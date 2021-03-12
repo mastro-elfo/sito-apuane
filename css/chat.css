@@ -1,0 +1,114 @@
+form {
+  border-top: 1px solid;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f6f5f4;
+}
+
+fieldset {
+  border: none;
+  display: grid;
+  grid-template-columns: max-content auto max-content;
+  max-width: 1024px;
+  margin: auto;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+select {
+  font: inherit;
+}
+
+input {
+  font: inherit;
+  grid-column: 2;
+  margin: 0 1em;
+  width: auto;
+}
+
+button {
+  grid-column: 3;
+}
+
+#chat {
+  list-style: none;
+  max-width: 1024px;
+  width: 100%;
+  margin: auto;
+  margin-top: 1em;
+  display: grid;
+  grid-template-columns: 25% auto 25%;
+  padding-bottom: 150px;
+}
+
+#chat li {
+  background: silver;
+  border-radius: 1em 1em 1em 0;
+  padding: 0.5em 1em;
+  margin-bottom: 1em;
+  grid-column: 1 / span 2;
+}
+
+#chat .own {
+  background: green;
+  border-radius: 1em 1em 0 1em;
+  color: white;
+  text-align: right;
+  grid-column: 2 / span 2;
+}
+
+#chat footer {
+  font-size: 75%;
+  color: #666;
+}
+
+#chat .own footer {
+  color: silver;
+}
+
+#chat .own footer .name {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) {
+  #chat,
+  fieldset {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+}
+
+@media screen and (max-width: 768px) and (min-width: 376px) {
+  select {
+    margin-bottom: 0.5em;
+  }
+  input {
+    grid-column: 1 / span 2;
+    margin-left: 0;
+  }
+  #chat {
+    grid-template-columns: 10% auto 10%;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  fieldset {
+    grid-template-columns: auto;
+  }
+  fieldset > * {
+    margin-bottom: 0.5em;
+  }
+  input {
+    grid-column: 1;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  button {
+    grid-column: 1;
+  }
+  #chat {
+    grid-template-columns: 0 auto 0;
+  }
+}

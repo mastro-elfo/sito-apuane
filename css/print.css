@@ -1,0 +1,23 @@
+body {
+  background-color: white;
+  font-size: initial;
+}
+
+video {
+  display: none;
+}
+
+img {
+  width: 200px;
+  display: block;
+}
+
+a {
+  color: green;
+}
+
+article {
+  border-bottom: 1px solid green;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}

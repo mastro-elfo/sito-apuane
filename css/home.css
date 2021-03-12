@@ -1,0 +1,74 @@
+body > header {
+  background-image: url(../imgs/alpi-apuane.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  text-shadow: silver 0 0 2px;
+}
+
+video {
+  margin-bottom: 1em;
+}
+
+article footer p {
+  margin-top: 1em;
+}
+
+article {
+  border-bottom: 1px solid green;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding: 0 1em;
+}
+article:last-of-type {
+  margin-bottom: 0;
+}
+
+video {
+  width: 376px;
+}
+
+article footer {
+  clear: both;
+}
+
+article section p {
+  margin-bottom: 0.5em;
+}
+
+article section p img {
+  float: right;
+  margin-left: 1em;
+  margin-bottom: 1em;
+  width: 376px;
+  border-radius: 1em;
+}
+
+@media screen and (min-width: 1024px) {
+  article {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 768px) {
+}
+
+@media screen and (max-width: 768px) {
+  article section p img {
+    float: none;
+    display: block;
+    margin: 0 auto 1em;
+  }
+  article section p {
+    text-align: justify;
+  }
+}
+
+/* @media screen and (max-width: 376px) { */
+@media screen and (max-width: 400px) {
+  article section p img,
+  video {
+    width: 100%;
+  }
+}
