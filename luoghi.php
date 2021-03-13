@@ -1,8 +1,13 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 
 require_once "ajax/database.php";
 require_once "php/formatParagraphs.php";
+require_once "php/concatRefs.php";
 
 // Inizializzo variabili di pagina
 $error       = null;
@@ -11,6 +16,7 @@ $description = "I luoghi sulle Alpi Apuane";
 $h1          = "";
 $article     = "";
 $datetime    = "";
+$related     = [];
 $showPlace   = false;
 $places      = [];
 
@@ -25,23 +31,35 @@ if (!$db) {
 
 if ($placeId) {
     // Se ho un id, carico le informazioni sul luogo specificato
-    $ret = $db->query("
+    $query = "
       SELECT
-        p.name, p.article, p.title, p.description, p.uDateTime
+        p.name, p.article, p.title, p.description, p.uDateTime,
+        GROUP_CONCAT(o.name, '/', o.id
+          SEPARATOR ',') AS related
       FROM places p
+      INNER JOIN places_places pp ON pp.idFrom = p.id
+      INNER JOIN places o ON o.id = pp.idTo
       WHERE p.id = '$placeId'
         AND p.deleted = 0
-    ");
-    $place = $ret->fetch_assoc();
-    if ($place) {
-        $title       = $place["title"];
-        $description = $place["description"];
-        $h1          = $place["name"];
-        $article     = $place["article"];
-        $datetime    = $place["uDateTime"];
-        $showPlace   = true;
+        AND pp.deleted = 0
+        AND o.deleted = 0
+    ";
+    $ret = $db->query($query);
+    if ($ret) {
+        $place = $ret->fetch_assoc();
+        if ($place) {
+            $title       = $place["title"];
+            $description = $place["description"];
+            $h1          = $place["name"];
+            $article     = $place["article"];
+            $datetime    = $place["uDateTime"];
+            $related     = explode(",", $place["related"]);
+            $showPlace   = true;
+        } else {
+            $error = "Non ho trovato questo luogo";
+        }
     } else {
-        // TODO: Not Found
+        $error = "Errore nella query: $query";
     }
 } else {
     // Carico la lista dei luoghi
@@ -75,7 +93,7 @@ if ($placeId) {
 
     <main>
       <?php if ($error): ?>
-        <p class="error"><?=$error?></p>
+        <p class="error p1"><?=$error?></p>
       <?php endif;?>
 
       <?php if ($showPlace): ?>
@@ -88,6 +106,9 @@ if ($placeId) {
               src="php/img.php?table=places&id=<?=$placeId?>"
               alt="<?=$title?>"/>
             <?=formatParagraphs($article)?>
+          </section>
+          <section>
+            <?=concatRefs($related, "luoghi.php")?>
           </section>
           <footer>
             <p>
