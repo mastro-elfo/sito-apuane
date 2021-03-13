@@ -181,7 +181,7 @@ input {
 
 .block-list .list-item {
   display: block;
-  padding: 0.5em 0;
+  padding: 0.5em;
   transition: color 0.25s ease, background-color 0.25s ease;
   color: inherit;
   text-decoration: none;
