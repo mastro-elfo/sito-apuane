@@ -12,7 +12,7 @@ function login($username, $password)
         return null;
     }
     $ret = $db->query("
-      SELECT id, nome, email FROM utenti
+      SELECT id, nome, email FROM users
       WHERE
             email = '$username'
         AND password = '" . hash("sha256", $password) . "'

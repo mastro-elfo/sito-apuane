@@ -30,7 +30,7 @@ function send($receiverId, $message)
         u.nome as nomeMittente,
         idMittente = '$userId' as own
       FROM chat
-      INNER JOIN utenti u ON u.id = idMittente
+      INNER JOIN users u ON u.id = idMittente
       WHERE chat.id = LAST_INSERT_ID();");
     // returns `null` on failure
     return $ret->fetch_assoc();
@@ -59,7 +59,7 @@ function read($user_2)
           u.nome as nomeMittente,
           idMittente = '$userId' as own
         FROM chat
-        INNER JOIN utenti u on u.id = idMittente
+        INNER JOIN users u on u.id = idMittente
         WHERE
              (idMittente = '$userId' AND idDestinatario = '$user_2')
           OR (idMittente = '$user_2' AND idDestinatario = '$userId')
@@ -84,7 +84,7 @@ function users()
     if (!$db) {
         return [];
     }
-    $ret = $db->query("SELECT id, nome FROM utenti WHERE id != '$userId'");
+    $ret = $db->query("SELECT id, nome FROM users WHERE id != '$userId'");
     return $ret->fetch_all(MYSQLI_ASSOC);
 }
 

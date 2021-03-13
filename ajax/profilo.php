@@ -15,7 +15,7 @@ function update($nome, $email){
     $userId = $_SESSION["user"]["id"];
     // Update record
     $db->query("
-      UPDATE utenti
+      UPDATE users
       SET
         nome = '$nome',
         email = '$email'
@@ -25,7 +25,7 @@ function update($nome, $email){
     // Reload user record
     $ret = $db->query("
       SELECT id, nome, email
-      FROM utenti
+      FROM users
       WHERE
         id = '$userId'
     ");
