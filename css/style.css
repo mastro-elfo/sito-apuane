@@ -52,6 +52,16 @@ article a:hover {
 label {
   font-variant: small-caps;
   display: block;
+  font-size: 80%;
+  margin-bottom: 0.2em;
+}
+
+fieldset {
+  display: block;
+  margin: auto;
+  padding: 1em;
+  border: none;
+  max-width: 400px;
 }
 
 nav ul {
@@ -127,6 +137,7 @@ input {
   color: inherit;
   width: 100%;
   padding: 0.25em 0;
+  margin-bottom: 1em;
 }
 
 /* Margini e Padding */
