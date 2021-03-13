@@ -2,10 +2,10 @@
 
 require_once "../ajax/database.php";
 
-$peakId = $_GET["id"];
+$id = $_GET["id"];
 $tableName = $_GET["table"];
 
-if (!$peakId) {
+if (!$id) {
     echo file_get_contents("../imgs/broken.png");
     exit;
 }
@@ -21,7 +21,7 @@ if (!$db) {
 $ret = $db->query("
   SELECT image
   FROM `$tableName`
-  WHERE id = '$peakId'
+  WHERE id = '$id'
 ");
 $image = $ret->fetch_assoc();
 if (!$image) {
