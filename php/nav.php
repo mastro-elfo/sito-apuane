@@ -63,21 +63,23 @@ $items = [
     <?php
 foreach ($items as $item) {
     // La pagina e' riservata agli utenti iscritti
-    if ($item["access"] && !isset($_SESSION["user"])) {
+    if (array_key_exists("access", $item) && $item["access"] && !isset($_SESSION["user"])) {
         continue;
     }
 
     // La pagina e' visibile solo se l'utente non ha effettuato l'accesso
-    if ($item["access"] === false && isset($_SESSION["user"])) {
+    if (array_key_exists("access", $item) && $item["access"] === false && isset($_SESSION["user"])) {
         continue;
     }
 
     // Try to match the "match" attribute
-    if (isset($item["match"]) && preg_match($item["match"], $_SERVER["REQUEST_URI"])) {
+    if (array_key_exists("match", $item)
+        && isset($item["match"])
+        && preg_match($item["match"], $_SERVER["REQUEST_URI"])) {
         echo "<li class='selected'><a href='#' title='$item[title]'>$item[label]</a></li>";
     }
     // Or try to match the "href" attribute
-    else if (preg_match("/$item[href]$/", $_SERVER["REQUEST_URI"])) {
+    else if (preg_match("/".$item["href"]."$/", $_SERVER["REQUEST_URI"])) {
         echo "<li class='selected'><a href='#' title='$item[title]'>$item[label]</a></li>";
     }
     // Otherwise
