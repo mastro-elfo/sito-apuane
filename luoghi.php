@@ -1,7 +1,7 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 session_start();
 
@@ -17,6 +17,7 @@ $h1          = "";
 $article     = "";
 $datetime    = "";
 $related     = [];
+$tags        = [];
 $showPlace   = false;
 $places      = [];
 
@@ -34,15 +35,30 @@ if ($placeId) {
     $query = "
       SELECT
         p.name, p.article, p.title, p.description, p.uDateTime,
-        GROUP_CONCAT(o.name, '/', o.id
-          SEPARATOR ',') AS related
+        (
+            SELECT
+            	GROUP_CONCAT(o.name, '/', o.id
+          			SEPARATOR ',')
+            FROM places o
+            INNER JOIN places_places pp ON pp.idTo = o.id
+            WHERE pp.idFrom = p.id
+            	AND pp.deleted = 0
+        		AND o.deleted = 0
+        ) AS related,
+        (
+            SELECT
+            	GROUP_CONCAT(t.name, '/', t.color
+          			SEPARATOR ',')
+            FROM tags t
+            INNER JOIN places_tags pt ON pt.idTag = t.id
+            WHERE
+            	pt.idPlace = p.id
+            	AND t.deleted = 0
+            	AND pt.deleted = 0
+        ) AS tags
       FROM places p
-      INNER JOIN places_places pp ON pp.idFrom = p.id
-      INNER JOIN places o ON o.id = pp.idTo
       WHERE p.id = '$placeId'
         AND p.deleted = 0
-        AND pp.deleted = 0
-        AND o.deleted = 0
     ";
     $ret = $db->query($query);
     if ($ret) {
@@ -54,6 +70,7 @@ if ($placeId) {
             $article     = $place["article"];
             $datetime    = $place["uDateTime"];
             $related     = explode(",", $place["related"]);
+            $tags        = explode(",", $place["tags"]);
             $showPlace   = true;
         } else {
             $error = "Non ho trovato questo luogo";
@@ -108,7 +125,11 @@ if ($placeId) {
             <?=formatParagraphs($article)?>
           </section>
           <section>
+            <h2>Vedi anche</h2>
             <?=concatRefs($related, "luoghi.php")?>
+
+            <h2>Tag</h2>
+            <?=implode(", ", $tags)?>
           </section>
           <footer>
             <p>
