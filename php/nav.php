@@ -7,20 +7,25 @@ $items = [
         "label" => "Home",
         "title" => "Home Page",
     ],
+    // [
+    //     "href"  => "vette.php",
+    //     "label" => "Le vette",
+    //     "title" => "Le vette delle Alpi Apuane",
+    // ],
+    // [
+    //     "href"  => "percorsi.php",
+    //     "label" => "I percorsi",
+    //     "title" => "Percorsi del CAI",
+    // ],
+    // [
+    //     "href"  => "rifugi.php",
+    //     "label" => "I rifugi",
+    //     "title" => "I Rifugi",
+    // ],
     [
-        "href"  => "vette.php",
-        "label" => "Le vette",
-        "title" => "Le vette delle Alpi Apuane",
-    ],
-    [
-        "href"  => "percorsi.php",
-        "label" => "I percorsi",
-        "title" => "Percorsi del CAI",
-    ],
-    [
-        "href"  => "rifugi.php",
-        "label" => "I rifugi",
-        "title" => "I Rifugi",
+        "href"  => "luoghi.php",
+        "label" => "Luoghi",
+        "title" => "Luoghi sulle Alpi Apuane",
     ],
     [
         "href"  => "#",
