@@ -21,7 +21,7 @@ $showPlace   = false;
 $places      = [];
 
 //
-$placeId = $_GET["id"];
+$placeId = array_key_exists("id", $_GET) ? $_GET["id"] : null;
 // Open db connection
 $db = open_db();
 // On error
