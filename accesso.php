@@ -15,20 +15,21 @@
     <script src="js/accesso.js"></script>
   </head>
   <body>
-    <header>
-      <h1>Area riservata</h1>
-    </header>
-
     <?php require("php/nav.php"); ?>
 
     <main>
+      <header>
+        <h1>Area riservata</h1>
+      </header>
+
       <form id="login" action="accesso.html" method="post">
         <fieldset>
           <label for="username">Username</label>
           <input type="text" id="username" name="username" value="" autofocus />
           <label for="password">Password</label>
           <input type="password" id="password" name="password" value="" />
-          <button type="submit" name="button">Login</button>
+          <button type="submit">Login</button>
+          <button type="button" onclick="location.href = 'registrazione.php';">Registrati</button>
           <p id="info" class="info"></p>
           <p id="success" class="success"></p>
           <p id="error" class="error"></p>
