@@ -70,9 +70,9 @@ if ($placeId) {
             $h1          = $place["name"];
             $article     = $place["article"];
             $datetime    = $place["uDateTime"];
-            $related     = explode(",", $place["related"]);
-            $tags        = explode(",", $place["tags"]);
-            $showPlace   = true;
+            $related     = array_filter(explode(",", $place["related"]), function ($in) {return $in;});
+            $tags = array_filter(explode(",", $place["tags"]), function ($in) {return $in;});
+            $showPlace = true;
         } else {
             $error = "Non ho trovato questo luogo";
         }
@@ -126,11 +126,17 @@ if ($placeId) {
             <?=formatParagraphs($article)?>
           </section>
           <section>
-            <h2>Vedi anche</h2>
-            <?=concatRefs($related, "luoghi.php")?>
+            <?php if (count($related)): ?>
+              <h2>Vedi anche</h2>
+              <?=count($related)?>
+              <?php print_r($related);?>
+              <?=concatRefs($related, "luoghi.php")?>
+            <?php endif;?>
 
-            <h2>Tag</h2>
-            <?=concatTags($tags)?>
+            <?php if (count($tags)): ?>
+              <h2>Tag</h2>
+              <?=concatTags($tags)?>
+            <?php endif;?>
           </section>
           <footer>
             <p>
