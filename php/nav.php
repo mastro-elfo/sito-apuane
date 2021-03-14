@@ -40,7 +40,7 @@ $items = [
     [
         "href"   => "accesso.php",
         "label"  => "Accedi",
-        "title"  => "Accedi all'area riservata",
+        "title"  => "Accedi all&rsquo;area riservata",
         "access" => false,
     ],
     [

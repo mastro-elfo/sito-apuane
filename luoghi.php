@@ -1,7 +1,7 @@
 <?php
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 session_start();
 
@@ -9,6 +9,7 @@ require_once "ajax/database.php";
 require_once "php/formatParagraphs.php";
 require_once "php/concatRefs.php";
 require_once "php/concatTags.php";
+require_once "php/tableAttributes.php";
 
 // Inizializzo variabili di pagina
 $error       = null;
@@ -19,6 +20,7 @@ $article     = "";
 $datetime    = "";
 $related     = [];
 $tags        = [];
+$attributes  = [];
 $showPlace   = false;
 $places      = [];
 
@@ -56,7 +58,14 @@ if ($placeId) {
             	pt.idPlace = p.id
             	AND t.deleted = 0
             	AND pt.deleted = 0
-        ) AS tags
+        ) AS tags,
+        (
+            SELECT
+              GROUP_CONCAT(a.name, '/', a.value, '', a.after
+                SEPARATOR ',')
+              FROM attributes a
+              WHERE a.idPlace = p.id
+        ) AS attributes
       FROM places p
       WHERE p.id = '$placeId'
         AND p.deleted = 0
@@ -72,6 +81,7 @@ if ($placeId) {
             $datetime    = $place["uDateTime"];
             $related     = array_filter(explode(",", $place["related"]), function ($in) {return $in;});
             $tags = array_filter(explode(",", $place["tags"]), function ($in) {return $in;});
+            $attributes = array_filter(explode(",", $place["attributes"]), function ($in) {return $in;});
             $showPlace = true;
         } else {
             $error = "Non ho trovato questo luogo";
@@ -116,28 +126,30 @@ if ($placeId) {
 
       <?php if ($showPlace): ?>
         <article>
-          <header>
-            <h1><?=$h1?></h1>
-          </header>
-          <section>
-            <img
-              src="php/img.php?table=places&id=<?=$placeId?>"
-              alt="<?=$title?>"/>
-            <?=formatParagraphs($article)?>
-          </section>
-          <section>
-            <?php if (count($related)): ?>
-              <h2>Vedi anche</h2>
-              <?=count($related)?>
-              <?php print_r($related);?>
-              <?=concatRefs($related, "luoghi.php")?>
-            <?php endif;?>
+          <h2><?=$h1?></h2>
+          <img
+            src="php/img.php?table=places&id=<?=$placeId?>"
+            alt="<?=$title?>"/>
+          <?=formatParagraphs($article)?>
 
-            <?php if (count($tags)): ?>
-              <h2>Tag</h2>
-              <?=concatTags($tags)?>
-            <?php endif;?>
-          </section>
+          <?php if (count($related)): ?>
+            <section>
+              <h3>Vedi anche</h3>
+              <?=concatRefs($related, "luoghi.php")?>
+            </section>
+          <?php endif;?>
+
+          <?php if (count($attributes)): ?>
+            <section>
+              <h3>Dati</h3>
+              <?=tableAttributes($attributes)?>
+            </section>
+          <?php endif;?>
+
+          <?php if (count($tags)): ?>
+            <?=concatTags($tags)?>
+          <?php endif;?>
+
           <footer>
             <p>
               <time datetime="<?=$datetime?>">
