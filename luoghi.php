@@ -8,6 +8,7 @@ session_start();
 require_once "ajax/database.php";
 require_once "php/formatParagraphs.php";
 require_once "php/concatRefs.php";
+require_once "php/concatTags.php";
 
 // Inizializzo variabili di pagina
 $error       = null;
@@ -37,17 +38,17 @@ if ($placeId) {
         p.name, p.article, p.title, p.description, p.uDateTime,
         (
             SELECT
-            	GROUP_CONCAT(o.name, '/', o.id
+            	GROUP_CONCAT(o.id, '/', o.name
           			SEPARATOR ',')
             FROM places o
             INNER JOIN places_places pp ON pp.idTo = o.id
             WHERE pp.idFrom = p.id
-            	AND pp.deleted = 0
-        		AND o.deleted = 0
+                AND pp.deleted = 0
+        		    AND o.deleted = 0
         ) AS related,
         (
             SELECT
-            	GROUP_CONCAT(t.name, '/', t.color
+            	GROUP_CONCAT(t.id, '/', t.name, '/', t.color, '/', t.textColor
           			SEPARATOR ',')
             FROM tags t
             INNER JOIN places_tags pt ON pt.idTag = t.id
@@ -129,7 +130,7 @@ if ($placeId) {
             <?=concatRefs($related, "luoghi.php")?>
 
             <h2>Tag</h2>
-            <?=implode(", ", $tags)?>
+            <?=concatTags($tags)?>
           </section>
           <footer>
             <p>
