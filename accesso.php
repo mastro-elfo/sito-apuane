@@ -25,7 +25,7 @@
       <form id="login" action="accesso.html" method="post">
         <fieldset>
           <label for="username">Username</label>
-          <input type="text" id="username" name="username" value="" autofocus />
+          <input type="email" id="username" name="username" value="" autofocus />
           <label for="password">Password</label>
           <input type="password" id="password" name="password" value="" />
           <button type="submit">Login</button>
