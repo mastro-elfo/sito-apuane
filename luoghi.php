@@ -147,7 +147,9 @@ if ($placeId) {
           <?php endif;?>
 
           <?php if (count($tags)): ?>
-            <?=concatTags($tags)?>
+            <p>
+              <?=concatTags($tags)?>
+            </p>
           <?php endif;?>
 
           <footer>
