@@ -153,7 +153,7 @@ if ($placeId) {
           <footer>
             <p>
               <time datetime="<?=$datetime?>">
-                (<?=$datetime?>)
+                (<?=date_format(date_create($datetime), "d/m/Y")?>)
               </time>
             </p>
           </footer>
