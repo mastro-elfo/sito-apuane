@@ -150,7 +150,7 @@ if ($placeId) {
           <?php endif;?>
 
           <?php if (count($tags)): ?>
-            <p>
+            <p class="mt1">
               <?=concatTags($tags)?>
             </p>
           <?php endif;?>
