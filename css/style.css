@@ -33,7 +33,8 @@ h2 {
   margin-bottom: 0.5em;
 }
 
-strong {
+strong,
+em {
   color: green;
 }
 
