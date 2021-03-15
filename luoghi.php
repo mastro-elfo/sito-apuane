@@ -6,10 +6,12 @@ error_reporting(E_ALL);
 session_start();
 
 require_once "ajax/database.php";
-require_once "php/formatParagraphs.php";
+require_once "lib/php/parsedown-master/Parsedown.php";
 require_once "php/concatRefs.php";
 require_once "php/concatTags.php";
 require_once "php/tableAttributes.php";
+
+$pd = new Parsedown();
 
 // Inizializzo variabili di pagina
 $error       = null;
@@ -130,7 +132,8 @@ if ($placeId) {
           <img
             src="php/img.php?table=places&id=<?=$placeId?>"
             alt="<?=$title?>"/>
-          <?=formatParagraphs($article)?>
+
+          <?=$pd->text($article)?>
 
           <?php if (count($related)): ?>
             <section>
