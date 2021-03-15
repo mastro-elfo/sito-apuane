@@ -138,7 +138,7 @@ if ($placeId) {
           <?php if (count($related)): ?>
             <section>
               <h3>Vedi anche</h3>
-              <?=concatRefs($related, "luoghi.php")?>
+              <p><?=concatRefs($related, "luoghi.php")?></p>
             </section>
           <?php endif;?>
 
@@ -150,9 +150,7 @@ if ($placeId) {
           <?php endif;?>
 
           <?php if (count($tags)): ?>
-            <p class="mt1">
-              <?=concatTags($tags)?>
-            </p>
+            <p class="mt1"><?=concatTags($tags)?></p>
           <?php endif;?>
 
           <footer>
