@@ -15,13 +15,9 @@
     <script src="js/accesso.js"></script>
   </head>
   <body>
-    <?php require("php/nav.php"); ?>
+    <?php require "php/nav.php";?>
 
     <main>
-      <header>
-        <h1>Area riservata</h1>
-      </header>
-
       <form id="login" action="accesso.html" method="post">
         <fieldset>
           <label for="username">Username</label>
