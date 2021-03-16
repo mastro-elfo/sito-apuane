@@ -7,21 +7,6 @@ $items = [
         "label" => "Home",
         "title" => "Home Page",
     ],
-    // [
-    //     "href"  => "vette.php",
-    //     "label" => "Le vette",
-    //     "title" => "Le vette delle Alpi Apuane",
-    // ],
-    // [
-    //     "href"  => "percorsi.php",
-    //     "label" => "I percorsi",
-    //     "title" => "Percorsi del CAI",
-    // ],
-    // [
-    //     "href"  => "rifugi.php",
-    //     "label" => "I rifugi",
-    //     "title" => "I Rifugi",
-    // ],
     [
         "href"  => "luoghi.php",
         "label" => "Luoghi",
@@ -48,13 +33,7 @@ $items = [
         "label"  => "Profilo",
         "title"  => "Il tuo profilo personale",
         "access" => true,
-    ],
-    [
-        "href"   => "chat.php",
-        "label"  => "Chat",
-        "title"  => "Chatta con gli utenti",
-        "access" => true,
-    ],
+    ]
 ];
 ?>
 
