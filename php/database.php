@@ -3,7 +3,7 @@
 function open_db()
 {
     // Load config from file
-    $config = parse_ini_file("database.ini");
+    $config = parse_ini_file(__DIR__."/database.ini");
     // Create mysqli object
     $mysqli = new mysqli($config["host"], $config["username"], $config["password"], $config["database"]);
     /* check connection */
