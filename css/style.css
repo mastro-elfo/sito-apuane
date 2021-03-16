@@ -148,6 +148,12 @@ input {
 .mb1 {
   margin-bottom: 1em;
 }
+.ml1 {
+  margin-left: 1em;
+}
+.mr1 {
+  margin-right: 1em;
+}
 .p1 {
   padding: 1em;
 }
@@ -157,6 +163,12 @@ input {
 }
 .radius1 {
   border-radius: 1em;
+}
+.right {
+  float: right;
+}
+.klein {
+  font-size: 75%;
 }
 
 /* Posizione */
