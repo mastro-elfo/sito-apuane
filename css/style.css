@@ -219,7 +219,8 @@ article table {
   margin: 0 auto;
 }
 
-article table td {
+article table td,
+article table th {
   padding: 0.5em 1em;
 }
 
