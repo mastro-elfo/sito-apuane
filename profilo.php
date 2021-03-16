@@ -20,7 +20,7 @@ session_start();
   </head>
   <body>
     <header>
-      <h1>Profilo utente di <span id="header-user-name"><?=$_SESSION["user"]["nome"]?></span></h1>
+      <h1>Profilo utente di <span id="header-user-name"><?=$_SESSION["user"]["name"]?></span></h1>
     </header>
 
     <?php require "php/nav.php";?>
@@ -29,7 +29,7 @@ session_start();
       <ul class="style-none mt1">
         <li class="mb1 px1">
           <label for="name">Nome</label>
-          <input type="text" name="name" id="name" value="<?=$_SESSION['user']['nome']?>" placeholder="Scrivi il tuo nome"/>
+          <input type="text" name="name" id="name" value="<?=$_SESSION['user']['name']?>" placeholder="Scrivi il tuo nome"/>
         </li>
         <li class="mb1 px1">
           <label for="email">Email</label>

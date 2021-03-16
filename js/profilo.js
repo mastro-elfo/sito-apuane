@@ -27,7 +27,7 @@ window.addEventListener("load", function () {
       function (data) {
         try {
           let user = JSON.parse(data);
-          document.getElementById("header-user-name").innerHTML = user.nome;
+          document.getElementById("header-user-name").innerHTML = user.name;
           console.log("Update success");
         } catch {
           console.error("Update error");

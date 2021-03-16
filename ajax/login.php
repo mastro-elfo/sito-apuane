@@ -1,27 +1,15 @@
 <?php
 session_start();
 
-require_once "database.php";
+require_once "../php/user.class.php";
 
-function login($username, $password)
-{
-    // Open db connection
-    $db = open_db();
-    // On error return null
-    if (!$db) {
-        return null;
-    }
-    $ret = $db->query("
-      SELECT id, nome, email FROM users
-      WHERE
-            email = '$username'
-        AND password = '" . hash("sha256", $password) . "'
-    ");
-    $user = $ret->fetch_assoc();
-    if ($user) {
-        $_SESSION["user"] = $user;
-    }
-    return $user;
+function login($username, $password) {
+  $user = new User();
+  $u = $user->login($username, $password);
+  if($u) {
+    $_SESSION["user"] = $u;
+  }
+  return $u;
 }
 
 function logout()

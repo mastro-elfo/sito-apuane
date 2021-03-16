@@ -1,44 +1,32 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 session_start();
 
-require_once "database.php";
+require_once "../php/user.class.php";
 
-function update($nome, $email){
-  // Open db connection
-    $db = open_db();
-    // On error return null
-    if (!$db) {
-        return null;
-    }
+function update($name, $email)
+{
     // Get user id from session
     $userId = $_SESSION["user"]["id"];
-    // Update record
-    $db->query("
-      UPDATE users
-      SET
-        nome = '$nome',
-        email = '$email'
-      WHERE
-        id = '$userId'
-    ");
-    // Reload user record
-    $ret = $db->query("
-      SELECT id, nome, email
-      FROM users
-      WHERE
-        id = '$userId'
-    ");
-    $user = $ret->fetch_assoc();
-    // Update session variable
-    if($user) {
-      $_SESSION["user"] = $user;
+    // Create new User
+    $user = new User($_SESSION["user"]["id"], $email, $name);
+    // Update user
+    $ret = $user->update();
+    if(!$ret) {
+      return null;
     }
-    return $user;
+    // Reload user
+    $u = $user->read();
+    // Update session variable
+    if ($u) {
+        $_SESSION["user"] = $u;
+    }
+    return $u;
 }
 
 if ($_POST["action"] == "update") {
-  echo json_encode(update($_POST["name"], $_POST["email"]));
+    echo json_encode(update($_POST["name"], $_POST["email"]));
 }
-
- ?>

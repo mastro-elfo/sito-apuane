@@ -12,11 +12,11 @@ $items = [
         "label" => "Luoghi",
         "title" => "Luoghi sulle Alpi Apuane",
     ],
-    [
-        "href"  => "#",
-        "label" => "Eventi",
-        "title" => "Gli eventi sulle Alpi Apuane",
-    ],
+    // [
+    //     "href"  => "#",
+    //     "label" => "Eventi",
+    //     "title" => "Gli eventi sulle Alpi Apuane",
+    // ],
     [
         "href"  => "meteo.php",
         "label" => "Meteo",
