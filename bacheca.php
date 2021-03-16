@@ -20,6 +20,7 @@ $author      = "";
 $datetime    = "";
 $showBoard   = false;
 $boards      = [];
+$answers     = [];
 //
 $boardId = array_key_exists("id", $_GET) ? $_GET["id"] : null;
 //
@@ -34,6 +35,7 @@ if ($boardId) {
         $author      = $board->user["name"];
         $datetime    = $board->uDateTime;
         $showBoard   = true;
+        $answers     = $board->readAnswers();
     }
 } else {
     // Carico la lista dei messaggi
@@ -76,8 +78,32 @@ if ($boardId) {
               </time>
             </p>
           </footer>
+
+          <?php if (isset($_SESSION["user"])): ?>
+            <div class="mb1">
+              <button type="button" name="button" onclick="alert('Work in progress :)')">Rispondi</button>
+            </div>
+          <?php endif;?>
+
+          <?php if (count($answers)): ?>
+            <?php foreach ($answers as $answer): ?>
+              <div class="answer">
+                <?=$pd->text($answer["content"])?>
+                <div class="klein">
+                  <span><?=$answer["name"]?></span>,
+                  <time datetime="<?=$answer["uDateTime"]?>"><?=date_format(date_create($answer["uDateTime"]), "d/m/Y")?></time>
+                </div>
+              </div>
+            <?php endforeach;?>
+          <?php endif;?>
         </article>
       <?php elseif (count($boards)): ?>
+        <?php if (isset($_SESSION["user"])): ?>
+          <div class="mb1">
+            <button type="button" name="button" onclick="alert('Work in progress :)')">Scrivi</button>
+          </div>
+        <?php endif;?>
+
         <div id="boards">
           <?php foreach ($boards as $board): ?>
             <a href="bacheca.php?id=<?=$board["id"]?>">
@@ -85,7 +111,9 @@ if ($boardId) {
                 <header>
                   <h3><?=$board["title"]?></h3>
                 </header>
-                <?=$pd->text(strlen($board["content"]) > 100 ? substr($board["content"], 0, 100) . "&hellip;" : $board["content"])?>
+                <div class="content">
+                  <?=$pd->text(strlen($board["content"]) > 100 ? substr($board["content"], 0, 100) . "&hellip;" : $board["content"])?>
+                </div>
                 <footer>
                   <p>
                     <?=$board["user_name"]?>,

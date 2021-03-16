@@ -4,6 +4,7 @@ body > header {
   background-position: center;
   background-size: cover;
   text-shadow: silver 0 0 2px;
+  padding: 4em 0;
 }
 
 video {

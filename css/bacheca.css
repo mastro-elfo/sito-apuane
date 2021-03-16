@@ -8,7 +8,7 @@
 #boards section {
   border-radius: 1em 1em 0 0;
   overflow: hidden;
-  max-width: 400px;
+  max-width: 320px;
   cursor: pointer;
   transition: background-color 250ms ease;
 }
@@ -20,13 +20,21 @@
   color: white;
   padding: 0.25em 1em;
 }
-#boards section > p {
+#boards section > div.content {
   padding: 0 1em;
   margin-top: 0.5em;
+}
+#boards section > div.content > p {
+  font-size: 80%;
 }
 #boards section > footer {
   padding: 0 1em;
   margin-top: 0.5em;
   background: green;
   color: white;
+}
+
+.answer {
+  border-top: 1px solid;
+  padding: 1em 0;
 }

@@ -62,4 +62,22 @@ class Board extends Model
       }
       return [];
     }
+
+
+    public function readAnswers(){
+      $ret = $this->query("
+        SELECT
+          a.content, a.uDateTime, u.name
+        FROM answers a
+        INNER JOIN users u ON u.id = a.idUser
+        WHERE a.deleted = 0
+          AND a.idBoard = '$this->_id'
+          AND u.deleted = 0
+        ORDER BY a.uDateTime DESC
+      ");
+      if($ret) {
+        return $ret->fetch_all(MYSQLI_ASSOC);
+      }
+      return [];
+    }
 }
