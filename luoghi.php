@@ -5,11 +5,9 @@ error_reporting(E_ALL);
 
 session_start();
 
-require_once "ajax/database.php";
+require_once "php/database.php";
 require_once "lib/php/parsedown-master/Parsedown.php";
-require_once "php/concatRefs.php";
-require_once "php/concatTags.php";
-require_once "php/tableAttributes.php";
+require_once "php/place.class.php";
 
 $pd = new Parsedown();
 
@@ -36,60 +34,27 @@ if (!$db) {
 }
 
 if ($placeId) {
-    // Se ho un id, carico le informazioni sul luogo specificato
-    $query = "
-      SELECT
-        p.name, p.article, p.title, p.description, p.uDateTime,
-        (
-            SELECT
-            	GROUP_CONCAT(o.id, '/', o.name
-          			SEPARATOR ',')
-            FROM places o
-            INNER JOIN places_places pp ON pp.idTo = o.id
-            WHERE pp.idFrom = p.id
-                AND pp.deleted = 0
-        		    AND o.deleted = 0
-        ) AS related,
-        (
-            SELECT
-            	GROUP_CONCAT(t.id, '/', t.name, '/', t.color, '/', t.textColor
-          			SEPARATOR ',')
-            FROM tags t
-            INNER JOIN places_tags pt ON pt.idTag = t.id
-            WHERE
-            	pt.idPlace = p.id
-            	AND t.deleted = 0
-            	AND pt.deleted = 0
-        ) AS tags,
-        (
-            SELECT
-              GROUP_CONCAT(a.name, '/', a.value, '', a.after
-                SEPARATOR ',')
-              FROM attributes a
-              WHERE a.idPlace = p.id
-        ) AS attributes
-      FROM places p
-      WHERE p.id = '$placeId'
-        AND p.deleted = 0
-    ";
-    $ret = $db->query($query);
-    if ($ret) {
-        $place = $ret->fetch_assoc();
-        if ($place) {
-            $title       = $place["title"];
-            $description = $place["description"];
-            $h1          = $place["name"];
-            $article     = $place["article"];
-            $datetime    = $place["uDateTime"];
-            $related     = array_filter(explode(",", $place["related"]), function ($in) {return $in;});
-            $tags = array_filter(explode(",", $place["tags"]), function ($in) {return $in;});
-            $attributes = array_filter(explode(",", $place["attributes"]), function ($in) {return $in;});
-            $showPlace = true;
-        } else {
-            $error = "Non ho trovato questo luogo";
-        }
+    // Create a new class `Place`
+    $place = new Place($placeId);
+    // Read from db
+    if ($place->read()) {
+        $title       = $place->title;
+        $description = $place->description;
+        $h1          = $place->name;
+        $article     = $place->article;
+        $datetime    = $place->uDateTime;
+        $showPlace   = true;
+        // Load related places
+        $place->readRelated();
+        $related = $place->related;
+        // Load tags
+        $place->readTags();
+        $tags = $place->tags;
+        // Load attributes
+        $place->readAttributes();
+        $attributes = $place->attributes;
     } else {
-        $error = "Errore nella query: $query";
+        $errore = "Errore nel database";
     }
 } else {
     // Carico la lista dei luoghi
@@ -138,19 +103,39 @@ if ($placeId) {
           <?php if (count($related)): ?>
             <section>
               <h3>Vedi anche</h3>
-              <p><?=concatRefs($related, "luoghi.php")?></p>
+              <p>
+                <?php foreach ($related as $item): ?>
+                  <a href="luoghi.php?id=<?=$item["id"]?>"><?=$item["name"]?></a>
+                <?php endforeach;?>
+              </p>
             </section>
           <?php endif;?>
 
           <?php if (count($attributes)): ?>
             <section>
               <h3>Dati</h3>
-              <?=tableAttributes($attributes)?>
+              <table>
+                <tbody>
+                  <?php foreach ($attributes as $attr): ?>
+                    <tr>
+                      <th><?=$attr["name"]?></th>
+                      <td><?=$attr["value"] . $attr["after"]?></td>
+                    </tr>
+                  <?php endforeach;?>
+                </tbody>
+              </table>
             </section>
           <?php endif;?>
 
           <?php if (count($tags)): ?>
-            <p class="mt1"><?=concatTags($tags)?></p>
+            <p class="mt1">
+              <?php foreach ($tags as $tag): ?>
+                <span class="tag"
+                  style="background-color: <?=$tag['color']?>; color:<?=$tag["textColor"]?>">
+                  <?=$tag["name"]?>
+                </span>
+              <?php endforeach;?>
+            </p>
           <?php endif;?>
 
           <footer>
