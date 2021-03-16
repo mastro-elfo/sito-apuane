@@ -1,0 +1,32 @@
+#boards {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 1em;
+  max-width: 1024px;
+  margin: auto;
+}
+#boards section {
+  border-radius: 1em 1em 0 0;
+  overflow: hidden;
+  max-width: 400px;
+  cursor: pointer;
+  transition: background-color 250ms ease;
+}
+#boards section:hover {
+  background: #ccc;
+}
+#boards section > header {
+  background: green;
+  color: white;
+  padding: 0.25em 1em;
+}
+#boards section > p {
+  padding: 0 1em;
+  margin-top: 0.5em;
+}
+#boards section > footer {
+  padding: 0 1em;
+  margin-top: 0.5em;
+  background: green;
+  color: white;
+}
