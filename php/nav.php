@@ -33,6 +33,12 @@ $items = [
         "label"  => "Profilo",
         "title"  => "Il tuo profilo personale",
         "access" => true,
+    ],
+    [
+        "href"   => "bacheca.php",
+        "label"  => "Bacheca",
+        "title"  => "Bacheca del sito",
+        "access" => true,
     ]
 ];
 ?>
