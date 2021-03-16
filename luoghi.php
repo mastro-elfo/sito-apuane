@@ -5,18 +5,17 @@ error_reporting(E_ALL);
 
 session_start();
 
-require_once "php/database.php";
 require_once "lib/php/parsedown-master/Parsedown.php";
 require_once "php/place.class.php";
 
 $pd = new Parsedown();
-
 // Inizializzo variabili di pagina
 $error       = null;
 $title       = "Luoghi";
 $description = "I luoghi sulle Alpi Apuane";
 $h1          = "";
 $article     = "";
+$image       = false;
 $datetime    = "";
 $related     = [];
 $tags        = [];
@@ -26,16 +25,10 @@ $places      = [];
 
 //
 $placeId = array_key_exists("id", $_GET) ? $_GET["id"] : null;
-// Open db connection
-$db = open_db();
-// On error
-if (!$db) {
-    $error = "Errore durante l'apertura del database";
-}
+// Create a new class `Place`
+$place = new Place($placeId);
 
 if ($placeId) {
-    // Create a new class `Place`
-    $place = new Place($placeId);
     // Read from db
     if ($place->read()) {
         $title       = $place->title;
@@ -43,6 +36,7 @@ if ($placeId) {
         $h1          = $place->name;
         $article     = $place->article;
         $datetime    = $place->uDateTime;
+        $image       = $place->image;
         $showPlace   = true;
         // Load related places
         $place->readRelated();
@@ -57,15 +51,7 @@ if ($placeId) {
         $errore = "Errore nel database";
     }
 } else {
-    // Carico la lista dei luoghi
-    $ret = $db->query("
-      SELECT id, name, title
-      FROM places
-      WHERE deleted = 0
-      ORDER BY uDateTime DESC
-      LIMIT 10
-    ");
-    $places = $ret->fetch_all(MYSQLI_ASSOC);
+    $places = $place->readAll();
 }
 
 ?>
@@ -94,9 +80,11 @@ if ($placeId) {
       <?php if ($showPlace): ?>
         <article>
           <h2><?=$h1?></h2>
-          <img
-            src="php/img.php?table=places&id=<?=$placeId?>"
-            alt="<?=$title?>"/>
+          <?php if ($image): ?>
+            <img
+              src="php/img.php?table=places&id=<?=$placeId?>"
+              alt="<?=$image?>"/>
+          <?php endif;?>
 
           <?=$pd->text($article)?>
 
@@ -104,8 +92,10 @@ if ($placeId) {
             <section>
               <h3>Vedi anche</h3>
               <p>
-                <?php foreach ($related as $item): ?>
-                  <a href="luoghi.php?id=<?=$item["id"]?>"><?=$item["name"]?></a>
+                <?php foreach ($related as $key => $item): ?>
+                  <a
+                    href="luoghi.php?id=<?=$item["id"]?>"
+                    title="Vedi <?=$item["name"]?>"><?=$item["name"]?></a><?=$key < count($related) - 1 ? ", " : ""?>
                 <?php endforeach;?>
               </p>
             </section>
@@ -130,10 +120,8 @@ if ($placeId) {
           <?php if (count($tags)): ?>
             <p class="mt1">
               <?php foreach ($tags as $tag): ?>
-                <span class="tag"
-                  style="background-color: <?=$tag['color']?>; color:<?=$tag["textColor"]?>">
-                  <?=$tag["name"]?>
-                </span>
+                <span class="tag mr1"
+                  style="background: <?=$tag['color']?>; color:<?=$tag["textColor"]?>"><?=$tag["name"]?></span>
               <?php endforeach;?>
             </p>
           <?php endif;?>
@@ -156,6 +144,15 @@ if ($placeId) {
                   href="luoghi.php?id=<?=$place["id"]?>"
                   title="<?=$place["title"]?>">
                   <?=$place["name"]?>
+                  <?php if ($place["tags"]): ?>
+                    <?php foreach (explode(",", $place["tags"]) as $tag): ?>
+                      <?php $parts = explode("/", $tag);?>
+                      <span class="tag right klein ml1"
+                        style="background:<?=$parts[1]?>;color:<?=$parts[2]?>">
+                        <?=$parts[0]?>
+                      </span>
+                    <?php endforeach;?>
+                  <?php endif;?>
                 </a>
               </li>
             <?php endforeach;?>

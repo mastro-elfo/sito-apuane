@@ -34,7 +34,7 @@ class Place extends Model
     public function read()
     {
         $ret = $this->query("
-          SELECT p.name, p.article, p.title, p.description, p.image, p.uDateTime
+          SELECT p.name, p.article, p.title, p.description, !isnull(p.image) as image, p.uDateTime
           FROM `$this->_table` p
           WHERE p.id = '$this->_id'
             AND p.deleted = 0
@@ -77,6 +77,7 @@ class Place extends Model
           WHERE pp.idFrom = '$this->_id'
             AND pp.deleted = 0
             AND o.deleted = 0
+          ORDER BY o.name ASC
         ");
         if ($ret) {
             $this->_related = $ret->fetch_all(MYSQLI_ASSOC);
@@ -96,6 +97,7 @@ class Place extends Model
                 pt.idPlace = '$this->_id'
             AND t.deleted = 0
             AND pt.deleted = 0
+          ORDER BY t.name ASC
         ");
         if ($ret) {
             $this->_tags = $ret->fetch_all(MYSQLI_ASSOC);
@@ -119,5 +121,26 @@ class Place extends Model
             return true;
         }
         return false;
+    }
+
+    public function readAll() {
+      $ret = $this->query("
+        SELECT
+          p.id, p.name, p.title,
+          (SELECT
+            GROUP_CONCAT(t.name, '/', t.color, '/', t.textColor
+              SEPARATOR ',')
+          FROM tags t
+          INNER JOIN places_tags pt ON pt.idTag = t.id
+          WHERE pt.idPlace = p.id
+          ORDER BY t.name ASC) AS tags
+        FROM `$this->_table` p
+        WHERE p.deleted = 0
+        ORDER BY p.name ASC
+      ");
+      if($ret) {
+        return $ret->fetch_all(MYSQLI_ASSOC);
+      }
+      return [];
     }
 }
