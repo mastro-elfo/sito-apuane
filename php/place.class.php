@@ -1,7 +1,7 @@
 <?php
-require_once "php/database.php";
+require_once __DIR__ . "/model.class.php";
 
-class Place
+class Place extends Model
 {
     protected $_id          = null;
     protected $_name        = null;
@@ -10,33 +10,19 @@ class Place
     protected $_description = null;
     protected $_image       = null;
     protected $_uDateTime   = null;
-    //
-    protected $_db = null;
+    protected $_related     = [];
+    protected $_tags        = [];
+    protected $_attributes  = [];
 
     public function __construct($id = null, $name = null, $article = null, $title = null, $description = null, $image = null)
     {
+        parent::__construct();
         $this->_id          = $id;
         $this->_name        = $name;
         $this->_article     = $article;
         $this->_title       = $title;
         $this->_description = $description;
         $this->_image       = $image;
-        //
-        $this->_db = open_db();
-    }
-
-    public function __get($key)
-    {
-        $_key = "_$key";
-        return $this->$_key;
-    }
-
-    public function __set($key, $value)
-    {
-        if (in_array($key, ["name", "article", "title", "description", "image"])) {
-            $_key        = "_$key";
-            $this->$_key = $value;
-        }
     }
 
     public function create()
@@ -60,6 +46,7 @@ class Place
                 $this->_title       = $place["title"];
                 $this->_description = $place["description"];
                 $this->_image       = $place["image"];
+                $this->_uDateTime   = $place["uDateTime"];
                 return true;
             }
         }
@@ -93,6 +80,66 @@ class Place
               WHERE id = '$this->_id'
             ");
             return $ret;
+        }
+        return false;
+    }
+
+    public function readRelated()
+    {
+        if ($this->_db) {
+            $ret = $this->_db->query("
+              SELECT
+                o.id, o.name
+              FROM places o
+              INNER JOIN places_places pp ON pp.idTo = o.id
+              WHERE pp.idFrom = '$this->_id'
+                AND pp.deleted = 0
+                AND o.deleted = 0
+            ");
+            if ($ret) {
+                $this->_related = $ret->fetch_all(MYSQLI_ASSOC);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function readTags()
+    {
+        if ($this->_db) {
+            $ret = $this->_db->query("
+              SELECT
+                t.id, t.name, t.color, t.textColor
+              FROM tags t
+              INNER JOIN places_tags pt ON pt.idTag = t.id
+              WHERE
+                    pt.idPlace = '$this->_id'
+                AND t.deleted = 0
+                AND pt.deleted = 0
+            ");
+            if ($ret) {
+                $this->_tags = $ret->fetch_all(MYSQLI_ASSOC);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function readAttributes()
+    {
+        if ($this->_db) {
+            $ret = $this->_db->query("
+              SELECT
+                a.name, a.value, a.after
+              FROM attributes a
+              WHERE
+                    a.idPlace = '$this->_id'
+                AND a.deleted = 0
+            ");
+            if ($ret) {
+                $this->_attributes = $ret->fetch_all(MYSQLI_ASSOC);
+                return true;
+            }
         }
         return false;
     }
