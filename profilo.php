@@ -14,15 +14,10 @@ session_start();
     <link rel="stylesheet" href="css/style.css" />
     <link rel="icon" href="favicon.png" type="image/png"/>
     <title>Profilo utente</title>
-    <script src="js/ajax.js"></script>
-    <script src="js/idListen.js"></script>
+    <script type="text/javascript" src="lib/jquery-3.6.0.js"></script>
     <script src="js/profilo.js"></script>
   </head>
   <body>
-    <header>
-      <h1>Profilo utente di <span id="header-user-name"><?=$_SESSION["user"]["name"]?></span></h1>
-    </header>
-
     <?php require "php/nav.php";?>
 
     <main>
@@ -38,6 +33,9 @@ session_start();
         <li class="mb1 px1"><button type="button" id="save">Salva</button></li>
         <li class="mb1 px1">
           <button type="button" name="button" id="logout" class="danger">Logout</button>
+        </li>
+        <li class="mb1 px1">
+          <span id="response"></span>
         </li>
       </ul>
     </main>
