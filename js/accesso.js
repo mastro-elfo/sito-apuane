@@ -1,12 +1,17 @@
 $(function () {
   const response = $("#response");
-  $("#login").on("submit", function (e) {
-    e.preventDefault();
-    // console.log("Submit");
-    response.text("Effettuo il login...");
+
+  function setResponse(severity, text) {
+    response.text(text);
     // Remove all classes
     response.removeClass();
-    response.addClass("info");
+    response.addClass(severity);
+  }
+
+  $("#login").on("submit", function (e) {
+    e.preventDefault();
+    //
+    setResponse("info", "Effettuo il login...");
     //
     $.ajax("ajax/login.php", {
       method: "POST",
@@ -18,24 +23,15 @@ $(function () {
       success: (r) => {
         // console.log(r);
         if (r) {
-          response.text("Login effettuato");
-          // Remove all classes
-          response.removeClass();
-          response.addClass("success");
+          setResponse("success", "Login effettuato");
           // Redirect to Home Page
           setTimeout(() => (location.href = "./"), 500);
         } else {
-          response.text("Login fallito");
-          // Remove all classes
-          response.removeClass();
-          response.addClass("error");
+          setResponse("error", "Login fallito");
         }
       },
       error: () => {
-        response.text("Errore AJAX");
-        // Remove all classes
-        response.removeClass();
-        response.addClass("error");
+        setResponse("error", "Errore AJAX");
       },
     });
   });
