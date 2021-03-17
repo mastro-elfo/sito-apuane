@@ -53,10 +53,16 @@ if ($boardId) {
       name="description"
       content="<?=$description?>"
     />
+    <link rel="stylesheet" href="lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
+    <link rel="stylesheet" href="lib/jquery-ui-1.12.1.custom/jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="lib/jquery-ui-1.12.1.custom/jquery-ui.theme.min.css">
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/bacheca.css" />
     <link rel="icon" href="favicon.png" type="image/png"/>
     <title><?=$title?></title>
+    <script type="text/javascript" src="lib/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/bacheca.js"></script>
   </head>
   <body>
     <?php require "php/nav.php";?>
@@ -81,7 +87,7 @@ if ($boardId) {
 
           <?php if (isset($_SESSION["user"])): ?>
             <div class="mb1">
-              <button type="button" name="button" onclick="alert('Work in progress :)')">Rispondi</button>
+              <button type="button" id="answer">Rispondi</button>
             </div>
           <?php endif;?>
 
@@ -100,7 +106,7 @@ if ($boardId) {
       <?php elseif (count($boards)): ?>
         <?php if (isset($_SESSION["user"])): ?>
           <div class="mb1">
-            <button type="button" name="button" onclick="alert('Work in progress :)')">Scrivi</button>
+            <button type="button" id="write">Scrivi</button>
           </div>
         <?php endif;?>
 
@@ -125,6 +131,18 @@ if ($boardId) {
               </section>
             </a>
           <?php endforeach;?>
+        </div>
+
+        <div id="dialog-new" title="Crea nuovo messaggio" style="display: none;">
+          <form>
+            <fieldset>
+              <label for="title">Titolo</label>
+              <input id="title" type="text" value="" placeholder=""/>
+              <label for="content">Testo</label>
+              <textarea id="content" rows="8" cols="40" placeholder="Messaggio"></textarea>
+              <p id="response"></p>
+            </fieldset>
+          </form>
         </div>
       <?php endif;?>
     </main>
