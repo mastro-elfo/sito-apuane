@@ -11,6 +11,7 @@ $(function () {
   const dialog = $("#dialog-new").dialog({
     autoOpen: false,
     modal: true,
+    width: "90%",
     buttons: {
       Conferma: () => {
         setResponse("info", "Invio messaggio...");
