@@ -1,41 +1,51 @@
-window.addEventListener("load", function () {
-  idListen(
-    "logout",
-    "click",
-    ajax,
-    "ajax/login.php",
-    "POST",
-    { action: "logout" },
-    function (ret) {
-      // console.log(ret);
-      location.href = "./";
-    },
-    function (e) {
-      console.error(e);
-    }
-  );
+$(function () {
+  const response = $("#response");
 
-  idListen("save", "click", function () {
-    ajax(
-      "ajax/profilo.php",
-      "POST",
-      {
-        action: "update",
-        name: document.getElementById("name").value,
-        email: document.getElementById("email").value,
+  function setResponse(severity, text) {
+    response.text(text);
+    // Remove all classes
+    response.removeClass();
+    response.addClass(severity);
+  }
+
+  $("#logout").on("click", function () {
+    //
+    setResponse("info", "Effettuo il logout...");
+    //
+    $.ajax("ajax/login.php", {
+      method: "POST",
+      data: { action: "logout" },
+      success: function () {
+        setResponse("success", "Logout effettuato");
+        setTimeout(() => (location.href = "./"), 500);
       },
-      function (data) {
+      error: function () {
+        setResponse("error", "Errore AJAX");
+      },
+    });
+  });
+
+  $("#save").on("click", function () {
+    setResponse("info", "Salvataggio in corso...");
+    $.ajax("ajax/profilo.php", {
+      method: "POST",
+      data: {
+        action: "update",
+        name: $("#name").val(),
+        email: $("#email").val(),
+      },
+      success: function (r) {
         try {
-          let user = JSON.parse(data);
-          document.getElementById("header-user-name").innerHTML = user.name;
-          console.log("Update success");
-        } catch {
-          console.error("Update error");
+          // Check if response is valid JSON
+          JSON.parse(r);
+          setResponse("success", "Update effettuato");
+        } catch (e) {
+          setResponse("error", `${e.name}, ${e.message}`);
         }
       },
-      function () {
-        console.error("Update failed");
-      }
-    );
+      error: function () {
+        setResponse("error", "Errore AJAX");
+      },
+    });
   });
 });
