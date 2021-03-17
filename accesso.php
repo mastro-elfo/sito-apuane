@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/accesso.css" />
     <link rel="icon" href="favicon.png" type="image/png"/>
     <title>Accesso al sito</title>
-    <script src="js/cookie.js"></script>
+    <script type="text/javascript" src="lib/jquery-3.6.0.js"></script>
     <script src="js/accesso.js"></script>
   </head>
   <body>
@@ -26,9 +26,7 @@
           <input type="password" id="password" name="password" value="" />
           <button type="submit">Login</button>
           <button type="button" onclick="location.href = 'registrazione.php';">Registrati</button>
-          <p id="info" class="info"></p>
-          <p id="success" class="success"></p>
-          <p id="error" class="error"></p>
+          <p id="response"></p>
         </fieldset>
       </form>
     </main>
