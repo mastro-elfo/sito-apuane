@@ -21,6 +21,15 @@ class Board extends Model
 
     public function create()
     {
+        $ret = $this->query("
+          INSERT INTO `$this->_table`
+            (title, content, idUser)
+          VALUES
+            ('$this->_title', '$this->_content', '" . $this->_user["id"] . "')
+        ");
+        if ($ret) {
+            return $this->_db->insert_id;
+        }
         return false;
     }
 
@@ -32,7 +41,8 @@ class Board extends Model
             u.name as user_name
           FROM `$this->_table` b
           INNER JOIN users u ON u.id = b.idUser
-          WHERE b.deleted = 0
+          WHERE b.id = '$this->_id'
+            AND b.deleted = 0
             AND u.deleted = 0
         ");
         if ($ret) {
@@ -47,8 +57,9 @@ class Board extends Model
         return false;
     }
 
-    public function readAll(){
-      $ret = $this->query("
+    public function readAll()
+    {
+        $ret = $this->query("
         SELECT
           b.id, b.title, b.content, b.uDateTime,
           u.name as user_name
@@ -57,15 +68,15 @@ class Board extends Model
         WHERE b.deleted = 0
         ORDER BY b.uDateTime DESC
       ");
-      if($ret){
-        return $ret->fetch_all(MYSQLI_ASSOC);
-      }
-      return [];
+        if ($ret) {
+            return $ret->fetch_all(MYSQLI_ASSOC);
+        }
+        return [];
     }
 
-
-    public function readAnswers(){
-      $ret = $this->query("
+    public function readAnswers()
+    {
+        $ret = $this->query("
         SELECT
           a.content, a.uDateTime, u.name
         FROM answers a
@@ -75,9 +86,9 @@ class Board extends Model
           AND u.deleted = 0
         ORDER BY a.uDateTime DESC
       ");
-      if($ret) {
-        return $ret->fetch_all(MYSQLI_ASSOC);
-      }
-      return [];
+        if ($ret) {
+            return $ret->fetch_all(MYSQLI_ASSOC);
+        }
+        return [];
     }
 }
