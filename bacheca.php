@@ -112,13 +112,13 @@ if ($boardId) {
 
         <div id="boards">
           <?php foreach ($boards as $board): ?>
-            <a href="bacheca.php?id=<?=$board["id"]?>">
+            <a href="bacheca.php?id=<?=$board["id"]?>" title="Apri <?=$board["title"]?>" class="mt1">
               <section>
                 <header>
                   <h3><?=$board["title"]?></h3>
                 </header>
                 <div class="content">
-                  <?=$pd->text(strlen($board["content"]) > 100 ? substr($board["content"], 0, 100) . "&hellip;" : $board["content"])?>
+                  <?=$pd->text(strlen($board["content"]) > 200 ? substr($board["content"], 0, 200) . "&hellip;" : $board["content"])?>
                 </div>
                 <footer>
                   <p>
