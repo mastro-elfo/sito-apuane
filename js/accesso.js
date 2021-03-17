@@ -22,6 +22,8 @@ $(function () {
           // Remove all classes
           response.removeClass();
           response.addClass("success");
+          // Redirect to Home Page
+          setTimeout(() => (location.href = "./"), 500);
         } else {
           response.text("Login fallito");
           // Remove all classes
