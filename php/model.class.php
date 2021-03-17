@@ -43,6 +43,19 @@ class Model
         return false;
     }
 
+    public function last()
+    {
+        $ret = $this->query("
+          SELECT LAST_INSERT_ID() AS id
+          FROM `$this->_table`
+          LIMIT 1
+        ");
+        if ($ret) {
+            return $ret->fetch_assoc();
+        }
+        return false;
+    }
+
     public function create()
     {
         return false;
