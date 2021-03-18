@@ -36,7 +36,7 @@ class Answer extends Model
         return false;
     }
 
-    public function delete($idUser)
+    public function delete($idUser = null)
     {
         if ($this->_db) {
             $ret = $this->_db->query("

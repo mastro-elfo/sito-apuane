@@ -59,7 +59,7 @@ class Board extends Model
         return false;
     }
 
-    public function delete($idUser)
+    public function delete($idUser = null)
     {
         if ($this->_db) {
             $ret = $this->_db->query("
@@ -99,7 +99,7 @@ class Board extends Model
     {
         $ret = $this->query("
         SELECT
-          a.idUser, a.content, a.uDateTime, u.name
+          a.id, a.idUser, a.content, a.uDateTime, u.name
         FROM answers a
         INNER JOIN users u ON u.id = a.idUser
         WHERE a.deleted = 0
