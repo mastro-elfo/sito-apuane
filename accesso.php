@@ -24,11 +24,11 @@
           <input type="email" id="username" name="username" value="" autofocus />
           <label for="password">Password</label>
           <input type="password" id="password" name="password" value="" />
-          <div id="buttons">
+          <div class="button-container">
             <button type="submit">Login</button>
             <button type="button" onclick="location.href = 'registrazione.php';" class="bWarning">Registrati</button>
           </div>
-          <p id="response"></p>
+          <p id="response" class="klein my1"></p>
         </fieldset>
       </form>
     </main>
