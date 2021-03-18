@@ -120,4 +120,51 @@ $(function () {
   $("#answer-button").on("click", function () {
     dialog.dialog("open");
   });
+
+  $("[data-delete-board]").on("click", function (e) {
+    // console.log(e.currentTarget.getAttribute("data-delete-board"));
+    if (
+      confirm(
+        "Sei sicuro di voler eliminare questo post?\n\nUna volta eliminato non sarà più visibile e non sarà possibile ripristinarlo.\n\nConfermi?"
+      )
+    ) {
+      $.ajax("ajax/board.php", {
+        method: "POST",
+        data: {
+          action: "delete-board",
+          boardId: e.currentTarget.getAttribute("data-delete-board"),
+        },
+        success: (r) => {
+          location.href = "bacheca.php";
+        },
+        error: (r) => {
+          console.error(r);
+        },
+      });
+    }
+  });
+
+  $("[data-delete-answer]").on("click", function (e) {
+    // console.log(e.currentTarget.getAttribute("data-delete-board"));
+    if (
+      confirm(
+        "Sei sicuro di voler eliminare questa risposta?\n\nUna volta eliminata non sarà più visibile e non sarà possibile ripristinarla.\n\nConfermi?"
+      )
+    ) {
+      $.ajax("ajax/board.php", {
+        method: "POST",
+        data: {
+          action: "delete-answer",
+          answerId: e.currentTarget.getAttribute("data-delete-answer"),
+        },
+        success: (r) => {
+          console.log(r);
+          location.reload();
+        },
+        error: (r) => {
+          console.error(r);
+        },
+      });
+    }
+  });
 });
