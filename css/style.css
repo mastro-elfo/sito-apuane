@@ -114,7 +114,7 @@ button,
   background: forestgreen;
   color: white;
   padding: 0.35em 1em;
-  border-radius: 1em;
+  border-radius: 0.675em;
   cursor: pointer;
   font: inherit;
   font-variant: small-caps;
@@ -140,6 +140,11 @@ input {
   width: 100%;
   padding: 0.25em 0;
   margin-bottom: 1em;
+}
+textarea {
+  font: inherit;
+  line-height: inherit;
+  color: inherit;
 }
 
 /* Margini e Padding */

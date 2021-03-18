@@ -1,33 +1,27 @@
 #boards {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
   padding: 0 1em;
-  max-width: 1024px;
   margin: auto;
 }
 #boards > * {
-  flex-basis: 320px;
+  border-bottom: 1px solid forestgreen;
 }
+
 #boards section {
-  border-radius: 1em 1em 0 0;
-  overflow: hidden;
   cursor: pointer;
   transition: background-color 250ms ease;
 }
 #boards section:hover {
   background: #ccc;
 }
+
 #boards section > header {
-  background: forestgreen;
-  color: white;
-  padding: 0.25em 1em;
+  padding: 0 1em;
 }
 #boards section > div.content {
   padding: 0 1em;
   margin-top: 0.5em;
 }
-#boards section > div.content {
+#boards section > div.content > * {
   font-size: 80%;
 }
 #boards section > div.content ul,
@@ -37,8 +31,6 @@
 #boards section > footer {
   padding: 0 1em;
   margin-top: 0.5em;
-  background: forestgreen;
-  color: white;
 }
 
 .answer {
