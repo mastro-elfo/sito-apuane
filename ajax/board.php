@@ -32,10 +32,32 @@ function answer($boardId, $content)
     return null;
 }
 
+function deleteBoard($boardId)
+{
+    if (isset($_SESSION["user"])) {
+        $board = new Board($boardId);
+        return $board->delete($_SESSION["user"]["id"]);
+    }
+    return null;
+}
+
+function deleteAnswer($answerId)
+{
+    if (isset($_SESSION["user"])) {
+        $answer = new Answer($answerId);
+        return $answer->delete($_SESSION["user"]["id"]);
+    }
+    return null;
+}
+
 if ($_POST["action"] == "create") {
     echo json_encode(create($_POST["title"], $_POST["content"]));
 } elseif ($_POST["action"] == "answer") {
     echo json_encode(answer($_POST["boardId"], $_POST["content"]));
+} elseif ($_POST["action"] == "delete-board") {
+    echo json_encode(deleteBoard($_POST["boardId"]));
+} elseif ($_POST["action"] == "delete-answer") {
+    echo json_encode(deleteAnswer($_POST["answerId"]));
 } else {
     echo json_encode(null);
 }
