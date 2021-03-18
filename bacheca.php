@@ -114,7 +114,7 @@ if ($boardId) {
         </div>
       <?php elseif (count($boards)): ?>
         <?php if (isset($_SESSION["user"])): ?>
-          <div class="mb1">
+          <div class="button-container mb1">
             <button type="button" id="write">Scrivi</button>
           </div>
         <?php endif;?>
