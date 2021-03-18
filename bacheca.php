@@ -86,10 +86,12 @@ if ($boardId) {
           </footer>
 
           <?php if (isset($_SESSION["user"])): ?>
+            <!-- Buttons -->
             <div class="button-container mb1">
               <button type="button" id="answer-button">Rispondi</button>
+              <!-- If user is owner, add the delete button -->
               <?php if ($_SESSION["user"]["id"] == $board->user["id"]): ?>
-                <button type="button" class="danger">Elimina</button>
+                <button type="button" class="danger" data-delete-board="<?=$board->id?>">Elimina</button>
               <?php endif;?>
             </div>
           <?php endif;?>
@@ -102,11 +104,12 @@ if ($boardId) {
                   <span><?=$answer["name"]?></span>,
                   <time datetime="<?=$answer["uDateTime"]?>"><?=date_format(date_create($answer["uDateTime"]), "d/m/Y")?></time>
                 </div>
+                <!-- Buttons -->
                 <div class="button-container">
                   <!-- This is a placeholder that move the next button to the right -->
                   <span></span>
                   <?php if (isset($_SESSION["user"]) && $answer["idUser"] == $_SESSION["user"]["id"]): ?>
-                    <button type="button" class="danger">Elimina</button>
+                    <button type="button" class="danger" data-delete-answer="<?=$answer["id"]?>">Elimina</button>
                   <?php endif;?>
                 </div>
               </div>
