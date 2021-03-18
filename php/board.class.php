@@ -60,14 +60,19 @@ class Board extends Model
     public function readAll()
     {
         $ret = $this->query("
-        SELECT
-          b.id, b.title, b.content, b.uDateTime,
-          u.name as user_name
-        FROM `$this->_table` b
-        INNER JOIN users u ON u.id = b.idUser
-        WHERE b.deleted = 0
-        ORDER BY b.uDateTime DESC
-      ");
+          SELECT
+            b.id, b.title, b.content, b.uDateTime,
+            u.name as user_name,
+            (SELECT COUNT(*)
+              FROM answers a
+              WHERE a.idBoard = b.id
+                AND a.deleted = 0
+            ) AS answers
+          FROM `$this->_table` b
+          INNER JOIN users u ON u.id = b.idUser
+          WHERE b.deleted = 0
+          ORDER BY b.uDateTime DESC
+        ");
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);
         }
