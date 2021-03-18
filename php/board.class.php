@@ -51,7 +51,8 @@ class Board extends Model
             $this->_user    = [
                 "name" => $board["user_name"],
             ];
-            $this->_title = $board["title"];
+            $this->_title     = $board["title"];
+            $this->_uDateTime = $board["uDateTime"];
             return true;
         }
         return false;
