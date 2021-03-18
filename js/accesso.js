@@ -21,13 +21,17 @@ $(function () {
         password: $("#password").val(),
       },
       success: (r) => {
-        // console.log(r);
-        if (r) {
-          setResponse("success", "Login effettuato");
-          // Redirect to Home Page
-          setTimeout(() => (location.href = "./"), 500);
-        } else {
-          setResponse("error", "Login fallito");
+        console.log(r);
+        try {
+          if (JSON.parse(r)) {
+            setResponse("success", "Login effettuato");
+            // Redirect to Home Page
+            setTimeout(() => (location.href = "./"), 500);
+          } else {
+            setResponse("error", "Login fallito");
+          }
+        } catch (e) {
+          setResponse("error", `${e.name}, ${e.message}`);
         }
       },
       error: () => {
