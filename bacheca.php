@@ -106,7 +106,7 @@ if ($boardId) {
         <div id="dialog-answer" title="Rispondi" style="display: none;">
           <form>
             <fieldset>
-              <label for="content">Risposta</label>
+              <label for="answer-text">Risposta</label>
               <textarea id="answer-text" rows="8" cols="40" placeholder="Messaggio"></textarea>
               <p id="answer-response"></p>
             </fieldset>
