@@ -88,6 +88,9 @@ if ($boardId) {
           <?php if (isset($_SESSION["user"])): ?>
             <div class="button-container mb1">
               <button type="button" id="answer-button">Rispondi</button>
+              <?php if ($_SESSION["user"]["id"] == $board->user["id"]): ?>
+                <button type="button" class="danger">Elimina</button>
+              <?php endif;?>
             </div>
           <?php endif;?>
 
