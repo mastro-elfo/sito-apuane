@@ -16,12 +16,13 @@
       });
     })
     </script>
+    <script src="js/registrazione.js"></script>
   </head>
   <body>
     <?php require("php/nav.php"); ?>
 
     <main>
-      <form action="ajax/registrazione.php" method="post">
+      <form id="registrazione" action="ajax/registrazione.php" method="post">
         <fieldset>
           <label for="name">Nome</label>
           <input type="text" name="name" value="" placeholder="">
@@ -29,6 +30,9 @@
           <input type="email" name="email" id="email" value="" placeholder="">
           <label for="password">Password</label>
           <input type="password" name="password" value="" placeholder="">
+          <div class="button-container">
+            <button type="submit">Registrami</button>
+          </div>
         </fieldset>
       </form>
 
