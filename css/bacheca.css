@@ -19,7 +19,7 @@
   background: #ccc;
 }
 #boards section > header {
-  background: green;
+  background: forestgreen;
   color: white;
   padding: 0.25em 1em;
 }
@@ -37,7 +37,7 @@
 #boards section > footer {
   padding: 0 1em;
   margin-top: 0.5em;
-  background: green;
+  background: forestgreen;
   color: white;
 }
 

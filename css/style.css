@@ -5,9 +5,14 @@
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: MainFont;
+  src: (../fonts/Raleway/Raleway-VariableFont-wght.ttf);
+}
+
 /* Oggetti principali */
 body {
-  font-family: sans-serif;
+  font-family: "Raleway", sans-serif;
   background-color: #f6f5f4;
 }
 
@@ -34,7 +39,7 @@ h2 {
 
 strong,
 em {
-  color: green;
+  color: forestgreen;
 }
 
 a {
@@ -74,8 +79,8 @@ nav ul {
 }
 
 nav li {
-  font-weight: bold;
-  color: green;
+  /* font-weight: bold; */
+  color: forestgreen;
 }
 
 nav li.selected {
@@ -106,7 +111,7 @@ body > footer {
 button,
 [type="submit"] {
   border: none;
-  background: green;
+  background: forestgreen;
   color: white;
   padding: 0.35em 1em;
   border-radius: 1em;
@@ -121,10 +126,6 @@ button:disabled,
   background: silver;
   color: #444;
   cursor: default;
-}
-
-button.danger {
-  background: #d00;
 }
 
 ul.style-none,
@@ -179,7 +180,7 @@ input {
 
 /* Varianti */
 .success {
-  color: green;
+  color: forestgreen;
 }
 
 .error {
@@ -187,10 +188,11 @@ input {
 }
 
 .bSuccess {
-  background: green;
+  background: forestgreen;
   color: white;
 }
 
+.danger,
 .bError {
   background: crimson;
   color: white;
@@ -218,9 +220,16 @@ input {
 
 .block-list .list-item:hover {
   color: white;
-  background-color: green;
+  background-color: forestgreen;
 }
 
+/* Contenitore di bottoni */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Tag */
 .tag {
   padding: 0.25em 0.5em;
   border-radius: 0.5em;
