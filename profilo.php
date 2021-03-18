@@ -30,9 +30,10 @@ session_start();
           <label for="email">Email</label>
           <input type="text" name="email" id="email" value="<?=$_SESSION['user']['email']?>" placeholder="Scrivi il tuo indirizzo email">
         </li>
-        <li class="mb1 px1"><button type="button" id="save">Salva</button></li>
-        <li class="mb1 px1">
-          <button type="button" name="button" id="logout" class="danger">Logout</button>
+        <li class="mb1 px1 button-container">
+          <button type="button" id="save">Salva</button>
+          <button type="button" name="button" id="logout" class="bWarning">Logout</button>
+          <button type="button" name="button" class="danger">Elimina</button>
         </li>
         <li class="mb1 px1">
           <span id="response"></span>
