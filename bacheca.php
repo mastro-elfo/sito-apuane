@@ -86,7 +86,7 @@ if ($boardId) {
           </footer>
 
           <?php if (isset($_SESSION["user"])): ?>
-            <div class="mb1">
+            <div class="button-container mb1">
               <button type="button" id="answer-button">Rispondi</button>
             </div>
           <?php endif;?>
