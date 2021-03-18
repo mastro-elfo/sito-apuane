@@ -55,9 +55,9 @@ class User extends Model
         $ret = $this->query("
           SELECT id, name, email, admin
           FROM `$this->_table`
-          WHERE
-              email = '$username'
-          AND password = '" . hash("sha256", $password) . "'
+          WHERE deleted = 0
+            AND email = '$username'
+            AND password = '" . hash("sha256", $password) . "'
       ");
         if ($ret) {
             return $ret->fetch_assoc();
