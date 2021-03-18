@@ -123,8 +123,8 @@ if ($boardId) {
                 <footer>
                   <p>
                     <?=$board["user_name"]?>,
-                    <time datetime="<?=$datetime?>">
-                      <?=date_format(date_create($datetime), "d/m/Y")?>
+                    <time datetime="<?=$board["uDateTime"]?>">
+                      <?=date_format(date_create($board["uDateTime"]), "d/m/Y")?>
                     </time>
                   </p>
                 </footer>
