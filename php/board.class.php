@@ -85,7 +85,7 @@ class Board extends Model
     {
         $ret = $this->query("
         SELECT
-          a.content, a.uDateTime, u.name
+          a.idUser, a.content, a.uDateTime, u.name
         FROM answers a
         INNER JOIN users u ON u.id = a.idUser
         WHERE a.deleted = 0
