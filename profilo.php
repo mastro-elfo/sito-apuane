@@ -22,6 +22,11 @@ session_start();
 
     <main>
       <ul class="style-none mt1">
+        <?php if ($_SESSION['user']['admin']): ?>
+          <li class="mb1 px1">
+            <label>Amministratore</label>
+          </li>
+        <?php endif;?>
         <li class="mb1 px1">
           <label for="name">Nome</label>
           <input type="text" name="name" id="name" value="<?=$_SESSION['user']['name']?>" placeholder="Scrivi il tuo nome"/>

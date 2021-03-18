@@ -148,9 +148,7 @@ if ($placeId) {
                     <?php foreach (explode(",", $place["tags"]) as $tag): ?>
                       <?php $parts = explode("/", $tag);?>
                       <span class="tag right klein ml1"
-                        style="background:<?=$parts[1]?>;color:<?=$parts[2]?>">
-                        <?=$parts[0]?>
-                      </span>
+                        style="background:<?=$parts[1]?>;color:<?=$parts[2]?>"><?=$parts[0]?></span>
                     <?php endforeach;?>
                   <?php endif;?>
                 </a>

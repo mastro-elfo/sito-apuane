@@ -1,0 +1,20 @@
+#map-container {
+  overflow: hidden;
+  border: 1px solid forestgreen;
+  width: 1024px;
+  height: 576px;
+}
+
+@media screen and (max-width: 1024px) {
+  #map-container {
+    width: 786px;
+    height: 442px;
+  }
+}
+
+@media screen and (max-width: 786px) {
+  #map-container {
+    width: 320px;
+    height: 200px;
+  }
+}

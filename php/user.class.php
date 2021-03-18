@@ -9,6 +9,7 @@ class User extends Model
     protected $_email     = null;
     protected $_name      = null;
     protected $_uDateTime = null;
+    protected $_admin     = false;
 
     public function __construct($id = null, $email = null, $name = null)
     {
@@ -20,7 +21,7 @@ class User extends Model
     public function read()
     {
         $ret = $this->query("
-        SELECT u.id, u.email, u.name, u.uDateTime
+        SELECT u.id, u.email, u.name, u.uDateTime, u.admin
         FROM `$this->_table` u
         WHERE u.id = '$this->_id'
           AND u.deleted = 0
@@ -29,6 +30,7 @@ class User extends Model
             $user             = $ret->fetch_assoc();
             $this->_email     = $user["email"];
             $this->_name      = $user["name"];
+            $this->_admin     = $user["admin"];
             $this->_uDateTime = $user["uDateTime"];
             return $user;
         }
@@ -51,7 +53,7 @@ class User extends Model
     public function login($username, $password)
     {
         $ret = $this->query("
-          SELECT id, name, email
+          SELECT id, name, email, admin
           FROM `$this->_table`
           WHERE
               email = '$username'

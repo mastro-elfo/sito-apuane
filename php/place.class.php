@@ -123,8 +123,9 @@ class Place extends Model
         return false;
     }
 
-    public function readAll() {
-      $ret = $this->query("
+    public function readAll()
+    {
+        $ret = $this->query("
         SELECT
           p.id, p.name, p.title,
           (SELECT
@@ -138,9 +139,42 @@ class Place extends Model
         WHERE p.deleted = 0
         ORDER BY p.name ASC
       ");
-      if($ret) {
-        return $ret->fetch_all(MYSQLI_ASSOC);
-      }
-      return [];
+        if ($ret) {
+            return $ret->fetch_all(MYSQLI_ASSOC);
+        }
+        return [];
+    }
+
+    public function readCoordinates()
+    {
+        $ret = $this->query("
+          SELECT p.name,
+            (SELECT a.value
+             FROM attributes a
+             WHERE a.deleted = 0
+               AND a.idPlace = p.id
+               AND a.name = 'Latitudine'
+            ) AS latitudine,
+            (SELECT a.value
+             FROM attributes a
+             WHERE a.deleted = 0
+               AND a.idPlace = p.id
+               AND a.name = 'Longitudine'
+            ) AS longitudine,
+            (SELECT t.name
+              FROM tags t
+              INNER JOIN places_tags pt ON pt.idTag = t.id
+              WHERE t.deleted = 0
+                AND pt.deleted = 0
+                AND pt.idPlace = p.id
+              LIMIT 1
+            ) AS tag
+          FROM places p
+          WHERE p.deleted = 0
+        ");
+        if ($ret) {
+            return $ret->fetch_all(MYSQLI_ASSOC);
+        }
+        return [];
     }
 }
