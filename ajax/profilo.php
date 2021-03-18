@@ -27,7 +27,7 @@ function update($name, $email)
         }
         return $u;
     }
-    http_response_code(401);
+    http_response_code(400);
     return false;
 }
 
@@ -37,9 +37,14 @@ function delete()
         // Get user id from session
         $userId = $_SESSION["user"]["id"];
         $user   = new User($userId);
-        return $user->delete();
+        $ret = $user->delete();
+        if($ret){
+          unset($_SESSION["user"]);
+          session_destroy();
+          return $ret;
+        }
     }
-    http_response_code(401);
+    http_response_code(400);
     return false;
 }
 
