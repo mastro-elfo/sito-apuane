@@ -30,10 +30,10 @@ $markers = array_values(array_filter($places, function ($p) {
     <title>Mappa del parco</title>
     <script src="lib/jquery-3.6.0.js"></script>
     <script src="https://maps.google.com/maps/api/js?sensor=true"></script>
-    <script type="text/javascript">
+    <script>
       const markers = JSON.parse(<?=json_encode(json_encode($markers))?>);
     </script>
-    <script type="text/javascript" src="js/mappa.js"></script>
+    <script src="js/mappa.js"></script>
   </head>
   <body>
     <?php require "php/nav.php";?>
