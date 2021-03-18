@@ -37,10 +37,10 @@ session_start();
         </li>
         <li class="mb1 px1 button-container">
           <button type="button" id="save">Salva</button>
-          <button type="button" name="button" id="logout" class="bWarning">Logout</button>
-          <button type="button" name="button" class="danger">Elimina</button>
+          <button type="button" id="logout" class="bWarning">Logout</button>
+          <button type="button" id="delete" class="danger">Elimina</button>
         </li>
-        <li class="mb1 px1">
+        <li class="mb1 px1 klein">
           <span id="response"></span>
         </li>
       </ul>
