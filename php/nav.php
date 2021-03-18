@@ -18,9 +18,9 @@ $items = [
     //     "title" => "Gli eventi sulle Alpi Apuane",
     // ],
     [
-        "href"  => "meteo.php",
-        "label" => "Meteo",
-        "title" => "Meteo locale",
+        "href"  => "mappa.php",
+        "label" => "Mappa",
+        "title" => "Mappa del parco",
     ],
     [
         "href"   => "accesso.php",
