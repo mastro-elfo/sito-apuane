@@ -54,8 +54,8 @@ if ($boardId) {
       content="<?=$description?>"
     />
     <link rel="stylesheet" href="lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
-    <link rel="stylesheet" href="lib/jquery-ui-1.12.1.custom/jquery-ui.structure.min.css">
-    <link rel="stylesheet" href="lib/jquery-ui-1.12.1.custom/jquery-ui.theme.min.css">
+    <!-- <link rel="stylesheet" href="lib/jquery-ui-1.12.1.custom/jquery-ui.structure.min.css"> -->
+    <!-- <link rel="stylesheet" href="lib/jquery-ui-1.12.1.custom/jquery-ui.theme.min.css"> -->
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/bacheca.css" />
     <link rel="icon" href="favicon.png" type="image/png"/>
@@ -87,7 +87,7 @@ if ($boardId) {
 
           <?php if (isset($_SESSION["user"])): ?>
             <div class="mb1">
-              <button type="button" id="answer">Rispondi</button>
+              <button type="button" id="answer-button">Rispondi</button>
             </div>
           <?php endif;?>
 
@@ -103,6 +103,15 @@ if ($boardId) {
             <?php endforeach;?>
           <?php endif;?>
         </article>
+        <div id="dialog-answer" title="Rispondi" style="display: none;">
+          <form>
+            <fieldset>
+              <label for="content">Risposta</label>
+              <textarea id="answer-text" rows="8" cols="40" placeholder="Messaggio"></textarea>
+              <p id="answer-response"></p>
+            </fieldset>
+          </form>
+        </div>
       <?php elseif (count($boards)): ?>
         <?php if (isset($_SESSION["user"])): ?>
           <div class="mb1">
@@ -112,24 +121,30 @@ if ($boardId) {
 
         <div id="boards">
           <?php foreach ($boards as $board): ?>
-            <a href="bacheca.php?id=<?=$board["id"]?>" title="Apri <?=$board["title"]?>" class="mt1">
-              <section>
-                <header>
-                  <h3><?=$board["title"]?></h3>
-                </header>
-                <div class="content">
-                  <?=$pd->text(strlen($board["content"]) > 200 ? substr($board["content"], 0, 200) . "&hellip;" : $board["content"])?>
-                </div>
-                <footer>
-                  <p>
-                    <?=$board["user_name"]?>,
-                    <time datetime="<?=$board["uDateTime"]?>">
-                      <?=date_format(date_create($board["uDateTime"]), "d/m/Y")?>
-                    </time>
-                  </p>
-                </footer>
-              </section>
-            </a>
+            <div class="mb1">
+              <a href="bacheca.php?id=<?=$board["id"]?>" title="Apri <?=$board["title"]?>" class="mt1">
+                <section>
+                  <header>
+                    <h3><?=$board["title"]?></h3>
+                  </header>
+                  <div class="content">
+                    <?=$pd->text(strlen($board["content"]) > 200 ? substr($board["content"], 0, 200) . "&hellip;" : $board["content"])?>
+                  </div>
+                  <footer>
+                    <p>
+                      <?=$board["user_name"]?>,
+                      <time datetime="<?=$board["uDateTime"]?>">
+                        <?=date_format(date_create($board["uDateTime"]), "d/m/Y")?></time>,
+                      <?php if ($board["answers"] == 1): ?>
+                        <?=$board["answers"]?> risposta
+                      <?php else: ?>
+                        <?=$board["answers"]?> risposte
+                      <?php endif;?>
+                    </p>
+                  </footer>
+                </section>
+              </a>
+            </div>
           <?php endforeach;?>
         </div>
 
