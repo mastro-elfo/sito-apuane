@@ -2,3 +2,8 @@ fieldset p {
   font-size: 75%;
   margin: 1em 0;
 }
+
+#buttons {
+  display: flex;
+  justify-content: space-between;
+}

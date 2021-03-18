@@ -113,6 +113,7 @@ button,
   cursor: pointer;
   font: inherit;
   font-variant: small-caps;
+  font-size: 75%;
 }
 
 button:disabled,
@@ -185,6 +186,22 @@ input {
   color: crimson;
 }
 
+.bSuccess {
+  background: green;
+  color: white;
+}
+
+.bError {
+  background: crimson;
+  color: white;
+}
+
+.bWarning {
+  background: orange;
+  color: black;
+}
+
+/* Lista a blocchi */
 .block-list {
   list-style: none;
   padding: 0;

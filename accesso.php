@@ -24,8 +24,10 @@
           <input type="email" id="username" name="username" value="" autofocus />
           <label for="password">Password</label>
           <input type="password" id="password" name="password" value="" />
-          <button type="submit">Login</button>
-          <button type="button" onclick="location.href = 'registrazione.php';">Registrati</button>
+          <div id="buttons">
+            <button type="submit">Login</button>
+            <button type="button" onclick="location.href = 'registrazione.php';" class="bWarning">Registrati</button>
+          </div>
           <p id="response"></p>
         </fieldset>
       </form>
