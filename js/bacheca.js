@@ -54,10 +54,70 @@ $(function () {
 
   $("#write").on("click", function () {
     dialog.dialog("open");
-    // alert("Work in progress");
+  });
+});
+
+$(function () {
+  const response = $("#answer-response");
+
+  function setResponse(severity, text) {
+    response.text(text);
+    // Remove all classes
+    response.removeClass();
+    response.addClass(severity);
+  }
+
+  const dialog = $("#dialog-answer").dialog({
+    autoOpen: false,
+    modal: true,
+    width: "90%",
+    buttons: {
+      Conferma: () => {
+        setResponse("info", "Invio risposta...");
+        //
+        const id = location.search
+          .substr(1)
+          .split("&")
+          .map((i) => i.split("="))
+          .find((i) => i[0] === "id");
+        //
+        if (id && id.length) {
+          $.ajax("ajax/board.php", {
+            method: "POST",
+            data: {
+              action: "answer",
+              content: $("#answer-text").val(),
+              boardId: id[1],
+            },
+            success: (r) => {
+              console.log("response", r);
+              try {
+                const id = JSON.parse(r);
+                if (id) {
+                  setResponse("success", "Messaggio inviato");
+                  setTimeout(() => {
+                    location.reload();
+                  }, 500);
+                } else {
+                  setResponse("error", "Errore nel database");
+                }
+              } catch (e) {
+                setResponse("error", `${e.name}, ${e.message}`);
+              }
+            },
+            error: () => {
+              setResponse("error", "Errore invio");
+            },
+          });
+        }
+      },
+      Annulla: () => {
+        dialog.dialog("close");
+      },
+    },
   });
 
-  $("#answer").on("click", function () {
-    alert("Work in progress");
+  $("#answer-button").on("click", function () {
+    dialog.dialog("open");
   });
 });
