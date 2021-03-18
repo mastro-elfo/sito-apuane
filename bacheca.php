@@ -60,9 +60,9 @@ if ($boardId) {
     <link rel="stylesheet" href="css/bacheca.css" />
     <link rel="icon" href="favicon.png" type="image/png"/>
     <title><?=$title?></title>
-    <script type="text/javascript" src="lib/jquery-3.6.0.js"></script>
-    <script type="text/javascript" src="lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="js/bacheca.js"></script>
+    <script src="lib/jquery-3.6.0.js"></script>
+    <script src="lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="js/bacheca.js"></script>
   </head>
   <body>
     <?php require "php/nav.php";?>
