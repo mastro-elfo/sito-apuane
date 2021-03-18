@@ -75,10 +75,10 @@ class Model
     {
         if ($this->_db) {
             $ret = $this->_db->query("
-            UPDATE `$this->_table`
-            SET deleted = 1
-            WHERE id = '$this->_id'
-          ");
+              UPDATE `$this->_table`
+              SET deleted = 1
+              WHERE id = '$this->_id'
+            ");
             return $ret;
         }
         return false;
