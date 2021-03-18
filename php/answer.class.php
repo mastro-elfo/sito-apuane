@@ -35,4 +35,18 @@ class Answer extends Model
         }
         return false;
     }
+
+    public function delete($idUser)
+    {
+        if ($this->_db) {
+            $ret = $this->_db->query("
+              UPDATE `$this->_table`
+              SET deleted = 1
+              WHERE id = '$this->_id'
+                AND idUser = '$idUser'
+            ");
+            return $ret;
+        }
+        return false;
+    }
 }
