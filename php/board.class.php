@@ -38,7 +38,7 @@ class Board extends Model
         $ret = $this->query("
           SELECT
             b.content, b.title, b.uDateTime,
-            u.name as user_name
+            u.id as user_id, u.name as user_name
           FROM `$this->_table` b
           INNER JOIN users u ON u.id = b.idUser
           WHERE b.id = '$this->_id'
@@ -49,6 +49,7 @@ class Board extends Model
             $board          = $ret->fetch_assoc();
             $this->_content = $board["content"];
             $this->_user    = [
+                "id"   => $board["user_id"],
                 "name" => $board["user_name"],
             ];
             $this->_title     = $board["title"];
