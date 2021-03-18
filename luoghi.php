@@ -74,13 +74,16 @@ if ($placeId) {
 
     <main>
       <?php if ($error): ?>
+        <!-- Stampa in caso di errore -->
         <p class="error p1"><?=$error?></p>
       <?php endif;?>
 
       <?php if ($showPlace): ?>
+        <!-- Visualizzazione luogo -->
         <article>
           <h2><?=$h1?></h2>
           <?php if ($image): ?>
+            <!-- Inserisci l'immagine se presente -->
             <img
               src="php/img.php?table=places&id=<?=$placeId?>"
               alt="<?=$image?>"/>
@@ -89,6 +92,7 @@ if ($placeId) {
           <?=$pd->text($article)?>
 
           <?php if (count($related)): ?>
+            <!-- Luoghi correlati -->
             <section>
               <h3>Vedi anche</h3>
               <p>
@@ -102,6 +106,7 @@ if ($placeId) {
           <?php endif;?>
 
           <?php if (count($attributes)): ?>
+            <!-- Attributi -->
             <section>
               <h3>Dati</h3>
               <table>
@@ -118,6 +123,7 @@ if ($placeId) {
           <?php endif;?>
 
           <?php if (count($tags)): ?>
+            <!-- Lista dei tag -->
             <p class="mt1">
               <?php foreach ($tags as $tag): ?>
                 <span class="tag mr1"
@@ -125,7 +131,6 @@ if ($placeId) {
               <?php endforeach;?>
             </p>
           <?php endif;?>
-
           <footer>
             <p>
               <time datetime="<?=$datetime?>">
@@ -136,6 +141,7 @@ if ($placeId) {
         </article>
       <?php else: ?>
         <?php if ($places): ?>
+          <!-- Visualizzazione lista -->
           <ul class="block-list">
             <?php foreach ($places as $place): ?>
               <li>
