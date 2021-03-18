@@ -148,31 +148,59 @@ textarea {
 }
 
 /* Margini e Padding */
+.m1,
+.my1,
 .mt1 {
   margin-top: 1em;
 }
+.m1,
+.my1,
 .mb1 {
   margin-bottom: 1em;
 }
+.m1,
+.mx1,
 .ml1 {
   margin-left: 1em;
 }
+.m1,
+.mx1,
 .mr1 {
   margin-right: 1em;
 }
-.p1 {
-  padding: 1em;
+
+.p1,
+.py1,
+.pt1 {
+  padding-top: 1em;
 }
-.px1 {
+.p1,
+.py1,
+.pb1 {
+  padding-bottom: 1em;
+}
+.p1,
+.px1,
+.pl1 {
   padding-left: 1em;
+}
+.p1,
+.px1,
+.pr1 {
   padding-right: 1em;
 }
+
 .radius1 {
   border-radius: 1em;
+}
+
+.left {
+  float: left;
 }
 .right {
   float: right;
 }
+
 .klein {
   font-size: 75%;
 }
