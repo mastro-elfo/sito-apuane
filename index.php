@@ -1,5 +1,18 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
+
+require_once "lib/php/parsedown-master/Parsedown.php";
+require_once "php/place.class.php";
+
+$pd = new Parsedown();
+
+$place  = new Place();
+$places = $place->readLatest(0, 4);
+
 ?>
 
 <!DOCTYPE html>
@@ -22,122 +35,38 @@ session_start();
       <h1>Alpi Apuane</h1>
     </header>
 
-    <?php require("php/nav.php"); ?>
+    <?php require "php/nav.php";?>
 
-    <aside class="center">
+    <!-- <aside class="center">
       <video autoplay controls muted title="Un video sulla montagna">
         <source src="./video/montagna.mp4" type="video/mp4" />
       </video>
-    </aside>
+    </aside> -->
 
     <main>
-      <article>
-        <header>
-          <h2>Monte Pisanino</h2>
-        </header>
-
-        <section>
-          <p>
+      <?php foreach ($places as $place): ?>
+        <article class="">
+          <h2><?=$place["name"]?></h2>
+          <!-- Check if place has image -->
+          <?php if ($place["image"]): ?>
             <img
-              src="imgs/pisanino.jpeg"
-              alt="La vetta del monte Pisanino"
-              title="Monte Pisanino"
-            />
-            Il Pisanino, insieme al Monte Prado situato in <strong>Garfagnana</strong> a nord-est
-            del Pisanino, è tra le montagne più alte appartenenti interamente
-            alla Toscana. La vetta si trova in provincia di Lucca nel comune di
-            Minucciano.
-          </p>
-        </section>
-
-        <section>
-          <h3>Curiosità</h3>
-          <p>Il Pisanino è la vetta più alta delle Alpi Apuane.</p>
-        </section>
-
-        <footer>
-          <p>(<time datetime="2021-02-26">26 febbraio 2021</time>)</p>
-        </footer>
-      </article>
-
-      <article>
-        <header>
-          <h2>Monte Tambura</h2>
-        </header>
-        <section>
-          <p>
-            <img
-              src="imgs/tambura.jpeg"
-              alt="La vetta del monte Tambura"
-              title="Monte Tambura"
-            />
-            Il Monte Tambura è una montagna di 1895 metri, la seconda per
-            altezza della catena delle Alpi Apuane, al confine tra la Provincia
-            di Lucca e la Provincia di Massa e Carrara, compreso nel territorio
-            del <strong>Parco naturale regionale delle Alpi Apuane</strong> con la vetta che si
-            trova nel comune di Vagli di Sotto.
-          </p>
-        </section>
-        <section>
-          <h3>Curiosità</h3>
-          <p>
-            La <strong>Via Vandelli</strong> attraversa il passo della Tambura e
-            collega le città di Massa e Modena.
-          </p>
-        </section>
-        <footer>
-          <p>(<time datetime="2021-02-26">26 febbraio 2021</time>)</p>
-        </footer>
-      </article>
-
-      <article>
-        <header>
-          <h2>Pania della Croce</h2>
-        </header>
-        <section>
-          <p>
-            <img
-              src="imgs/pania_della_croce.jpg"
-              alt="La vetta della Pania della Croce"
-              title="Pania della Croce"
-            />
-            La Pania della Croce è la quarta cima più alta delle Alpi Apuane e
-            la più alta del Gruppo delle Panie, gruppo di notevole interesse
-            paesaggistico, alpinistico e geologico, che sorge al centro della
-            catena Apuana a pochi chilometri dalla costa tirrenica.
-          </p>
-        </section>
-        <footer>
-          <p>(<time datetime="2021-02-26">26 febbraio 2021</time>)</p>
-        </footer>
-      </article>
-
-      <article>
-        <header>
-          <h2>Monte Forato</h2>
-        </header>
-        <section>
-          <p>
-            <img
-              src="imgs/forato.jpeg"
-              alt="La vetta del monte Forato"
-              title="Monte Forato"
-            />
-            Il monte Forato o Pania Forata è una montagna della catena toscana
-            delle Alpi Apuane, nella provincia di <strong>Lucca</strong>.
-          </p>
-        </section>
-        <section>
-          <h3>Curiosità</h3>
-          <p>
-            La vetta del Monte Forato è caratterizzata da un arco di roccia
-            naturale.
-          </p>
-        </section>
-        <footer>
-          <p>(<time datetime="2021-02-26">26 febbraio 2021</time>)</p>
-        </footer>
-      </article>
+              src="php/img.php?table=places&id=<?=$place["id"]?>"
+              alt="<?=$place["title"]?>">
+          <?php endif;?>
+          <!-- Place description -->
+          <?=$pd->text($place["description"])?>
+          <!-- Bottoni -->
+          <div class="button-container">
+            <a
+              href="luoghi.php?id=<?=$place["id"]?>" 
+              title="<?=$place["title"]?>">Leggi</a>
+          </div>
+          <!-- Footer -->
+          <footer class="clear">
+            <p>(<time datetime="<?=$place["uDateTime"]?>"><?=date_format(date_create($place["uDateTime"]), "d/m/Y")?></time>)</p>
+          </footer>
+        </article>
+      <?php endforeach;?>
     </main>
 
     <footer>
