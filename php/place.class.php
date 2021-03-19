@@ -178,9 +178,13 @@ class Place extends Model
         return [];
     }
 
-    readLatest(public $offset = 0, $count = 10) {
+    public function readLatest($offset = 0, $count = 10) {
         $ret = $this->query("
-          SELECT p.id, !isnull(p.image) as image, p.name, p.description,
+          SELECT p.id,
+            p.name,
+            p.description,
+            p.title,
+            !isnull(p.image) as image,
             p.uDateTime
           FROM `$this->_table` p
           WHERE p.deleted = 0
