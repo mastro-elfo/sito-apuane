@@ -10,9 +10,7 @@ require_once "php/place.class.php";
 // Create a new class `Place`
 $place   = new Place();
 $places  = $place->readCoordinates();
-$markers = array_values(array_filter($places, function ($p) {
-    return $p["latitudine"] && $p["longitudine"];
-}));
+$markers = array_values(array_filter($places, fn($p) => $p["latitudine"] && $p["longitudine"]));
 ?>
 
 <!DOCTYPE html>
