@@ -205,6 +205,10 @@ textarea {
   font-size: 75%;
 }
 
+.clear {
+  clear: both;
+}
+
 /* Posizione */
 .center {
   display: flex;
