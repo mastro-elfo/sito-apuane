@@ -26,13 +26,14 @@ $(function () {
       });
 
       const ICONS = {
-        Vetta: "http://maps.google.com/mapfiles/kml/shapes/mountains.png",
+        Castello: "http://maps.google.com/mapfiles/kml/shapes/schools.png",
         Culto: "http://maps.google.com/mapfiles/kml/shapes/church.png",
-        Rifugio:
-          "http://maps.google.com/mapfiles/kml/shapes/homegardenbusiness.png",
+        Grotta: "http://maps.google.com/mapfiles/kml/shapes/shaded_dot.png",
         Località: "http://maps.google.com/mapfiles/kml/shapes/realestate.png",
         Natura: "http://maps.google.com/mapfiles/kml/shapes/parks.png",
-        Grotta: "http://maps.google.com/mapfiles/kml/shapes/shaded_dot.png",
+        Rifugio:
+          "http://maps.google.com/mapfiles/kml/shapes/homegardenbusiness.png",
+        Vetta: "http://maps.google.com/mapfiles/kml/shapes/mountains.png",
       };
 
       markers.forEach(({ name, latitudine, longitudine, tag }) => {
