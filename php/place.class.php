@@ -177,4 +177,19 @@ class Place extends Model
         }
         return [];
     }
+
+    readLatest(public $offset = 0, $count = 10) {
+        $ret = $this->query("
+          SELECT p.id, !isnull(p.image) as image, p.name, p.description,
+            p.uDateTime
+          FROM `$this->_table` p
+          WHERE p.deleted = 0
+          ORDER BY p.uDateTime DESC
+          LIMIT $offset, $count
+        ");
+        if ($ret) {
+            return $ret->fetch_all(MYSQLI_ASSOC);
+        }
+        return [];
+    }
 }
