@@ -17,6 +17,11 @@ class Model
         $this->_db = open_db();
     }
 
+    public function __destruct(){
+      $this->_db->close();
+      $this->_db = null;
+    }
+
     public function __get($key)
     {
         $_key = "_$key";
