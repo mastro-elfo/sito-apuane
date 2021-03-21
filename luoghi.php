@@ -26,7 +26,8 @@ $showPlace   = false;
 $places      = [];
 
 // Search string
-$search = array_key_exists("q", $_GET) ? $_GET["q"] : null;
+$search    = array_key_exists("q", $_GET) ? $_GET["q"] : null;
+$tagFilter = array_key_exists("t", $_GET) ? $_GET["t"] : null;
 //
 $placeId = array_key_exists("id", $_GET) ? $_GET["id"] : null;
 // Create a new class `Place`
@@ -53,8 +54,7 @@ if ($placeId) {
         $errore = "Errore nel database";
     }
 } else {
-    // $places = $place->readAll();
-    $places = $cPlace->search($search);
+    $places = $cPlace->search($search, $tagFilter);
 }
 
 ?>
@@ -102,7 +102,8 @@ if ($placeId) {
                 <?php foreach ($related as $key => $item): ?>
                   <a
                     href="luoghi.php?id=<?=$item["id"]?>"
-                    title="Vedi <?=$item["name"]?>"><?=$item["name"]?></a><?=$key < count($related) - 1 ? ", " : ""?>
+                    title="Vedi <?=$item["name"]?>"
+                    ><?=$item["name"]?></a><?=$key < count($related) - 1 ? ", " : ""?>
                 <?php endforeach;?>
               </p>
             </section>
@@ -129,8 +130,12 @@ if ($placeId) {
             <!-- Lista dei tag -->
             <p class="mt1">
               <?php foreach ($tags as $tag): ?>
-                <span class="tag mr1"
-                  style="background: <?=$tag['color']?>; color:<?=$tag["textColor"]?>"><?=$tag["name"]?></span>
+                <a
+                  class="tag mr1"
+                  style="background: <?=$tag['color']?>; color:<?=$tag["textColor"]?>"
+                  href="luoghi.php?t=<?=$tag["name"]?>"
+                  title="Cerca <?=$tag["name"]?>"
+                  ><?=$tag["name"]?></a>
               <?php endforeach;?>
             </p>
           <?php endif;?>
@@ -156,18 +161,26 @@ if ($placeId) {
           <ul class="block-list">
             <?php foreach ($places as $place): ?>
               <li>
+                <!-- List of tags -->
+                <?php if ($place["tags"]): ?>
+                  <div class="right mt-5 mr-5">
+                    <?php foreach (explode(",", $place["tags"]) as $tag): ?>
+                      <?php $parts = explode("/", $tag);?>
+                      <a
+                        class="tag klein ml1"
+                        style="background:<?=$parts[1]?>;color:<?=$parts[2]?>"
+                        href="luoghi.php?t=<?=$parts[0]?>"
+                        title="Cerca <?=$parts[0]?>"
+                        ><?=$parts[0]?></a>
+                    <?php endforeach;?>
+                  </div>
+                <?php endif;?>
+                <!-- Row -->
                 <a
                   class="list-item"
                   href="luoghi.php?id=<?=$place["id"]?>"
                   title="<?=$place["title"]?>">
                   <?=$place["name"]?>
-                  <?php if ($place["tags"]): ?>
-                    <?php foreach (explode(",", $place["tags"]) as $tag): ?>
-                      <?php $parts = explode("/", $tag);?>
-                      <span class="tag right klein ml1"
-                        style="background:<?=$parts[1]?>;color:<?=$parts[2]?>"><?=$parts[0]?></span>
-                    <?php endforeach;?>
-                  <?php endif;?>
                 </a>
               </li>
             <?php endforeach;?>
