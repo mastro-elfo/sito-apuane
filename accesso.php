@@ -18,7 +18,7 @@
     <?php require "php/nav.php";?>
 
     <main>
-      <form id="login" action="accesso.html" method="post">
+      <form id="login">
         <fieldset>
           <label for="username">Username</label>
           <input type="email" id="username" name="username" value="" autofocus />
