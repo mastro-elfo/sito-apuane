@@ -88,7 +88,7 @@ if ($placeId) {
           <?php if ($image): ?>
             <!-- Inserisci l'immagine se presente -->
             <img
-              src="php/img.php?table=places&id=<?=$placeId?>"
+              src="php/img.php?id=<?=$placeId?>"
               alt="<?=$image?>"/>
           <?php endif;?>
 
