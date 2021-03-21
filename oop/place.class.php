@@ -40,7 +40,7 @@ class Place extends Model
             " . ($string ? "AND name LIKE '%$string%'" : "") . "
           ORDER BY p.name ASC
         ";
-        $ret = $this->_db->query($query);
+        $ret = $this->query($query);
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);
         }
@@ -59,7 +59,7 @@ class Place extends Model
             AND o.deleted = 0
           ORDER BY o.name ASC
         ";
-        $ret = $this->_db->query($query);
+        $ret = $this->query($query);
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);
         }
@@ -79,7 +79,7 @@ class Place extends Model
             AND pt.deleted = 0
           ORDER BY t.name ASC
         ";
-        $ret = $this->_db->query($query);
+        $ret = $this->query($query);
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);
         }
@@ -96,7 +96,7 @@ class Place extends Model
                 a.idPlace = $this->_id
             AND a.deleted = 0
         ";
-        $ret = $this->_db->query($query);
+        $ret = $this->query($query);
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);
         }
