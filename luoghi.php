@@ -6,7 +6,8 @@ error_reporting(E_ALL);
 session_start();
 
 require_once "lib/php/parsedown-master/Parsedown.php";
-require_once "php/place.class.php";
+// require_once "php/place.class.php";
+require_once "oop/place.class.php";
 
 $pd = new Parsedown();
 // Inizializzo variabili di pagina
@@ -23,35 +24,39 @@ $attributes  = [];
 $showPlace   = false;
 $places      = [];
 
+// Search string
+$search = array_key_exists("q", $_GET) ? $_GET["q"] : null;
 //
 $placeId = array_key_exists("id", $_GET) ? $_GET["id"] : null;
 // Create a new class `Place`
-$place = new Place($placeId);
+$cPlace = new Place($placeId);
 
 if ($placeId) {
     // Read from db
-    if ($place->read()) {
-        $title       = $place->title;
-        $description = $place->description;
-        $h1          = $place->name;
-        $article     = $place->article;
-        $datetime    = $place->uDateTime;
-        $image       = $place->image;
+    $place = $cPlace->read();
+    if ($place) {
+        $title       = $place["title"];
+        $description = $place["description"];
+        $h1          = $place["name"];
+        $article     = $place["article"];
+        $datetime    = $place["uDateTime"];
+        $image       = $place["image"];
         $showPlace   = true;
-        // Load related places
-        $place->readRelated();
-        $related = $place->related;
-        // Load tags
-        $place->readTags();
-        $tags = $place->tags;
-        // Load attributes
-        $place->readAttributes();
-        $attributes = $place->attributes;
+        // // Load related places
+        // $place->readRelated();
+        // $related = $place->related;
+        // // Load tags
+        // $place->readTags();
+        // $tags = $place->tags;
+        // // Load attributes
+        // $place->readAttributes();
+        // $attributes = $place->attributes;
     } else {
         $errore = "Errore nel database";
     }
 } else {
-    $places = $place->readAll();
+    // $places = $place->readAll();
+    $places = $cPlace->search($search);
 }
 
 ?>
@@ -140,6 +145,14 @@ if ($placeId) {
           </footer>
         </article>
       <?php else: ?>
+        <!-- Input di ricerca -->
+        <form action="luoghi.php" method="get">
+          <input
+            type="text"
+            name="q"
+            value="<?=$search?>"
+            placeholder="Ricerca">
+        </form>
         <?php if ($places): ?>
           <!-- Visualizzazione lista -->
           <ul class="block-list">
