@@ -102,4 +102,19 @@ class Place extends Model
         }
         return null;
     }
+
+    public function latest($offset, $count)
+    {
+        $query = (new Query)
+            ->select(["id", "name", "description", "title", "!isnull(image) as image", "uDateTime"])
+            ->from($this->_table)
+            ->where("deleted = 0")
+            ->order(["uDateTime" => "DESC"])
+            ->limit($offset, $count);
+        $ret = $this->query($query);
+        if ($ret) {
+            return $ret->fetch_all(MYSQLI_ASSOC);
+        }
+        return [];
+    }
 }

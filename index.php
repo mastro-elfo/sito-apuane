@@ -6,12 +6,12 @@ error_reporting(E_ALL);
 session_start();
 
 require_once "lib/php/parsedown-master/Parsedown.php";
-require_once "php/place.class.php";
+require_once "oop/place.class.php";
 
 $pd = new Parsedown();
 
-$place  = new Place();
-$places = $place->readLatest(0, 4);
+$cPlace  = new Place();
+$places = $cPlace->latest(0, 4);
 
 ?>
 
@@ -58,7 +58,7 @@ $places = $place->readLatest(0, 4);
           <!-- Bottoni -->
           <div class="button-container">
             <a
-              href="luoghi.php?id=<?=$place["id"]?>" 
+              href="luoghi.php?id=<?=$place["id"]?>"
               title="<?=$place["title"]?>">Leggi</a>
           </div>
           <!-- Footer -->
