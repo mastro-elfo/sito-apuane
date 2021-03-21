@@ -1,24 +1,15 @@
 <?php
 session_start();
 
-require_once "../php/user.class.php";
+require_once "../oop/user.class.php";
 
 function login($username, $password) {
-  $user = new User();
-  $u = $user->login($username, $password);
-  if($u) {
-    $_SESSION["user"] = $u;
-  }
-  return $u;
+  return (new User)->login($username, $password);
 }
 
 function logout()
 {
-    if (isset($_SESSION["user"])) {
-        unset($_SESSION["user"]);
-        return "Logout";
-    }
-    return "Error";
+    return (new User)->logout();
 }
 
 if ($_POST["action"] == "login") {
