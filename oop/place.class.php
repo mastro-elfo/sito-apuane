@@ -14,21 +14,17 @@ class Place extends Model
         parent::__construct("places", $id);
     }
 
-    public function read($columns = null){
-      return parent::read(
-        is_null($columns)
-        ? ["id", "name", "title", "description", "article", "!isnull(image) as image", "uDateTime"]
-        : $columns
-      );
+    public function read($columns = null)
+    {
+        return parent::read(
+            is_null($columns)
+            ? ["id", "name", "title", "description", "article", "!isnull(image) as image", "uDateTime"]
+            : $columns
+        );
     }
 
     public function search($string)
     {
-        // $query = (new Query)
-        //     ->select(["id", "name"])
-        //     ->from($this->_table)
-        //     ->where("(name LIKE '%$string%' OR description LIKE '%$string%')")
-        //     ->and("deleted = 0");
         $query = "
           SELECT
             p.id, p.name, p.title,
@@ -41,8 +37,64 @@ class Place extends Model
             ORDER BY t.name ASC) AS tags
           FROM `$this->_table` p
           WHERE p.deleted = 0
-            ".($string ? "AND name LIKE '%$string%'" : "")."
+            " . ($string ? "AND name LIKE '%$string%'" : "") . "
           ORDER BY p.name ASC
+        ";
+        $ret = $this->_db->query($query);
+        if ($ret) {
+            return $ret->fetch_all(MYSQLI_ASSOC);
+        }
+        return null;
+    }
+
+    public function related()
+    {
+        $query = "
+          SELECT
+            o.id, o.name
+          FROM places o
+          INNER JOIN places_places pp ON pp.idTo = o.id
+          WHERE pp.idFrom = $this->_id
+            AND pp.deleted = 0
+            AND o.deleted = 0
+          ORDER BY o.name ASC
+        ";
+        $ret = $this->_db->query($query);
+        if ($ret) {
+            return $ret->fetch_all(MYSQLI_ASSOC);
+        }
+        return null;
+    }
+
+    public function tags()
+    {
+        $query = "
+          SELECT
+            t.id, t.name, t.color, t.textColor
+          FROM tags t
+          INNER JOIN places_tags pt ON pt.idTag = t.id
+          WHERE
+                pt.idPlace = $this->_id
+            AND t.deleted = 0
+            AND pt.deleted = 0
+          ORDER BY t.name ASC
+        ";
+        $ret = $this->_db->query($query);
+        if ($ret) {
+            return $ret->fetch_all(MYSQLI_ASSOC);
+        }
+        return null;
+    }
+
+    public function attributes()
+    {
+        $query = "
+          SELECT
+            a.name, a.value, a.after
+          FROM attributes a
+          WHERE
+                a.idPlace = $this->_id
+            AND a.deleted = 0
         ";
         $ret = $this->_db->query($query);
         if ($ret) {

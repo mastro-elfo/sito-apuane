@@ -42,15 +42,12 @@ if ($placeId) {
         $datetime    = $place["uDateTime"];
         $image       = $place["image"];
         $showPlace   = true;
-        // // Load related places
-        // $place->readRelated();
-        // $related = $place->related;
-        // // Load tags
-        // $place->readTags();
-        // $tags = $place->tags;
+        // Load related places
+        $related = $cPlace->related();
+        // Load tags
+        $tags = $cPlace->tags();
         // // Load attributes
-        // $place->readAttributes();
-        // $attributes = $place->attributes;
+        $attributes = $cPlace->attributes();
     } else {
         $errore = "Errore nel database";
     }
