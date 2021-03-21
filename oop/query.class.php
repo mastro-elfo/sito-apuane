@@ -199,7 +199,7 @@ class Query
         if (is_null($limit)) {
             $this->_limit = " $offset";
         } else {
-            $this->_limit = " $offset $limit";
+            $this->_limit = " $offset, $limit";
         }
         return $this;
     }
