@@ -68,7 +68,8 @@ class Model
         $query = (new Query)
             ->select($columns)
             ->from($this->_table)
-            ->where("id = $this->_id");
+            ->where("id = $this->_id")
+            ->and("deleted = 0");
         $ret = $this->query($query);
         if ($ret) {
             return $ret->fetch_assoc();
@@ -89,7 +90,8 @@ class Model
                 array_keys($columns),
                 array_map(fn($s) => $this->clean($s), array_values($columns))
             ))
-            ->where("id = $this->_id");
+            ->where("id = $this->_id")
+            ->and("deleted = 0");
         $ret = $this->query($query);
         if ($ret) {
             return $this->_db->get_affected();
@@ -101,12 +103,21 @@ class Model
      * Elimina una riga dal db
      * @return int numero di righe aggiornate o `null` in caso di errore
      */
-    public function delete()
+    public function delete($force = false)
     {
-        $query = (new Query)
-            ->delete()
-            ->from($this->_table)
-            ->where("id = $this->_id");
+        $query = (new Query);
+        if ($force) {
+            // Delete row from table
+            $query
+                ->delete()
+                ->from($this->_table);
+        } else {
+            // Soft delete
+            $query->update($this->_table)
+                ->set(["deleted" => 1]);
+        }
+        $query->where("id = $this->_id");
+
         $ret = $this->query($query);
         if ($ret) {
             return $this->_db->get_affected();
