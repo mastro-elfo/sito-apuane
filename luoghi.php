@@ -9,7 +9,7 @@ require_once "lib/php/parsedown-master/Parsedown.php";
 require_once "oop/attribute.class.php";
 require_once "oop/place.class.php";
 require_once "oop/tag.class.php";
-
+// Init parser
 $pd = new Parsedown();
 // Inizializzo variabili di pagina
 $error       = null;
@@ -22,20 +22,21 @@ $datetime    = "";
 $related     = [];
 $tags        = [];
 $attributes  = [];
+// Turn this on to show the place article
 $showPlace   = false;
 $places      = [];
-
 // Search string
 $search    = array_key_exists("q", $_GET) ? $_GET["q"] : null;
 $tagFilter = array_key_exists("t", $_GET) ? $_GET["t"] : null;
-//
+// Place id
 $placeId = array_key_exists("id", $_GET) ? $_GET["id"] : null;
 // Create a new class `Place`
 $cPlace = new Place($placeId);
-
+// Switch view
 if ($placeId) {
     // Read from db
     $place = $cPlace->read(["id", "name", "title", "description", "article", "!isnull(image) as image", "uDateTime"]);
+    // Check return value
     if ($place) {
         $title       = $place["title"];
         $description = $place["description"];
@@ -84,6 +85,7 @@ if ($placeId) {
       <?php if ($showPlace): ?>
         <!-- Visualizzazione luogo -->
         <article>
+          <!-- Title -->
           <h2><?=$h1?></h2>
           <?php if ($image): ?>
             <!-- Inserisci l'immagine se presente -->
@@ -91,11 +93,10 @@ if ($placeId) {
               src="php/img.php?id=<?=$placeId?>"
               alt="<?=$image?>"/>
           <?php endif;?>
-
+          <!-- Article content -->
           <?=$pd->text($article)?>
-
+          <!-- Luoghi correlati -->
           <?php if (count($related)): ?>
-            <!-- Luoghi correlati -->
             <section>
               <h3>Vedi anche</h3>
               <p>
@@ -108,9 +109,8 @@ if ($placeId) {
               </p>
             </section>
           <?php endif;?>
-
+          <!-- Attributi -->
           <?php if (count($attributes)): ?>
-            <!-- Attributi -->
             <section>
               <h3>Dati</h3>
               <table>
@@ -125,9 +125,8 @@ if ($placeId) {
               </table>
             </section>
           <?php endif;?>
-
+          <!-- Lista dei tag -->
           <?php if (count($tags)): ?>
-            <!-- Lista dei tag -->
             <p class="mt1">
               <?php foreach ($tags as $tag): ?>
                 <a
@@ -156,8 +155,8 @@ if ($placeId) {
             value="<?=$search?>"
             placeholder="Ricerca">
         </form>
+        <!-- Visualizzazione lista -->
         <?php if ($places): ?>
-          <!-- Visualizzazione lista -->
           <ul class="block-list">
             <?php foreach ($places as $place): ?>
               <li>
