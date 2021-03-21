@@ -14,15 +14,6 @@ class Place extends Model
         parent::__construct("places", $id);
     }
 
-    public function read($columns = null)
-    {
-        return parent::read(
-            is_null($columns)
-            ? ["id", "name", "title", "description", "article", "!isnull(image) as image", "uDateTime"]
-            : $columns
-        );
-    }
-
     public function search($string)
     {
         $query = "
@@ -66,43 +57,6 @@ class Place extends Model
         return [];
     }
 
-    public function tags()
-    {
-        $query = "
-          SELECT
-            t.id, t.name, t.color, t.textColor
-          FROM tags t
-          INNER JOIN places_tags pt ON pt.idTag = t.id
-          WHERE
-                pt.idPlace = $this->_id
-            AND t.deleted = 0
-            AND pt.deleted = 0
-          ORDER BY t.name ASC
-        ";
-        $ret = $this->query($query);
-        if ($ret) {
-            return $ret->fetch_all(MYSQLI_ASSOC);
-        }
-        return [];
-    }
-
-    public function attributes()
-    {
-        $query = "
-          SELECT
-            a.name, a.value, a.after
-          FROM attributes a
-          WHERE
-                a.idPlace = $this->_id
-            AND a.deleted = 0
-        ";
-        $ret = $this->query($query);
-        if ($ret) {
-            return $ret->fetch_all(MYSQLI_ASSOC);
-        }
-        return [];
-    }
-
     public function latest($offset, $count)
     {
         $query = (new Query)
@@ -123,16 +77,18 @@ class Place extends Model
         $query = "
           SELECT p.name,
             (SELECT a.value
-             FROM attributes a
-             WHERE a.deleted = 0
-               AND a.idPlace = p.id
-               AND a.name = 'Latitudine'
+              FROM attributes a
+              WHERE a.deleted = 0
+                AND a.idPlace = p.id
+                AND a.name = 'Latitudine'
+              LIMIT 1
             ) AS latitudine,
             (SELECT a.value
-             FROM attributes a
-             WHERE a.deleted = 0
-               AND a.idPlace = p.id
-               AND a.name = 'Longitudine'
+              FROM attributes a
+              WHERE a.deleted = 0
+                AND a.idPlace = p.id
+                AND a.name = 'Longitudine'
+              LIMIT 1
             ) AS longitudine,
             (SELECT t.name
               FROM tags t
@@ -142,7 +98,7 @@ class Place extends Model
                 AND pt.idPlace = p.id
               LIMIT 1
             ) AS tag
-          FROM places p
+          FROM $this->_table p
           WHERE p.deleted = 0
         ";
         $ret = $this->query($query);
@@ -150,5 +106,17 @@ class Place extends Model
             return $ret->fetch_all(MYSQLI_ASSOC);
         }
         return [];
+    }
+
+    public function image(){
+      $query = (new Query)
+        ->select("image")
+        ->from($this->_table)
+        ->where("id = $this->_id");
+      $ret = $this->query($query);
+      if(!$ret || !($place = $ret->fetch_assoc())) {
+        return null;
+      }
+      return $place["image"];
     }
 }

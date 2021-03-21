@@ -5,29 +5,38 @@ error_reporting(E_ALL);
 
 session_start();
 
-require_once "../php/answer.class.php";
-require_once "../php/board.class.php";
+require_once "../oop/answer.class.php";
+require_once "../oop/board.class.php";
 
 function create($title, $content)
 {
     if (isset($_SESSION["user"])) {
-        $board = new Board(null, $content, $_SESSION["user"], $title);
-        return $board->create();
+        $cBoard = new Board();
+        $ret    = $cBoard->create([
+            "title"   => $title,
+            "content" => $content,
+            "idUser"  => $_SESSION["user"]["id"],
+        ]);
+        if ($ret) {
+            return $ret;
+        }
     }
+    http_response_code(400);
     return null;
 }
 
 function answer($boardId, $content)
 {
     if (isset($_SESSION["user"])) {
-        $answer = new Answer(
-            null,
-            $content,
-            ["id" => null],
-            ["id" => $boardId],
-            $_SESSION["user"]
-        );
-        return $answer->create();
+        $cAnswer = new Answer();
+        $ret     = $cAnswer->create([
+            "content" => $content,
+            "idBoard" => $boardId,
+            "idUser"  => $_SESSION["user"]["id"],
+        ]);
+        if ($ret) {
+            return $ret;
+        }
     }
     return null;
 }
@@ -59,5 +68,6 @@ if ($_POST["action"] == "create") {
 } elseif ($_POST["action"] == "delete-answer") {
     echo json_encode(deleteAnswer($_POST["answerId"]));
 } else {
+    http_response_code(400);
     echo json_encode(null);
 }

@@ -6,7 +6,9 @@ error_reporting(E_ALL);
 session_start();
 
 require_once "lib/php/parsedown-master/Parsedown.php";
+require_once "oop/attribute.class.php";
 require_once "oop/place.class.php";
+require_once "oop/tag.class.php";
 
 $pd = new Parsedown();
 // Inizializzo variabili di pagina
@@ -32,7 +34,7 @@ $cPlace = new Place($placeId);
 
 if ($placeId) {
     // Read from db
-    $place = $cPlace->read();
+    $place = $cPlace->read(["id", "name", "title", "description", "article", "!isnull(image) as image", "uDateTime"]);
     if ($place) {
         $title       = $place["title"];
         $description = $place["description"];
@@ -44,9 +46,9 @@ if ($placeId) {
         // Load related places
         $related = $cPlace->related();
         // Load tags
-        $tags = $cPlace->tags();
+        $tags = (new Tag)->ofPlace($placeId);
         // // Load attributes
-        $attributes = $cPlace->attributes();
+        $attributes = (new Attribute)->ofPlace($placeId);
     } else {
         $errore = "Errore nel database";
     }

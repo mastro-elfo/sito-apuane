@@ -6,7 +6,8 @@ error_reporting(E_ALL);
 session_start();
 
 require_once "lib/php/parsedown-master/Parsedown.php";
-require_once "php/board.class.php";
+require_once "oop/answer.class.php";
+require_once "oop/board.class.php";
 
 $pd = new Parsedown();
 
@@ -24,22 +25,24 @@ $answers     = [];
 //
 $boardId = array_key_exists("id", $_GET) ? $_GET["id"] : null;
 //
-$board = new Board($boardId);
+$cBoard  = new Board($boardId);
+$cAnswer = new Answer();
 
 if ($boardId) {
-    if ($board->read()) {
-        $title       = $board->title;
-        $description = $board->content;
-        $h1          = $board->title;
-        $article     = $board->content;
-        $author      = $board->user["name"];
-        $datetime    = $board->uDateTime;
+    $board = $cBoard->read();
+    if ($board) {
+        $title       = $board["title"];
+        $description = $board["content"];
+        $h1          = $board["title"];
+        $article     = $board["content"];
+        $author      = $board["user_name"];
+        $datetime    = $board["uDateTime"];
         $showBoard   = true;
-        $answers     = $board->readAnswers();
+        $answers     = $cAnswer->toBoard($boardId);
     }
 } else {
     // Carico la lista dei messaggi
-    $boards = $board->readAll();
+    $boards = $cBoard->search();
 }
 
 ?>
@@ -90,8 +93,8 @@ if ($boardId) {
             <div class="button-container mb1">
               <button type="button" id="answer-button">Rispondi</button>
               <!-- If user is owner, add the delete button -->
-              <?php if ($_SESSION["user"]["id"] == $board->user["id"]): ?>
-                <button type="button" class="danger" data-delete-board="<?=$board->id?>">Elimina</button>
+              <?php if ($_SESSION["user"]["id"] == $board["user_id"]): ?>
+                <button type="button" class="danger" data-delete-board="<?=$board["id"]?>">Elimina</button>
               <?php endif;?>
             </div>
           <?php endif;?>

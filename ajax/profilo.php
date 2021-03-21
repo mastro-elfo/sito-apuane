@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 session_start();
 
-require_once "../php/user.class.php";
+require_once "../oop/user.class.php";
 
 function update($name, $email)
 {
@@ -13,19 +13,24 @@ function update($name, $email)
         // Get user id from session
         $userId = $_SESSION["user"]["id"];
         // Create new User
-        $user = new User($userId, $email, $name);
+        $cUser = new User($userId);
         // Update user
-        $ret = $user->update();
+        $ret = $cUser->update([
+            "email" => $email,
+            "name"  => $name,
+        ]);
+        // Check return
         if (!$ret) {
+            http_response_code(404);
             return null;
         }
         // Reload user
-        $u = $user->read();
+        $user = $cUser->read();
         // Update session variable
-        if ($u) {
-            $_SESSION["user"] = $u;
+        if ($user) {
+            $_SESSION["user"] = $user;
         }
-        return $u;
+        return $user;
     }
     http_response_code(400);
     return false;
@@ -36,12 +41,12 @@ function delete()
     if (isset($_SESSION["user"]["id"])) {
         // Get user id from session
         $userId = $_SESSION["user"]["id"];
-        $user   = new User($userId);
-        $ret = $user->delete();
-        if($ret){
-          unset($_SESSION["user"]);
-          session_destroy();
-          return $ret;
+        $cUser  = new User($userId);
+        $ret    = $cUser->delete();
+        if ($ret) {
+            unset($_SESSION["user"]);
+            session_destroy();
+            return $ret;
         }
     }
     http_response_code(400);
@@ -53,5 +58,6 @@ if ($_POST["action"] == "update") {
 } elseif ($_POST["action"] == "delete") {
     echo json_encode(delete());
 } else {
+    http_response_code(400);
     echo json_encode(null);
 }
