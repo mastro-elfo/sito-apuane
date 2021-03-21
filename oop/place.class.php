@@ -63,7 +63,7 @@ class Place extends Model
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);
         }
-        return null;
+        return [];
     }
 
     public function tags()
@@ -83,7 +83,7 @@ class Place extends Model
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);
         }
-        return null;
+        return [];
     }
 
     public function attributes()
@@ -100,7 +100,7 @@ class Place extends Model
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);
         }
-        return null;
+        return [];
     }
 
     public function latest($offset, $count)
@@ -111,6 +111,40 @@ class Place extends Model
             ->where("deleted = 0")
             ->order(["uDateTime" => "DESC"])
             ->limit($offset, $count);
+        $ret = $this->query($query);
+        if ($ret) {
+            return $ret->fetch_all(MYSQLI_ASSOC);
+        }
+        return [];
+    }
+
+    public function coordinates()
+    {
+        $query = "
+          SELECT p.name,
+            (SELECT a.value
+             FROM attributes a
+             WHERE a.deleted = 0
+               AND a.idPlace = p.id
+               AND a.name = 'Latitudine'
+            ) AS latitudine,
+            (SELECT a.value
+             FROM attributes a
+             WHERE a.deleted = 0
+               AND a.idPlace = p.id
+               AND a.name = 'Longitudine'
+            ) AS longitudine,
+            (SELECT t.name
+              FROM tags t
+              INNER JOIN places_tags pt ON pt.idTag = t.id
+              WHERE t.deleted = 0
+                AND pt.deleted = 0
+                AND pt.idPlace = p.id
+              LIMIT 1
+            ) AS tag
+          FROM places p
+          WHERE p.deleted = 0
+        ";
         $ret = $this->query($query);
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);

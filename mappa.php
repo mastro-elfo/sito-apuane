@@ -5,12 +5,15 @@ error_reporting(E_ALL);
 
 session_start();
 
-require_once "php/place.class.php";
+require_once "oop/place.class.php";
 
 // Create a new class `Place`
-$place   = new Place();
-$places  = $place->readCoordinates();
-$markers = array_values(array_filter($places, fn($p) => $p["latitudine"] && $p["longitudine"]));
+$cPlace  = new Place();
+$places  = $cPlace->coordinates();
+$markers = array_values(array_filter(
+    $places,
+    fn($p) => $p["latitudine"] && $p["longitudine"]
+));
 ?>
 
 <!DOCTYPE html>

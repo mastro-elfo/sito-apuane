@@ -6,7 +6,6 @@ error_reporting(E_ALL);
 session_start();
 
 require_once "lib/php/parsedown-master/Parsedown.php";
-// require_once "php/place.class.php";
 require_once "oop/place.class.php";
 
 $pd = new Parsedown();
