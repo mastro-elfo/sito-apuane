@@ -26,13 +26,14 @@ $(function () {
       });
 
       const ICONS = {
-        Castello: "https://localhost/Master/sito-apuane/imgs/castello.svg",
-        Culto: "https://localhost/Master/sito-apuane/imgs/culto.svg",
-        Grotta: "https://localhost/Master/sito-apuane/imgs/grotta.svg",
-        Località: "https://localhost/Master/sito-apuane/imgs/localita.svg",
-        Natura: "https://localhost/Master/sito-apuane/imgs/natura.svg",
-        Rifugio: "https://localhost/Master/sito-apuane/imgs/rifugio.svg",
-        Vetta: "https://localhost/Master/sito-apuane/imgs/vetta.svg",
+        Cascata: "imgs/cascata.svg",
+        Castello: "imgs/castello.svg",
+        Culto: "imgs/culto.svg",
+        Grotta: "imgs/grotta.svg",
+        Località: "imgs/localita.svg",
+        Natura: "imgs/natura.svg",
+        Rifugio: "imgs/rifugio.svg",
+        Vetta: "imgs/vetta.svg",
       };
 
       markers.forEach(({ name, latitudine, longitudine, tag }) => {
