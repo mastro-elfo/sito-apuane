@@ -14,7 +14,7 @@ class Place extends Model
         parent::__construct("places", $id);
     }
 
-    public function search($string)
+    public function search($string = null, $tag = null)
     {
         $query = "
           SELECT
@@ -27,8 +27,13 @@ class Place extends Model
             WHERE pt.idPlace = p.id
             ORDER BY t.name ASC) AS tags
           FROM `$this->_table` p
+          " . ($tag ? "
+          INNER JOIN places_tags pt ON pt.idPlace = p.id
+          INNER JOIN tags t ON t.id = pt.idTag
+          " : "") . "
           WHERE p.deleted = 0
             " . ($string ? "AND name LIKE '%$string%'" : "") . "
+            " . ($tag ? "AND t.name = '$tag'" : "") . "
           ORDER BY p.name ASC
         ";
         $ret = $this->query($query);
@@ -108,15 +113,16 @@ class Place extends Model
         return [];
     }
 
-    public function image(){
-      $query = (new Query)
-        ->select("image")
-        ->from($this->_table)
-        ->where("id = $this->_id");
-      $ret = $this->query($query);
-      if(!$ret || !($place = $ret->fetch_assoc())) {
-        return null;
-      }
-      return $place["image"];
+    public function image()
+    {
+        $query = (new Query)
+            ->select("image")
+            ->from($this->_table)
+            ->where("id = $this->_id");
+        $ret = $this->query($query);
+        if (!$ret || !($place = $ret->fetch_assoc())) {
+            return null;
+        }
+        return $place["image"];
     }
 }
