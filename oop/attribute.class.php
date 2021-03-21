@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 require_once __DIR__ . "/model.class.php";
 require_once __DIR__ . "/query.class.php";
 
-class Attribute extends Model
+class MyAttribute extends Model
 {
     public function __construct($id = null)
     {

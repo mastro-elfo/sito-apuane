@@ -48,7 +48,7 @@ if ($placeId) {
         // Load tags
         $tags = (new Tag)->ofPlace($placeId);
         // // Load attributes
-        $attributes = (new Attribute)->ofPlace($placeId);
+        $attributes = (new MyAttribute)->ofPlace($placeId);
     } else {
         $errore = "Errore nel database";
     }
