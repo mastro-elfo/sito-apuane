@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+if(!array_key_exists("user", $_SESSION)) {
+  header("Location: /");
+  exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +27,7 @@ session_start();
 
     <main>
       <ul class="style-none mt1">
-        <?php if ($_SESSION['user']['admin']): ?>
+        <?php if (array_key_exists("admin", $_SESSION['user']) && $_SESSION['user']['admin']): ?>
           <li class="mb1 px1">
             <label>Amministratore</label>
           </li>
