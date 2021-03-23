@@ -13,10 +13,22 @@ class User extends Model
         parent::__construct("users", $id);
     }
 
+    public function create($columns)
+    {
+        if (!array_key_exists("email", $columns)
+            || !array_key_exists("password", $columns)
+            || trim($columns["email"]) == ""
+            || trim($columns["password"]) == "") {
+            return null;
+        }
+        $columns["password"] = hash("sha256", $columns["password"]);
+        return parent::create($columns);
+    }
+
     public function login($username, $password)
     {
         $query = (new Query)
-            ->select(["id", "name", "email"])
+            ->select(["id", "name", "email", "admin"])
             ->from($this->_table)
             ->where("email = '$username'")
             ->and("password = '" . hash("sha256", $password) . "'");
