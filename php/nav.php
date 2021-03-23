@@ -23,7 +23,7 @@ $items = [
         "title" => "Mappa del parco",
     ],
     [
-        "href"   => "accesso.php",
+        "href"   => "login.php",
         "label"  => "Accedi",
         "title"  => "Accedi all&rsquo;area riservata",
         "access" => false,

@@ -1,58 +1,36 @@
-<?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-session_start();
-
-$error  = "";
-$data   = null;
-$places = null;
-
-if (array_key_exists("login", $_POST)) {
-    // Includo la classe User
-    require_once "oop/user.class.php";
-    require_once "oop/place.class.php";
-    // Instanzio l'oggetto
-    $user = new User();
-    // Chiamo il metodo login
-    $data = $user->login($_POST["username"], $_POST["password"]);
-    // Verifico l'output della funzione
-    if (!$data) {
-        $error = "Errore, login fallito";
-    }
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="it" dir="ltr">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <meta
+      name="description"
+      content="Pagina di accesso all'area riservata del sito."
+    />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/accesso.css" />
+    <link rel="icon" href="favicon.png" type="image/png"/>
+    <title>Accesso al sito</title>
+    <script type="text/javascript" src="lib/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="js/accesso.js"></script>
   </head>
   <body>
-    <p class="error">
-      <?=$error?>
-    </p>
+    <?php require "php/nav.php";?>
 
-    <p>
-      <?php print_r($data);?>
-    </p>
-
-    <p><?php print_r($places);?></p>
-
-    <form action="login.php" method="post">
-      <fieldset>
-        <label for="username">Username</label>
-        <input type="text" name="username" value="" placeholder="Username">
-        <label for="password">Password</label>
-        <input type="password" name="password" value="" placeholder="Password">
-
-        <input type="submit" name="login" value="login">
-      </fieldset>
-    </form>
+    <main>
+      <form id="login">
+        <fieldset>
+          <label for="username">Username</label>
+          <input type="email" id="username" name="username" value="" autofocus />
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" value="" />
+          <div class="button-container">
+            <button type="submit">Login</button>
+            <button type="button" onclick="location.href = 'registrazione.php';" class="bWarning">Registrati</button>
+          </div>
+          <p id="response" class="klein my1"></p>
+        </fieldset>
+      </form>
+    </main>
   </body>
 </html>
