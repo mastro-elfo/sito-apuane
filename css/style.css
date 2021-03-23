@@ -115,7 +115,7 @@ body > footer {
 }
 
 button,
-[type="submit"] {
+[type="button"] {
   border: none;
   background: forestgreen;
   color: white;

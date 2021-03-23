@@ -9,6 +9,7 @@ require_once "lib/php/parsedown-master/Parsedown.php";
 require_once "oop/attribute.class.php";
 require_once "oop/place.class.php";
 require_once "oop/tag.class.php";
+
 // Init parser
 $pd = new Parsedown();
 // Inizializzo variabili di pagina
@@ -23,8 +24,8 @@ $related     = [];
 $tags        = [];
 $attributes  = [];
 // Turn this on to show the place article
-$showPlace   = false;
-$places      = [];
+$showPlace = false;
+$places    = [];
 // Search string
 $search    = array_key_exists("q", $_GET) ? $_GET["q"] : null;
 $tagFilter = array_key_exists("t", $_GET) ? $_GET["t"] : null;

@@ -6,6 +6,10 @@
   border-bottom: 1px solid forestgreen;
 }
 
+#boards a {
+  text-decoration: none;
+}
+
 #boards section {
   cursor: pointer;
   transition: background-color 250ms ease;

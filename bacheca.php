@@ -92,8 +92,9 @@ if ($boardId) {
             <!-- Buttons -->
             <div class="button-container mb1">
               <button type="button" id="answer-button">Rispondi</button>
-              <!-- If user is owner, add the delete button -->
+              <!-- If user is owner, add the edit and delete button -->
               <?php if ($_SESSION["user"]["id"] == $board["user_id"]): ?>
+                <button type="button" class="bWarning" onclick="alert('Work in progress')">Modifica</button>
                 <button type="button" class="danger" data-delete-board="<?=$board["id"]?>">Elimina</button>
               <?php endif;?>
             </div>
@@ -112,6 +113,7 @@ if ($boardId) {
                   <!-- This is a placeholder that move the next button to the right -->
                   <span></span>
                   <?php if (isset($_SESSION["user"]) && $answer["idUser"] == $_SESSION["user"]["id"]): ?>
+                    <button type="button" class="bWarning" onclick="alert('Work in progress')">Modifica</button>
                     <button type="button" class="danger" data-delete-answer="<?=$answer["id"]?>">Elimina</button>
                   <?php endif;?>
                 </div>
