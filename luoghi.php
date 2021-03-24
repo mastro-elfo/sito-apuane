@@ -119,7 +119,17 @@ if ($placeId) {
                   <?php foreach ($attributes as $attr): ?>
                     <tr>
                       <th><?=$attr["name"]?></th>
-                      <td><?=$attr["value"] . $attr["after"]?></td>
+                        <td>
+                          <?php if(str_starts_with($attr["value"], "http")): ?>
+                            <a
+                              href="<?=$attr["value"] . $attr["after"]?>"
+                              title="Apri link <?=$attr["value"] . $attr["after"]?>"
+                              target="_blank"
+                              ><?=$attr["value"] . $attr["after"]?></a>
+                          <?php else: ?>
+                            <?=$attr["value"] . $attr["after"]?>
+                          <?php endif; ?>
+                        </td>
                     </tr>
                   <?php endforeach;?>
                 </tbody>
