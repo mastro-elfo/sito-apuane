@@ -5,6 +5,11 @@ error_reporting(E_ALL);
 
 session_start();
 
+if(!array_key_exists("user", $_SESSION)) {
+  header("Location: login.php");
+  exit;
+}
+
 require_once "lib/php/parsedown-master/Parsedown.php";
 require_once "oop/answer.class.php";
 require_once "oop/board.class.php";
