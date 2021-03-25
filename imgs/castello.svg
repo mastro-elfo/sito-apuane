@@ -5,54 +5,11 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="32"
    height="32"
    viewBox="0 0 8.4666665 8.4666669"
    version="1.1"
-   id="svg8"
-   sodipodi:docname="castello.svg"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1043"
-     id="namedview10"
-     showgrid="true"
-     inkscape:snap-grids="true"
-     showguides="true"
-     inkscape:guide-bbox="true"
-     inkscape:zoom="17.1875"
-     inkscape:cx="15.149498"
-     inkscape:cy="16.599348"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg8">
-    <inkscape:grid
-       type="xygrid"
-       id="grid835" />
-    <sodipodi:guide
-       position="1.3229166,4.4979168"
-       orientation="0,-1"
-       id="guide859" />
-    <sodipodi:guide
-       position="1.3229166,4.4979169"
-       orientation="1,0"
-       id="guide861" />
-    <sodipodi:guide
-       position="7.14375,4.4979168"
-       orientation="1,0"
-       id="guide863" />
-  </sodipodi:namedview>
+   id="svg8">
   <defs
      id="defs2" />
   <metadata
@@ -63,10 +20,18 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
+  <path
+     style="fill:#fe0000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
+     d="M 4.2333333,1.3229166 5.2916666,1.8520833 4.2333333,2.38125 Z"
+     id="path915" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="m 4.2333333,4.2333333 0,-2.9104166"
+     id="path913" />
   <g
      id="g897">
     <rect
@@ -472,4 +437,25 @@
      height="0.5291664"
      x="3.4395838"
      y="3.1750002" />
+  <rect
+     style="fill:#000000;fill-opacity:0.50026;stroke-width:0.0529167;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+     id="rect895"
+     width="1.5875"
+     height="0.26458332"
+     x="3.4395833"
+     y="4.2333331" />
+  <rect
+     style="fill:#000000;fill-opacity:0.50026;stroke-width:0.0529167;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+     id="rect897"
+     width="1.0583333"
+     height="0.26458332"
+     x="6.0854168"
+     y="4.2333331" />
+  <rect
+     style="fill:#000000;fill-opacity:0.50026;stroke-width:0.0529167;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+     id="rect893"
+     width="1.0583333"
+     height="0.26458332"
+     x="1.3229166"
+     y="4.2333331" />
 </svg>
