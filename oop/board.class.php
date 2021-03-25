@@ -57,7 +57,7 @@ class Board extends Model
         return null;
     }
 
-    public function search($string = null)
+    public function search($string = null, $userId = null)
     {
         $query = "
           SELECT
@@ -72,6 +72,7 @@ class Board extends Model
           INNER JOIN users u ON u.id = b.idUser
           WHERE b.deleted = 0
           " . ($string ? "AND b.title LIKE '%$string%'" : "") . "
+          ".($userId ? "AND u.id = $userId" : "")."
           ORDER BY b.uDateTime DESC
         ";
         $ret = $this->query($query);

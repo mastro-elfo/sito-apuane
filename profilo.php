@@ -33,6 +33,10 @@ if(!array_key_exists("user", $_SESSION)) {
           </li>
         <?php endif;?>
         <li class="mb1 px1">
+          <label>I tuoi messaggi</label>
+          <a href="bacheca.php?byUser">Leggi</a>
+        </li>
+        <li class="mb1 px1">
           <label for="name">Nome</label>
           <input type="text" name="name" id="name" value="<?=$_SESSION['user']['name']?>" placeholder="Scrivi il tuo nome"/>
         </li>

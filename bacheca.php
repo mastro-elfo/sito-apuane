@@ -23,7 +23,9 @@ $showBoard   = false;
 $boards      = [];
 $answers     = [];
 //
-$boardId = array_key_exists("id", $_GET) ? $_GET["id"] : null;
+$boardId        = array_key_exists("id", $_GET) ? $_GET["id"] : null;
+$searchByUserId = array_key_exists("byUser", $_GET) ? $_SESSION["user"]["id"] : null;
+$searchByQuery  = array_key_exists("q", $_GET) ? $_GET["q"] : null;
 //
 $cBoard  = new Board($boardId);
 $cAnswer = new Answer();
@@ -42,7 +44,7 @@ if ($boardId) {
     }
 } else {
     // Carico la lista dei messaggi
-    $boards = $cBoard->search();
+    $boards = $cBoard->search($searchByQuery, $searchByUserId);
 }
 
 ?>
@@ -131,9 +133,12 @@ if ($boardId) {
           </form>
         </div>
       <?php elseif (count($boards)): ?>
+        <!-- Lista dei messaggi -->
         <?php if (isset($_SESSION["user"])): ?>
           <div class="button-container p1">
             <button type="button" id="write">Scrivi</button>
+            <button type="button" class="bWarning" onclick="location.href = 'bacheca.php?byUser'">Filtra</button>
+            <span></span>
           </div>
         <?php endif;?>
 
