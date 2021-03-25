@@ -17,7 +17,7 @@ $(function () {
             // Redirect to Home Page
             setTimeout(() => (location.href = "./"), 500);
           } else {
-            snackbar("Login fallito", "error");
+            snackbar("Login fallito", "warning");
           }
         } catch (e) {
           snackbar(`${e.name}, ${e.message}`, "error");
