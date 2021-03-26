@@ -20,10 +20,13 @@ if(!array_key_exists("user", $_SESSION)) {
       name="description"
       content="Profilo utente."
     />
+    <link rel="stylesheet" href="lib/js/SnackBar-master/dist/snackbar.min.css">
     <link rel="stylesheet" href="css/style.css" />
     <link rel="icon" href="favicon.png" type="image/png"/>
     <title>Profilo utente</title>
     <script type="text/javascript" src="lib/js/jquery-3.6.0.js"></script>
+    <script src="lib/js/SnackBar-master/dist/snackbar.min.js" charset="utf-8"></script>
+    <script src="js/snackbar.js" charset="utf-8"></script>
     <script src="js/profilo.js"></script>
   </head>
   <body>

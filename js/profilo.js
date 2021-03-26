@@ -1,32 +1,23 @@
 $(function () {
-  const response = $("#response");
-
-  function setResponse(severity, text) {
-    response.text(text);
-    // Remove all classes
-    response.removeClass();
-    response.addClass(severity);
-  }
-
   $("#logout").on("click", function () {
     //
-    setResponse("info", "Effettuo il logout...");
+    snackbar("Effettuo il logout...", "info");
     //
     $.ajax("ajax/login.php", {
       method: "POST",
       data: { action: "logout" },
       success: function () {
-        setResponse("success", "Logout effettuato");
+        snackbar("Logout effettuato", "success");
         setTimeout(() => (location.href = "./"), 500);
       },
       error: function () {
-        setResponse("error", "Errore AJAX");
+        snackbar("Errore AJAX", "error");
       },
     });
   });
 
   $("#save").on("click", function () {
-    setResponse("info", "Salvataggio in corso...");
+    snackbar("Salvataggio in corso...", "info");
     $.ajax("ajax/profilo.php", {
       method: "POST",
       data: {
@@ -38,25 +29,25 @@ $(function () {
         try {
           // Check if response is valid JSON
           JSON.parse(r);
-          setResponse("success", "Update effettuato");
+          snackbar("Update effettuato", "success");
         } catch (e) {
-          setResponse("error", `${e.name}, ${e.message}`);
+          snackbar(`${e.name}, ${e.message}`, "error");
         }
       },
       error: function () {
-        setResponse("error", "Errore AJAX");
+        snackbar("Errore AJAX", "error");
       },
     });
   });
 
   $("#delete").on("click", function () {
-    setResponse("info", "Richiesta conferma...");
+    snackbar("Richiesta conferma...", "info");
     if (
       confirm(
         "Sei sicuro di voler eliminare il tuo account. Tutti i dati saranno cancellati e non sarà più possibile ripristinarli.\n\nSe confermi non sarà più possibile accedere all'area privata del sito."
       )
     ) {
-      setResponse("info", "Elimino l'account...");
+      snackbar("Elimino l'account...", "info");
       $.ajax("ajax/profilo.php", {
         method: "POST",
         data: { action: "delete" },
@@ -64,7 +55,7 @@ $(function () {
           try {
             // Check if response is valid JSON
             JSON.parse(r);
-            setResponse("success", "Account eliminato");
+            snackbar("Account eliminato", "success");
             setTimeout(() => {
               location.href = "./";
             }, 500);
@@ -73,11 +64,11 @@ $(function () {
           }
         },
         error: function () {
-          setResponse("error", "Errore AJAX");
+          snackbar("Errore AJAX", "error");
         },
       });
     } else {
-      setResponse("info", "Operazione annullata");
+      snackbar("Operazione annullata", "info");
     }
   });
 });
