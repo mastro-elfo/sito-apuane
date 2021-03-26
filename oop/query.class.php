@@ -25,6 +25,8 @@ class Query
     protected $_values = null;
     // List of column=value for UPDATE
     protected $_set = null;
+    // List of inner joins
+    protected $_joins = [];
 
     /**
      * This is where all the magic happens.
@@ -62,6 +64,10 @@ class Query
 
         if ($this->_set) {
             $query .= " SET $this->_set";
+        }
+
+        foreach ($this->_joins as $join => $on) {
+            $query .= " INNER JOIN $join ON $on";
         }
 
         if ($this->_where) {
@@ -167,6 +173,18 @@ class Query
         } else {
             $this->_from = $table;
         }
+        return $this;
+    }
+
+    /**
+     * Set "INNER JOIN" table/condition statement
+     * @param  string $join table
+     * @param  string $on   condition
+     * @return Query
+     */
+    public function join($join, $on)
+    {
+        $this->_joins[$join] = $on;
         return $this;
     }
 

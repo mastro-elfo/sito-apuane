@@ -10,6 +10,7 @@ echo "Start test query.class.test.php" . PHP_EOL;
 
 function test($title, $expression, $expected)
 {
+    echo $title . PHP_EOL;
     assert(
         ((string) $expression) == $expected,
         "$title, Expected: \"$expected\", Got: \""
@@ -37,6 +38,17 @@ test(
         ->where("id = 0")
         ->and("deleted = 0"),
     "SELECT id, name FROM table WHERE id = 0 AND deleted = 0"
+);
+
+test(
+    "Join query",
+    (new Query)
+        ->select(["t.id", "t.name"])
+        ->from("table t")
+        ->join("other o", "o.tableId = t.id")
+        ->where("t.id = 0")
+        ->and("t.deleted = 0"),
+    "SELECT t.id, t.name FROM table t INNER JOIN other o ON o.tableId = t.id WHERE t.id = 0 AND t.deleted = 0"
 );
 
 test(
