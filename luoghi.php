@@ -197,6 +197,7 @@ if ($placeId) {
           </ul>
         <?php endif;?>
       <?php endif;?>
+      <footer class="py1"></footer>
     </main>
   </body>
 </html>
