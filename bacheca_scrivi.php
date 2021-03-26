@@ -13,6 +13,18 @@ if (!array_key_exists("user", $_SESSION)) {
 require_once "lib/php/parsedown-master/Parsedown.php";
 require_once "oop/board.class.php";
 
+$boardId = array_key_exists("id", $_GET) ? $_GET["id"] : null;
+$cBoard  = new Board($boardId);
+$board   = [
+    "title"   => "",
+    "content" => "",
+];
+if ($boardId) {
+    $ret = $cBoard->read();
+    if ($ret) {
+        $board = $ret;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -34,9 +46,18 @@ require_once "oop/board.class.php";
     <form>
       <fieldset>
         <label for="title">Titolo</label>
-        <input id="title" type="text" value="" placeholder="" autofocus/>
+        <input
+          id="title"
+          type="text"
+          value="<?=$board["title"]?>"
+          placeholder=""
+          autofocus/>
         <label for="content">Testo</label>
-        <textarea id="content" rows="8" cols="40" placeholder="Messaggio"></textarea>
+        <textarea
+          id="content"
+          rows="8" cols="40"
+          placeholder="Messaggio"
+          ><?=$board["content"]?></textarea>
         <div class="button-container mt1">
           <button type="button" id="write">Conferma</button>
           <button
@@ -46,6 +67,7 @@ require_once "oop/board.class.php";
             onclick="location.href = 'bacheca.php';"
             >Annulla</button>
         </div>
+        <input type="hidden" id="boardId" value="<?=$board["id"]?>">
       </fieldset>
     </form>
   </body>

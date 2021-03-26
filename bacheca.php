@@ -98,13 +98,20 @@ if ($boardId) {
           <?php if (isset($_SESSION["user"])): ?>
             <!-- Buttons -->
             <div class="button-container mb1">
+              <!-- Answer this message -->
               <button
                 type="button"
                 onclick="location.href = 'bacheca_rispondi.php?id=<?=$board["id"]?>'"
                 >Rispondi</button>
               <!-- If user is owner, add the edit and delete button -->
               <?php if ($_SESSION["user"]["id"] == $board["user_id"]): ?>
-                <button type="button" class="bWarning" onclick="alert('Work in progress')">Modifica</button>
+                <!-- Edit this message -->
+                <button
+                  type="button"
+                  class="bWarning"
+                  onclick="location.href = 'bacheca_scrivi.php?id=<?=$board["id"]?>'"
+                  >Modifica</button>
+                <!-- Delete this message -->
                 <button type="button" class="danger" data-delete-board="<?=$board["id"]?>">Elimina</button>
               <?php endif;?>
             </div>

@@ -1,12 +1,14 @@
 $(function () {
   // Write new board message
   $("#write").on("click", function () {
+    const boardId = $("#boardId").val();
     $.ajax("ajax/board.php", {
       method: "POST",
       data: {
-        action: "create",
+        action: boardId === "null" ? "create" : "edit-board",
         title: $("#title").val(),
         content: $("#content").val(),
+        boardId,
       },
       success: (r) => {
         // console.log("response", r);
@@ -24,7 +26,6 @@ $(function () {
           snackbar(`${e.name}, ${e.message}`, "error");
         }
       },
-
       error: () => {
         snackbar("Errore invio", "error");
       },
