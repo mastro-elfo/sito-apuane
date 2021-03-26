@@ -29,7 +29,7 @@ $markers = array_values(array_filter(
     <link rel="stylesheet" href="css/mappa.css" />
     <link rel="icon" href="favicon.png" type="image/png"/>
     <title>Mappa del parco</title>
-    <script src="lib/jquery-3.6.0.js"></script>
+    <script src="lib/js/jquery-3.6.0.js"></script>
     <script src="https://maps.google.com/maps/api/js?sensor=true"></script>
     <script>
       const markers = JSON.parse(<?=json_encode(json_encode($markers))?>);

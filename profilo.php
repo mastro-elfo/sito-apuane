@@ -23,7 +23,7 @@ if(!array_key_exists("user", $_SESSION)) {
     <link rel="stylesheet" href="css/style.css" />
     <link rel="icon" href="favicon.png" type="image/png"/>
     <title>Profilo utente</title>
-    <script type="text/javascript" src="lib/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="lib/js/jquery-3.6.0.js"></script>
     <script src="js/profilo.js"></script>
   </head>
   <body>

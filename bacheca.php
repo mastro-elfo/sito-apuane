@@ -70,8 +70,8 @@ if ($boardId) {
     <link rel="stylesheet" href="css/bacheca.css" />
     <link rel="icon" href="favicon.png" type="image/png"/>
     <title><?=$title?></title>
-    <script src="lib/jquery-3.6.0.js"></script>
-    <script src="lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="lib/js/jquery-3.6.0.js"></script>
+    <script src="lib/js/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <script src="js/bacheca.js"></script>
   </head>
   <body>

@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="icon" href="favicon.png" type="image/png"/>
     <title>Registrazione</title>
-    <script src="lib/jquery-3.6.0.js"></script>
+    <script src="lib/js/jquery-3.6.0.js"></script>
     <link rel="stylesheet" href="lib/passfield-1.1.15/dist/css/passfield.min.css">
-    <script src="lib/passfield-1.1.15/dist/js/passfield.min.js"></script>
+    <script src="lib/js/passfield-1.1.15/dist/js/passfield.min.js"></script>
     <script type="text/javascript">
     $(function($){
       $('input[type="password"]').passField({
