@@ -127,7 +127,7 @@ if ($placeId) {
                               target="_blank"
                               ><?=$attr["value"] . $attr["after"]?></a>
                           <?php else: ?>
-                            <?=$attr["value"] . $attr["after"]?>
+                            <span><?=$attr["value"] . $attr["after"]?></span>
                           <?php endif; ?>
                         </td>
                     </tr>
