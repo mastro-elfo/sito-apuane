@@ -18,7 +18,7 @@ class MyAttribute extends Model
     {
         $query = "
           SELECT
-            a.name, a.value, a.after
+            a.id, a.name, a.value, a.after
           FROM $this->_table a
           WHERE
                 a.idPlace = $idPlace
