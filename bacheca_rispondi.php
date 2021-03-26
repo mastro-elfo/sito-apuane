@@ -15,7 +15,7 @@ if (!array_key_exists("boardId", $_GET)) {
     exit;
 }
 
-$boardId = $_GET["boardId"];
+$boardId  = $_GET["boardId"];
 $answerId = array_key_exists("answerId", $_GET) ? $_GET["answerId"] : null;
 
 require_once "lib/php/parsedown-master/Parsedown.php";
@@ -31,8 +31,8 @@ if (!$board) {
 }
 
 $answer = null;
-if($answerId) {
-  $answer = (new Answer($answerId))->read();
+if ($answerId) {
+    $answer = (new Answer($answerId))->read();
 }
 ?>
 
@@ -63,7 +63,8 @@ if($answerId) {
             id="content"
             rows="8" cols="40"
             placeholder="Messaggio"
-            class="mb1"><?=$answer["content"]?></textarea>
+            class="mb1"
+            ><?=$answer && array_key_exists("content", $answer) ? $answer["content"] : ""?></textarea>
           <div class="button-container">
             <button
               type="button"
