@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="lib/js/SnackBar-master/dist/snackbar.min.css">
     <link rel="stylesheet" href="css/style.css" />
     <link rel="icon" href="favicon.png" type="image/png"/>
     <title>Registrazione</title>
@@ -16,6 +17,8 @@
       });
     })
     </script>
+    <script src="lib/js/SnackBar-master/dist/snackbar.min.js" charset="utf-8"></script>
+    <script src="js/snackbar.js" charset="utf-8"></script>
     <script src="js/registrazione.js"></script>
   </head>
   <body>

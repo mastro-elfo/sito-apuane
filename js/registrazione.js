@@ -1,13 +1,4 @@
 $(function () {
-  const response = $("#response");
-
-  function setResponse(severity, text) {
-    response.text(text);
-    // Remove all classes
-    response.removeClass();
-    response.addClass(severity);
-  }
-
   $("#registrazione").on("submit", function (e) {
     e.preventDefault();
     // console.log(e);
@@ -23,18 +14,17 @@ $(function () {
         try {
           r = JSON.parse(r);
           if (r) {
-            setResponse("success", "Registrazione effettuata");
+            snackbar("Registrazione effettuata", "success");
             setTimeout(() => (location.href = "/login.php"), 500);
           } else {
-            setResponse("error", "Errore di registrazione");
+            snackbar("Errore di registrazione", "error");
           }
         } catch {
-          setResponse("error", "Errore risposta");
+          snackbar("Errore risposta", "error");
         }
-        setResponse("success", "Registrazione effettuata");
       },
       error: function () {
-        setResponse("error", "Errore AJAX");
+        snackbar("Errore AJAX", "error");
       },
     });
   });

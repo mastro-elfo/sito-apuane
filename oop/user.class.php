@@ -15,13 +15,27 @@ class User extends Model
 
     public function create($columns)
     {
+        // Check valid fields
         if (!array_key_exists("email", $columns)
             || !array_key_exists("password", $columns)
             || trim($columns["email"]) == ""
             || trim($columns["password"]) == "") {
             return null;
         }
+        // Check email not used;
+        $user = $this->query(
+          (new Query)
+            ->select()
+            ->from($this->_table)
+            ->where("email = '$columns[email]'")
+            ->and("deleted = 0")
+        );
+        if($user) {
+          return null;
+        }
+        // Encrypt password
         $columns["password"] = hash("sha256", $columns["password"]);
+        // Create row
         return parent::create($columns);
     }
 
