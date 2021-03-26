@@ -76,10 +76,16 @@ fieldset {
   max-width: 1024;
 }
 
-nav ul {
+nav {
   background-color: #eee;
+}
+
+nav ul {
+  max-width: 1024px;
+  width: 100%;
+  margin: auto;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   list-style: none;
   flex-wrap: wrap;
