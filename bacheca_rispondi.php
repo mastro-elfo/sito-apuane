@@ -52,30 +52,35 @@ if($answerId) {
   </head>
   <body>
     <?php require "php/nav.php";?>
-    <form>
-      <fieldset>
-        <label>Rispondi a <?=$board["user_name"]?></label>
-        <p class="mb1"><?=$board["title"]?></p>
-        <label for="content">Testo</label>
-        <textarea
-          id="content"
-          rows="8" cols="40"
-          placeholder="Messaggio"
-          class="mb1"><?=$answer["content"]?></textarea>
-        <div class="button-container">
-          <button
-            type="button"
-            id="answer"
-            >Rispondi</button>
-          <a
-            href="bacheca.php?id=<?=$board["id"]?>"
-            type="button"
-            class="bWarning"
-            >Annulla</a>
-        </div>
-        <input type="hidden" id="boardId" value="<?=$boardId?>">
-        <input type="hidden" id="answerId" value="<?=$answerId?>">
-      </fieldset>
-    </form>
+    <!-- Main content -->
+    <main>
+      <form>
+        <fieldset>
+          <label>Rispondi a <?=$board["user_name"]?></label>
+          <p class="mb1"><?=$board["title"]?></p>
+          <label for="content">Testo</label>
+          <textarea
+            id="content"
+            rows="8" cols="40"
+            placeholder="Messaggio"
+            class="mb1"><?=$answer["content"]?></textarea>
+          <div class="button-container">
+            <button
+              type="button"
+              id="answer"
+              >Rispondi</button>
+            <a
+              href="bacheca.php?id=<?=$board["id"]?>"
+              type="button"
+              class="bWarning"
+              >Annulla</a>
+          </div>
+          <input type="hidden" id="boardId" value="<?=$boardId?>">
+          <input type="hidden" id="answerId" value="<?=$answerId?>">
+        </fieldset>
+      </form>
+    </main>
+    <!-- Footer -->
+    <footer class="py1"></footer>
   </body>
 </html>

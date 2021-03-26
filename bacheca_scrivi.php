@@ -43,32 +43,37 @@ if ($boardId) {
   </head>
   <body>
     <?php require "php/nav.php";?>
-    <form>
-      <fieldset>
-        <label for="title">Titolo</label>
-        <input
-          id="title"
-          type="text"
-          value="<?=$board["title"]?>"
-          placeholder=""
-          autofocus/>
-        <label for="content">Testo</label>
-        <textarea
-          id="content"
-          rows="8" cols="40"
-          placeholder="Messaggio"
-          ><?=$board["content"]?></textarea>
-        <div class="button-container mt1">
-          <button type="button" id="write">Conferma</button>
-          <button
-            type="button"
-            id="cancel"
-            class="bWarning"
-            onclick="location.href = 'bacheca.php';"
-            >Annulla</button>
-        </div>
-        <input type="hidden" id="boardId" value="<?=$boardId?>">
-      </fieldset>
-    </form>
+    <!-- Main content -->
+    <main>
+      <form>
+        <fieldset>
+          <label for="title">Titolo</label>
+          <input
+            id="title"
+            type="text"
+            value="<?=$board["title"]?>"
+            placeholder=""
+            autofocus/>
+          <label for="content">Testo</label>
+          <textarea
+            id="content"
+            rows="8" cols="40"
+            placeholder="Messaggio"
+            ><?=$board["content"]?></textarea>
+          <div class="button-container mt1">
+            <button type="button" id="write">Conferma</button>
+            <a
+              type="button"
+              id="cancel"
+              class="bWarning"
+              href="bacheca.php"
+              >Annulla</a>
+          </div>
+          <input type="hidden" id="boardId" value="<?=$boardId?>">
+        </fieldset>
+      </form>
+    </main>
+    <!-- Footer -->
+    <footer class="py1"></footer>
   </body>
 </html>
