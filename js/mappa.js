@@ -1,4 +1,7 @@
 $(function () {
+  let map = null;
+
+  // Ask geolocation permission
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position) => {
       const {
@@ -9,14 +12,11 @@ $(function () {
         44.07868721388755,
         10.280850401209221
       );
-      const map = new google.maps.Map(
-        document.getElementById("map-container"),
-        {
-          zoom: 11,
-          center,
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-        }
-      );
+      map = new google.maps.Map(document.getElementById("map-container"), {
+        zoom: 11,
+        center,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+      });
 
       // Posizione utente
       new google.maps.Marker({
@@ -48,4 +48,14 @@ $(function () {
   } else {
     alert("Localizzazione non consentita");
   }
+
+  $("#center").on("click", function () {
+    if (map) {
+      // console.log(map);
+      map.setCenter(
+        new google.maps.LatLng(44.07868721388755, 10.280850401209221)
+      );
+      map.setZoom(11);
+    }
+  });
 });
