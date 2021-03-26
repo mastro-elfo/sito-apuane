@@ -44,8 +44,10 @@ function answer($boardId, $content)
 function deleteBoard($boardId)
 {
     if (isset($_SESSION["user"])) {
-        $board = new Board($boardId);
-        return $board->delete($_SESSION["user"]["id"]);
+        return (new Board($boardId))
+          ->delete(false, [
+            "idUser = " . $_SESSION["user"]["id"]
+          ]);
     }
     return null;
 }
@@ -53,8 +55,10 @@ function deleteBoard($boardId)
 function deleteAnswer($answerId)
 {
     if (isset($_SESSION["user"])) {
-        $answer = new Answer($answerId);
-        return $answer->delete($_SESSION["user"]["id"]);
+        return (new Answer($answerId))
+          ->delete(false, [
+            "idUser = " . $_SESSION["user"]["id"]
+          ]);
     }
     return null;
 }

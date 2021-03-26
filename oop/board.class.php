@@ -14,7 +14,7 @@ class Board extends Model
         parent::__construct("boards", $id);
     }
 
-    public function read($columns = null)
+    public function read($columns = null, $ands = [])
     {
         if ($columns) {
             return parent::read($columns);
@@ -33,28 +33,6 @@ class Board extends Model
             return null;
         }
         return $ret->fetch_assoc();
-    }
-
-    public function delete($userId = null, $force = false)
-    {
-        $query = (new Query);
-        if ($force) {
-            // Delete row from table
-            $query
-                ->delete()
-                ->from($this->_table);
-        } else {
-            // Soft delete
-            $query->update($this->_table)
-                ->set(["deleted" => 1]);
-        }
-        $query->where("id = $this->_id")
-            ->and("idUser = $userId");
-        $ret = $this->query($query);
-        if ($ret) {
-            return $this->_db->get_affected();
-        }
-        return null;
     }
 
     public function search($string = null, $userId = null)

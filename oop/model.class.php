@@ -63,13 +63,18 @@ class Model
      * @param  string $columns Elenco delle colonne da leggere
      * @return array dei risultati o `null` in caso di errore
      */
-    public function read($columns = "*")
+    public function read($columns = "*", $ands = [])
     {
         $query = (new Query)
             ->select($columns)
             ->from($this->_table)
             ->where("id = $this->_id")
             ->and("deleted = 0");
+        // Add `$ands`
+        foreach ($ands as $and) {
+            $query->and($and);
+        }
+        // Query
         $ret = $this->query($query);
         if ($ret) {
             return $ret->fetch_assoc();
@@ -82,7 +87,7 @@ class Model
      * @param  array $columns array associativo `["colonna" => <valore>, ...]`
      * @return int numero di righe aggiornate o `null` in caso di errore
      */
-    public function update($columns)
+    public function update($columns, $ands = [])
     {
         $query = (new Query)
             ->update($this->_table)
@@ -92,6 +97,11 @@ class Model
             ))
             ->where("id = $this->_id")
             ->and("deleted = 0");
+        // Add `$ands`
+        foreach ($ands as $and) {
+            $query->and($and);
+        }
+        // Query
         $ret = $this->query($query);
         if ($ret) {
             return $this->_db->get_affected();
@@ -103,7 +113,7 @@ class Model
      * Elimina una riga dal db
      * @return int numero di righe aggiornate o `null` in caso di errore
      */
-    public function delete($force = false)
+    public function delete($force = false, $ands = [])
     {
         $query = (new Query);
         if ($force) {
@@ -117,7 +127,11 @@ class Model
                 ->set(["deleted" => 1]);
         }
         $query->where("id = $this->_id");
-
+        // Add `$ands`
+        foreach ($ands as $and) {
+            $query->and($and);
+        }
+        // Query
         $ret = $this->query($query);
         if ($ret) {
             return $this->_db->get_affected();

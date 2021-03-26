@@ -14,28 +14,6 @@ class Answer extends Model
         parent::__construct("answers", $id);
     }
 
-    public function delete($userId = null, $force = false)
-    {
-        $query = (new Query);
-        if ($force) {
-            // Delete row from table
-            $query
-                ->delete()
-                ->from($this->_table);
-        } else {
-            // Soft delete
-            $query->update($this->_table)
-                ->set(["deleted" => 1]);
-        }
-        $query->where("id = $this->_id")
-            ->and("idUser = $userId");
-        $ret = $this->query($query);
-        if ($ret) {
-            return $this->_db->get_affected();
-        }
-        return null;
-    }
-    
     public function toBoard($idBoard)
     {
         $query = "
