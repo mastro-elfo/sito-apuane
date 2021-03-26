@@ -10,14 +10,16 @@ if (!array_key_exists("user", $_SESSION)) {
     exit;
 }
 
-if (!array_key_exists("id", $_GET)) {
+if (!array_key_exists("boardId", $_GET)) {
     header("Location: bacheca.php?error=" . urlencode("Messaggio non definito"));
     exit;
 }
 
-$boardId = $_GET["id"];
+$boardId = $_GET["boardId"];
+$answerId = array_key_exists("answerId", $_GET) ? $_GET["answerId"] : null;
 
 require_once "lib/php/parsedown-master/Parsedown.php";
+require_once "oop/answer.class.php";
 require_once "oop/board.class.php";
 //
 $cBoard = new Board($boardId);
@@ -26,6 +28,11 @@ $board  = $cBoard->read();
 if (!$board) {
     header("Location: bacheca.php?error=" . urlencode("Messaggio non trovato: $boardId"));
     exit;
+}
+
+$answer = null;
+if($answerId) {
+  $answer = (new Answer($answerId))->read();
 }
 ?>
 
@@ -47,19 +54,27 @@ if (!$board) {
     <?php require "php/nav.php";?>
     <form>
       <fieldset>
-        <label>Risposta a </label>
-        <p><?=$board["title"]?>, <?=$board["user_name"]?></p>
+        <label>Rispondi a <?=$board["user_name"]?></label>
+        <p class="mb1"><?=$board["title"]?></p>
         <label for="content">Testo</label>
-        <textarea id="content" rows="8" cols="40" placeholder="Messaggio"></textarea>
-        <div class="button-container mt1">
-          <button type="button" id="answer">Rispondi</button>
+        <textarea
+          id="content"
+          rows="8" cols="40"
+          placeholder="Messaggio"
+          class="mb1"><?=$answer["content"]?></textarea>
+        <div class="button-container">
           <button
             type="button"
-            id="cancel"
+            id="answer"
+            >Rispondi</button>
+          <a
+            href="bacheca.php?id=<?=$board["id"]?>"
+            type="button"
             class="bWarning"
-            onclick="location.href = 'bacheca.php?id=<?=$board["id"]?>'"
-            >Annulla</button>
+            >Annulla</a>
         </div>
+        <input type="hidden" id="boardId" value="<?=$boardId?>">
+        <input type="hidden" id="answerId" value="<?=$answerId?>">
       </fieldset>
     </form>
   </body>

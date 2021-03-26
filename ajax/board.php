@@ -62,12 +62,22 @@ function deleteAnswer($answerId)
 function editBoard($boardId, $title, $content)
 {
     if (isset($_SESSION["user"])) {
-        (new Board($boardId))
+        return (new Board($boardId))
             ->update([
                 "title"   => $title,
                 "content" => $content,
             ]);
-        return $boardId;
+    }
+    return null;
+}
+
+function editAnswer($answerId, $content)
+{
+    if (isset($_SESSION["user"])) {
+        return (new Answer($answerId))
+            ->update([
+                "content" => $content,
+            ]);
     }
     return null;
 }
@@ -82,6 +92,8 @@ if ($_POST["action"] == "create") {
     echo json_encode(deleteAnswer($_POST["answerId"]));
 } elseif ($_POST["action"] == "edit-board") {
     echo json_encode(editBoard($_POST["boardId"], $_POST["title"], $_POST["content"]));
+} elseif ($_POST["action"] == "edit-answer") {
+    echo json_encode(editAnswer($_POST["answerId"], $_POST["content"]));
 } else {
     http_response_code(400);
     echo json_encode(null);

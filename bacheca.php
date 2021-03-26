@@ -101,7 +101,7 @@ if ($boardId) {
               <!-- Answer this message -->
               <button
                 type="button"
-                onclick="location.href = 'bacheca_rispondi.php?id=<?=$board["id"]?>'"
+                onclick="location.href = 'bacheca_rispondi.php?boardId=<?=$board["id"]?>'"
                 >Rispondi</button>
               <!-- If user is owner, add the edit and delete button -->
               <?php if ($_SESSION["user"]["id"] == $board["user_id"]): ?>
@@ -130,29 +130,37 @@ if ($boardId) {
                   <!-- This is a placeholder that move the next button to the right -->
                   <span></span>
                   <?php if (isset($_SESSION["user"]) && $answer["idUser"] == $_SESSION["user"]["id"]): ?>
-                    <button type="button" class="bWarning" onclick="alert('Work in progress')">Modifica</button>
-                    <button type="button" class="danger" data-delete-answer="<?=$answer["id"]?>">Elimina</button>
+                    <button
+                      type="button"
+                      class="bWarning"
+                      data-board-id="<?=$board["id"]?>"
+                      data-answer-id="<?=$answer["id"]?>"
+                      onclick="location.href = 'bacheca_rispondi.php?boardId=<?=$board["id"]?>&answerId=<?=$answer["id"]?>'"
+                      >Modifica</button>
+                    <button
+                      type="button"
+                      class="danger"
+                      data-delete-answer="<?=$answer["id"]?>"
+                      >Elimina</button>
                   <?php endif;?>
                 </div>
               </div>
             <?php endforeach;?>
           <?php endif;?>
         </article>
-        <div id="dialog-answer" title="Rispondi" style="display: none;">
-          <form>
-            <fieldset>
-              <label for="answer-text">Risposta</label>
-              <textarea id="answer-text" rows="8" cols="40" placeholder="Messaggio"></textarea>
-              <p id="answer-response"></p>
-            </fieldset>
-          </form>
-        </div>
       <?php elseif (count($boards)): ?>
         <!-- Lista dei messaggi -->
         <?php if (isset($_SESSION["user"])): ?>
           <div class="button-container p1">
-            <button type="button" id="write" onclick="location.href = 'bacheca_scrivi.php';">Scrivi</button>
-            <button type="button" class="bWarning" onclick="location.href = 'bacheca.php?byUser'">Filtra</button>
+            <a
+              type="button"
+              href="bacheca_scrivi.php"
+              >Scrivi</a>
+            <a
+              type="button"
+              class="bWarning"
+              href="bacheca.php?<?=$searchByUserId ? "" : "byUser"?>"
+              ><?=$searchByUserId ? "-" : "+"?> Filtra</a>
             <span></span>
           </div>
         <?php endif;?>
@@ -174,9 +182,9 @@ if ($boardId) {
                       <time datetime="<?=$board["uDateTime"]?>">
                         <?=date_format(date_create($board["uDateTime"]), "d/m/Y")?></time>,
                       <?php if ($board["answers"] == 1): ?>
-                        <?=$board["answers"]?> risposta
+                        <span><?=$board["answers"]?> risposta</span>
                       <?php else: ?>
-                        <?=$board["answers"]?> risposte
+                        <span><?=$board["answers"]?> risposte</span>
                       <?php endif;?>
                     </p>
                   </footer>
@@ -184,18 +192,6 @@ if ($boardId) {
               </a>
             </div>
           <?php endforeach;?>
-        </div>
-
-        <div id="dialog-new" title="Crea nuovo messaggio" style="display: none;">
-          <form>
-            <fieldset>
-              <label for="title">Titolo</label>
-              <input id="title" type="text" value="" placeholder=""/>
-              <label for="content">Testo</label>
-              <textarea id="content" rows="8" cols="40" placeholder="Messaggio"></textarea>
-              <p id="response"></p>
-            </fieldset>
-          </form>
         </div>
       <?php endif;?>
     </main>

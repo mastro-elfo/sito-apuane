@@ -33,19 +33,17 @@ $(function () {
   });
 
   $("#answer").on("click", function () {
-    const boardId = location.search
-      .substr(1)
-      .split("&")
-      .map((i) => i.split("="))
-      .find((i) => i[0] === "id");
+    const boardId = $("#boardId").val();
+    const answerId = $("#answerId").val();
     //
     if (boardId && boardId.length) {
       $.ajax("ajax/board.php", {
         method: "POST",
         data: {
-          action: "answer",
+          action: answerId ? "edit-answer" : "answer",
           content: $("#content").val(),
-          boardId: boardId[1],
+          boardId,
+          answerId,
         },
         success: (r) => {
           // console.log("response", r);
