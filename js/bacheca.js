@@ -112,7 +112,9 @@ $(function () {
         success: (r) => {
           snackbar("Risposta cancellata", "success");
           // location.reload();
-          setTimeout(location.reload, 500);
+          setTimeout(() => {
+            location.reload();
+          }, 500);
         },
         error: (e) => {
           snackbar(`${e.name}, ${e.message}`, "error");
