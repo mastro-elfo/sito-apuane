@@ -9,12 +9,16 @@ header("Content-Type: image/*");
 
 $id = $_GET["id"];
 if (!$id) {
+    header('Content-Disposition: filename="notfound.png"');
     echo file_get_contents("../imgs/broken.png");
     exit;
 }
 $cPlace = new Place($id);
-$image = $cPlace->image();
+$place  = $cPlace->read();
+$image  = $cPlace->image();
 if (!$image) {
     broken();
 }
+
+header('Content-Disposition: filename="' . $place["name"] . '.jpg"');
 echo $image;
