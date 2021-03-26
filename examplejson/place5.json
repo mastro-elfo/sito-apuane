@@ -1,0 +1,28 @@
+{
+  "error": false,
+  "message": "",
+  "place": {
+    "id": "5",
+    "name": "Col di Favilla",
+    "title": "Localit\u00e0 Col di Favilla",
+    "article": "Detto anche Colle di Favilla, \u00e8 un piccolo borgo, nel comune di **Stazzema**, tra i pi\u00f9 alti nelle Alpi Apuane, ed \u00e8 ormai disabitato da molti anni.\r\n\r\nSi trova a 940 metri di quota a cavallo del colle boscoso che dalla cresta NE del monte Corchia si dirige su Isola Santa ed \u00e8 sovrastato dal possente Pizzo delle Saette.\r\n\r\nDal piazzale antistante la chiesa si gode di bella vista anche sul monte Freddone e sul Sumbra e, di fronte, c\u2019\u00e8 una fonte dove si incontrano i due sentieri che arrivano a questo borgo.",
+    "description": "Detto anche Colle di Favilla, \u00e8 un piccolo borgo, nel *comune di Stazzema*, tra i pi\u00f9 alti nelle Alpi Apuane, ed \u00e8 ormai disabitato da molti anni.",
+    "has_image": "1",
+    "uDateTime": "2021-03-16 21:26:27",
+    "src": "/php/img.php?id=5",
+    "attributes": [
+      { "id": "33", "name": "Altitudine", "value": "940", "after": "m s.l.m." },
+      { "id": "65", "name": "Latitudine", "value": "44.0505011", "after": "" },
+      { "id": "66", "name": "Longitudine", "value": "10.3095098", "after": "" }
+    ],
+    "tags": [
+      {
+        "id": "3",
+        "name": "Localit\u00e0",
+        "color": "#daa520",
+        "textColor": "#222"
+      },
+      { "id": "4", "name": "Storia", "color": "#cd5c5c", "textColor": "#eee" }
+    ]
+  }
+}
