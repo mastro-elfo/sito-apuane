@@ -160,11 +160,13 @@ if ($placeId) {
       <?php else: ?>
         <!-- Input di ricerca -->
         <form action="luoghi.php" method="get">
-          <input
-            type="text"
-            name="q"
-            value="<?=$search?>"
-            placeholder="Ricerca">
+          <fieldset>
+            <input
+              type="text"
+              name="q"
+              value="<?=$search?>"
+              placeholder="Ricerca">
+          </fieldset>
         </form>
         <!-- Visualizzazione lista -->
         <?php if ($places): ?>

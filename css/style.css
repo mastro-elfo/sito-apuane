@@ -69,9 +69,11 @@ label {
 fieldset {
   display: block;
   margin: auto;
-  padding: 1em;
+  padding: 1em 0.5em;
   border: none;
-  max-width: 400px;
+  /* max-width: 400px; */
+  width: 100%;
+  max-width: 1024;
 }
 
 nav ul {
@@ -145,12 +147,12 @@ input {
   color: inherit;
   width: 100%;
   padding: 0.25em 0;
-  margin-bottom: 1em;
 }
 textarea {
   font: inherit;
   line-height: inherit;
   color: inherit;
+  width: 100%;
 }
 
 /* Margini e Padding */

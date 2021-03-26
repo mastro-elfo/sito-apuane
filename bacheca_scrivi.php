@@ -67,7 +67,7 @@ if ($boardId) {
             onclick="location.href = 'bacheca.php';"
             >Annulla</button>
         </div>
-        <input type="hidden" id="boardId" value="<?=$board["id"]?>">
+        <input type="hidden" id="boardId" value="<?=$boardId?>">
       </fieldset>
     </form>
   </body>

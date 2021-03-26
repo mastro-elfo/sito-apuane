@@ -24,9 +24,20 @@
       <form id="login">
         <fieldset>
           <label for="username">Username</label>
-          <input type="email" id="username" name="username" value="" autofocus />
+          <input
+            type="email"
+            id="username"
+            name="username"
+            value=""
+            autofocus
+            class="mb1"/>
           <label for="password">Password</label>
-          <input type="password" id="password" name="password" value="" />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value=""
+            class="mb1"/>
           <div class="button-container">
             <button type="submit">Login</button>
             <button type="button" onclick="location.href = 'registrazione.php';" class="bWarning">Registrati</button>
