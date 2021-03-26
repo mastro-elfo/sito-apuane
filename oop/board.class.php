@@ -19,16 +19,14 @@ class Board extends Model
         if ($columns) {
             return parent::read($columns);
         }
-        $ret = $this->query("
-          SELECT
-            b.id, b.content, b.title, b.uDateTime,
-            u.id as user_id, u.name as user_name
-          FROM `$this->_table` b
-          INNER JOIN users u ON u.id = b.idUser
-          WHERE b.id = '$this->_id'
-            AND b.deleted = 0
-            AND u.deleted = 0
-        ");
+        $query = (new Query)
+            ->select(["b.id", "b.content", "b.title", "b.uDateTime", "u.id as user_id", "u.name as user_name"])
+            ->from("$this->_table b")
+            ->join("users u", "u.id = b.idUser")
+            ->where("b.id = $this->_id")
+            ->and("b.deleted = 0")
+            ->and("u.deleted = 0");
+        $ret = $this->query($query);
         if (!$ret) {
             return null;
         }
@@ -37,22 +35,28 @@ class Board extends Model
 
     public function search($string = null, $userId = null)
     {
-        $query = "
-          SELECT
-            b.id, b.title, b.content, b.uDateTime,
-            u.name as user_name,
-            (SELECT COUNT(*)
-              FROM answers a
-              WHERE a.idBoard = b.id
-                AND a.deleted = 0
-            ) AS answers
-          FROM `$this->_table` b
-          INNER JOIN users u ON u.id = b.idUser
-          WHERE b.deleted = 0
-          " . ($string ? "AND b.title LIKE '%$string%'" : "") . "
-          ".($userId ? "AND u.id = $userId" : "")."
-          ORDER BY b.uDateTime DESC
-        ";
+        // Query how many answers
+        $query_a = (string) (new Query)
+            ->select("COUNT(*)")
+            ->from("answers a")
+            ->where("a.idBoard = b.id")
+            ->and("a.deleted = 0");
+        // Main query
+        $query = (new Query)
+            ->select(["b.id", "b.title", "b.content", "b.uDateTime", "u.name as user_name", "($query_a) as answers"])
+            ->from("$this->_table b")
+            ->join("users u", "u.id = b.idUser")
+            ->where("b.deleted = 0")
+            ->order(["b.uDateTime" => "DESC"]);
+        // Search by string
+        if ($string) {
+            $query->and("b.title LIKE '%$string%'");
+        }
+        // Filter by user id
+        if ($userId) {
+            $query->and("u.id = $userId");
+        }
+        // Query
         $ret = $this->query($query);
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);

@@ -16,26 +16,29 @@ class Place extends Model
 
     public function search($string = null, $tag = null)
     {
-        $query = "
-          SELECT
-            p.id, p.name, p.title,
-            (SELECT
-              GROUP_CONCAT(t.name, '/', t.color, '/', t.textColor
-                SEPARATOR ',')
-            FROM tags t
-            INNER JOIN places_tags pt ON pt.idTag = t.id
-            WHERE pt.idPlace = p.id
-            ORDER BY t.name ASC) AS tags
-          FROM `$this->_table` p
-          " . ($tag ? "
-          INNER JOIN places_tags pt ON pt.idPlace = p.id
-          INNER JOIN tags t ON t.id = pt.idTag
-          " : "") . "
-          WHERE p.deleted = 0
-            " . ($string ? "AND name LIKE '%$string%'" : "") . "
-            " . ($tag ? "AND t.name = '$tag'" : "") . "
-          ORDER BY p.name ASC
-        ";
+        // Query tags
+        $query_t = (string) (new Query)
+            ->select("GROUP_CONCAT(t.name, '/', t.color, '/', t.textColor SEPARATOR ',')")
+            ->from("tags t")
+            ->join("places_tags pt", "pt.idTag = t.id")
+            ->where("pt.idPlace = p.id")
+            ->order(["t.name" => "ASC"]);
+        // Query
+        $query = (new Query)
+            ->select(["p.id", "p.name", "p.title", "($query_t) AS tags"])
+            ->from("$this->_table p")
+            ->where("p.deleted = 0")
+            ->order(["p.name" => "ASC"]);
+        // Filter by name
+        if ($string) {
+            $query->and("p.name LIKE '%$string%'");
+        }
+        if ($tag) {
+            $query->join("places_tags pt", "pt.idPlace = p.id")
+                ->join("tags t", "t.id = pt.idTag")
+                ->and("t.name = '$tag'");
+        }
+        // Filter by tag
         $ret = $this->query($query);
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);
@@ -45,16 +48,14 @@ class Place extends Model
 
     public function related()
     {
-        $query = "
-          SELECT
-            o.id, o.name
-          FROM places o
-          INNER JOIN places_places pp ON pp.idTo = o.id
-          WHERE pp.idFrom = $this->_id
-            AND pp.deleted = 0
-            AND o.deleted = 0
-          ORDER BY o.name ASC
-        ";
+        $query = (new Query)
+            ->select(["o.id", "o.name"])
+            ->from("places o")
+            ->join("places_places pp", "pp.idTo = o.id")
+            ->where("pp.idFrom = $this->_id")
+            ->and("pp.deleted = 0")
+            ->and("o.deleted = 0")
+            ->order(["o.name" => "ASC"]);
         $ret = $this->query($query);
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);
@@ -79,33 +80,37 @@ class Place extends Model
 
     public function coordinates()
     {
-        $query = "
-          SELECT p.name,
-            (SELECT a.value
-              FROM attributes a
-              WHERE a.deleted = 0
-                AND a.idPlace = p.id
-                AND a.name = 'Latitudine'
-              LIMIT 1
-            ) AS latitudine,
-            (SELECT a.value
-              FROM attributes a
-              WHERE a.deleted = 0
-                AND a.idPlace = p.id
-                AND a.name = 'Longitudine'
-              LIMIT 1
-            ) AS longitudine,
-            (SELECT t.name
-              FROM tags t
-              INNER JOIN places_tags pt ON pt.idTag = t.id
-              WHERE t.deleted = 0
-                AND pt.deleted = 0
-                AND pt.idPlace = p.id
-              LIMIT 1
-            ) AS tag
-          FROM $this->_table p
-          WHERE p.deleted = 0
-        ";
+        $query_lat = (string) (new Query)
+            ->select("a.value")
+            ->from("attributes a")
+            ->where("a.deleted = 0")
+            ->and("a.idPlace = p.id")
+            ->and("a.name = 'Latitudine'")
+            ->limit(1);
+        $query_lon = (string) (new Query)
+            ->select("a.value")
+            ->from("attributes a")
+            ->where("a.deleted = 0")
+            ->and("a.idPlace = p.id")
+            ->and("a.name = 'Longitudine'")
+            ->limit(1);
+        $query_tag = (string) (new Query)
+            ->select("t.name")
+            ->from("tags t")
+            ->join("places_tags pt", "pt.idTag = t.id")
+            ->where("t.deleted = 0")
+            ->and("pt.deleted = 0")
+            ->and("pt.idPlace = p.id")
+            ->limit(1);
+        $query = (new Query)
+            ->select([
+                "p.name",
+                "($query_lat) AS latitudine",
+                "($query_lon) AS longitudine",
+                "($query_tag) as tag",
+            ])
+            ->from("$this->_table p")
+            ->where("p.deleted = 0");
         $ret = $this->query($query);
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);

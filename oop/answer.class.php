@@ -16,16 +16,14 @@ class Answer extends Model
 
     public function toBoard($idBoard)
     {
-        $query = "
-          SELECT
-            a.id, a.idUser, a.content, a.uDateTime, u.name
-          FROM answers a
-          INNER JOIN users u ON u.id = a.idUser
-          WHERE a.deleted = 0
-            AND a.idBoard = $idBoard
-            AND u.deleted = 0
-          ORDER BY a.uDateTime DESC
-        ";
+        $query = (new Query)
+            ->select(["a.id", "a.idUser", "a.content", "a.uDateTime", "u.name"])
+            ->from("answers a")
+            ->join("users u", "u.id = a.idUser")
+            ->where("a.deleted = 0")
+            ->and("a.idBoard = $idBoard")
+            ->and("u.deleted = 0")
+            ->order(["a.uDateTime" => "DESC"]);
         $ret = $this->query($query);
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);

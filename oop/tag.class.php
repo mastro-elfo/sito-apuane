@@ -16,17 +16,14 @@ class Tag extends Model
 
     public function ofPlace($idPlace)
     {
-        $query = "
-          SELECT
-            t.id, t.name, t.color, t.textColor
-          FROM $this->_table t
-          INNER JOIN places_tags pt ON pt.idTag = t.id
-          WHERE
-                pt.idPlace = $idPlace
-            AND t.deleted = 0
-            AND pt.deleted = 0
-          ORDER BY t.name ASC
-        ";
+        $query = (new Query)
+            ->select(["t.id", "t.name", "t.color", "t.textColor"])
+            ->from("$this->_table t")
+            ->join("places_tags pt", "pt.idTag = t.id")
+            ->where("pt.idPlace = $idPlace")
+            ->and("t.deleted = 0")
+            ->and("pt.deleted = 0")
+            ->order(["t.name" => "ASC"]);
         $ret = $this->query($query);
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);
