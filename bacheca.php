@@ -69,6 +69,7 @@ if ($boardId) {
     <!-- <link rel="stylesheet" href="lib/js/jquery-ui-1.12.1.custom/jquery-ui.min.css"> -->
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/bacheca.css" />
+    <link rel="stylesheet" href="lib/js/SnackBar-master/dist/snackbar.min.css">
     <link rel="icon" href="favicon.png" type="image/png"/>
     <title><?=$title?></title>
     <script src="lib/js/jquery-3.6.0.js"></script>
@@ -136,13 +137,13 @@ if ($boardId) {
                   <!-- This is a placeholder that move the next button to the right -->
                   <span></span>
                   <?php if (isset($_SESSION["user"]) && $answer["idUser"] == $_SESSION["user"]["id"]): ?>
-                    <button
+                    <a
                       type="button"
                       class="bWarning"
                       data-board-id="<?=$board["id"]?>"
                       data-answer-id="<?=$answer["id"]?>"
-                      onclick="location.href = 'bacheca_rispondi.php?boardId=<?=$board["id"]?>&answerId=<?=$answer["id"]?>'"
-                      >Modifica</button>
+                      href="bacheca_rispondi.php?boardId=<?=$board["id"]?>&answerId=<?=$answer["id"]?>"
+                      >Modifica</a>
                     <button
                       type="button"
                       class="danger"
