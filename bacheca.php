@@ -63,7 +63,7 @@ if ($boardId) {
       name="description"
       content="<?=$description?>"
     />
-    <link rel="stylesheet" href="lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
+    <link rel="stylesheet" href="lib/js/jquery-ui-1.12.1.custom/jquery-ui.min.css">
     <!-- <link rel="stylesheet" href="lib/jquery-ui-1.12.1.custom/jquery-ui.structure.min.css"> -->
     <!-- <link rel="stylesheet" href="lib/jquery-ui-1.12.1.custom/jquery-ui.theme.min.css"> -->
     <link rel="stylesheet" href="css/style.css" />
