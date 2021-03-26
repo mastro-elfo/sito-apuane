@@ -49,7 +49,7 @@ if ($placeId) {
         // Load related places
         $related = $cPlace->related();
         // Load tags
-        $tags = (new Tag)->ofPlace($placeId);
+        $tags = (new Tag)->ofPlace($placeId, ["name", "color", "textColor"]);
         // // Load attributes
         $attributes = (new MyAttribute)->ofPlace($placeId);
     } else {
@@ -142,7 +142,7 @@ if ($placeId) {
               <?php foreach ($tags as $tag): ?>
                 <a
                   class="tag mr1"
-                  style="background: <?=$tag['color']?>; color:<?=$tag["textColor"]?>"
+                  style="background: <?=$tag['color']?>; color:<?=$tag['textColor']?>"
                   href="luoghi.php?t=<?=$tag["name"]?>"
                   title="Cerca <?=$tag["name"]?>"
                   ><?=$tag["name"]?></a>
