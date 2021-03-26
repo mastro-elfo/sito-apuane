@@ -17,7 +17,7 @@ require_once "oop/board.class.php";
 $pd = new Parsedown();
 
 // Inizializzo variabili di pagina
-$error       = null;
+$error       = array_key_exists("error", $_GET) ? $_GET["error"] : "";
 $title       = "Bacheca";
 $description = "Bacheca del sito";
 $h1          = "";
@@ -70,9 +70,9 @@ if ($boardId) {
     <link rel="stylesheet" href="css/bacheca.css" />
     <link rel="icon" href="favicon.png" type="image/png"/>
     <title><?=$title?></title>
-    <script src="lib/js/jquery-3.6.0.js"></script>
+    <!-- <script src="lib/js/jquery-3.6.0.js"></script>
     <script src="lib/js/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-    <script src="js/bacheca.js"></script>
+    <script src="js/bacheca.js"></script> -->
   </head>
   <body>
     <?php require "php/nav.php";?>
@@ -98,7 +98,10 @@ if ($boardId) {
           <?php if (isset($_SESSION["user"])): ?>
             <!-- Buttons -->
             <div class="button-container mb1">
-              <button type="button" id="answer-button">Rispondi</button>
+              <button
+                type="button"
+                onclick="location.href = 'bacheca_rispondi.php?id=<?=$board["id"]?>'"
+                >Rispondi</button>
               <!-- If user is owner, add the edit and delete button -->
               <?php if ($_SESSION["user"]["id"] == $board["user_id"]): ?>
                 <button type="button" class="bWarning" onclick="alert('Work in progress')">Modifica</button>
@@ -141,7 +144,7 @@ if ($boardId) {
         <!-- Lista dei messaggi -->
         <?php if (isset($_SESSION["user"])): ?>
           <div class="button-container p1">
-            <button type="button" id="write">Scrivi</button>
+            <button type="button" id="write" onclick="location.href = 'bacheca_scrivi.php';">Scrivi</button>
             <button type="button" class="bWarning" onclick="location.href = 'bacheca.php?byUser'">Filtra</button>
             <span></span>
           </div>
