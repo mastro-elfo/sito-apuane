@@ -44,6 +44,7 @@ $markers = array_values(array_filter(
         <div id="map-container" class="radius1">
         </div>
       </div>
+      <footer class="py1"></footer>
     </main>
   </body>
 </html>
