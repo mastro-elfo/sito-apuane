@@ -118,13 +118,10 @@ class Model
         $query = (new Query);
         if ($force) {
             // Delete row from table
-            $query
-                ->delete()
-                ->from($this->_table);
+            $query->delete()->from($this->_table);
         } else {
             // Soft delete
-            $query->update($this->_table)
-                ->set(["deleted" => 1]);
+            $query->update($this->_table)->set(["deleted" => 1]);
         }
         $query->where("id = $this->_id");
         // Add `$ands`

@@ -48,25 +48,31 @@ $(function () {
       )
     ) {
       snackbar("Elimino l'account...", "info");
-      $.ajax("ajax/profilo.php", {
-        method: "POST",
-        data: { action: "delete" },
-        success: function (r) {
-          try {
-            // Check if response is valid JSON
-            JSON.parse(r);
-            snackbar("Account eliminato", "success");
-            setTimeout(() => {
-              location.href = "./";
-            }, 500);
-          } catch (e) {
-            setResponse("error", `${e.name}, ${e.message}`);
-          }
-        },
-        error: function () {
-          snackbar("Errore AJAX", "error");
-        },
-      });
+      // Soluzione provvisoria
+      const password = prompt("Inserisci la password");
+      if (password) {
+        $.ajax("ajax/profilo.php", {
+          method: "POST",
+          data: { action: "delete", password },
+          success: function (r) {
+            try {
+              // Check if response is valid JSON
+              JSON.parse(r);
+              snackbar("Account eliminato", "success");
+              setTimeout(() => {
+                location.href = "./";
+              }, 500);
+            } catch (e) {
+              setResponse("error", `${e.name}, ${e.message}`);
+            }
+          },
+          error: function () {
+            snackbar("Errore AJAX", "error");
+          },
+        });
+      } else {
+        snackbar("Operazione annullata", "info");
+      }
     } else {
       snackbar("Operazione annullata", "info");
     }

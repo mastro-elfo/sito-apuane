@@ -36,13 +36,15 @@ function update($name, $email)
     return false;
 }
 
-function delete()
+function delete($password)
 {
     if (isset($_SESSION["user"]["id"])) {
         // Get user id from session
         $userId = $_SESSION["user"]["id"];
         $cUser  = new User($userId);
-        $ret    = $cUser->delete();
+        $ret    = $cUser->delete(false, [
+            "password = '" . hash("sha256", $password) . "'",
+        ]);
         if ($ret) {
             unset($_SESSION["user"]);
             session_destroy();
@@ -56,7 +58,7 @@ function delete()
 if ($_POST["action"] == "update") {
     echo json_encode(update($_POST["name"], $_POST["email"]));
 } elseif ($_POST["action"] == "delete") {
-    echo json_encode(delete());
+    echo json_encode(delete($_POST["password"]));
 } else {
     http_response_code(400);
     echo json_encode(null);
