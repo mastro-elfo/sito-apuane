@@ -66,11 +66,14 @@ function deleteAnswer($answerId)
 function editBoard($boardId, $title, $content)
 {
     if (isset($_SESSION["user"])) {
-        return (new Board($boardId))
+        $affected = (new Board($boardId))
             ->update([
                 "title"   => $title,
                 "content" => $content,
             ]);
+        if($affected) {
+          return $boardId;
+        }
     }
     return null;
 }

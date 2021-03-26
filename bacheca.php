@@ -5,9 +5,9 @@ error_reporting(E_ALL);
 
 session_start();
 
-if(!array_key_exists("user", $_SESSION)) {
-  header("Location: login.php");
-  exit;
+if (!array_key_exists("user", $_SESSION)) {
+    header("Location: login.php");
+    exit;
 }
 
 require_once "lib/php/parsedown-master/Parsedown.php";
@@ -47,6 +47,9 @@ if ($boardId) {
         $showBoard   = true;
         $answers     = $cAnswer->toBoard($boardId);
     }
+    else {
+      $error = "Questo messaggio non esiste";
+    }
 } else {
     // Carico la lista dei messaggi
     $boards = $cBoard->search($searchByQuery, $searchByUserId);
@@ -63,16 +66,15 @@ if ($boardId) {
       name="description"
       content="<?=$description?>"
     />
-    <link rel="stylesheet" href="lib/js/jquery-ui-1.12.1.custom/jquery-ui.min.css">
-    <!-- <link rel="stylesheet" href="lib/jquery-ui-1.12.1.custom/jquery-ui.structure.min.css"> -->
-    <!-- <link rel="stylesheet" href="lib/jquery-ui-1.12.1.custom/jquery-ui.theme.min.css"> -->
+    <!-- <link rel="stylesheet" href="lib/js/jquery-ui-1.12.1.custom/jquery-ui.min.css"> -->
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/bacheca.css" />
     <link rel="icon" href="favicon.png" type="image/png"/>
     <title><?=$title?></title>
-    <!-- <script src="lib/js/jquery-3.6.0.js"></script>
-    <script src="lib/js/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-    <script src="js/bacheca.js"></script> -->
+    <script src="lib/js/jquery-3.6.0.js"></script>
+    <script src="lib/js/SnackBar-master/dist/snackbar.min.js" charset="utf-8"></script>
+    <script src="js/snackbar.js" charset="utf-8"></script>
+    <script src="js/bacheca.js"></script>
   </head>
   <body>
     <?php require "php/nav.php";?>
@@ -99,20 +101,24 @@ if ($boardId) {
             <!-- Buttons -->
             <div class="button-container mb1">
               <!-- Answer this message -->
-              <button
+              <a
                 type="button"
-                onclick="location.href = 'bacheca_rispondi.php?boardId=<?=$board["id"]?>'"
-                >Rispondi</button>
+                href="bacheca_rispondi.php?boardId=<?=$board["id"]?>"
+                >Rispondi</a>
               <!-- If user is owner, add the edit and delete button -->
               <?php if ($_SESSION["user"]["id"] == $board["user_id"]): ?>
                 <!-- Edit this message -->
-                <button
+                <a
                   type="button"
                   class="bWarning"
-                  onclick="location.href = 'bacheca_scrivi.php?id=<?=$board["id"]?>'"
-                  >Modifica</button>
+                  href="bacheca_scrivi.php?id=<?=$board["id"]?>"
+                  >Modifica</a>
                 <!-- Delete this message -->
-                <button type="button" class="danger" data-delete-board="<?=$board["id"]?>">Elimina</button>
+                <button
+                  type="button"
+                  class="danger"
+                  data-delete-board="<?=$board["id"]?>"
+                  >Elimina</button>
               <?php endif;?>
             </div>
           <?php endif;?>

@@ -5,7 +5,7 @@ $(function () {
     $.ajax("ajax/board.php", {
       method: "POST",
       data: {
-        action: boardId === "null" ? "create" : "edit-board",
+        action: !!boardId ? "edit-board" : "create",
         title: $("#title").val(),
         content: $("#content").val(),
         boardId,
@@ -40,7 +40,7 @@ $(function () {
       $.ajax("ajax/board.php", {
         method: "POST",
         data: {
-          action: answerId ? "edit-answer" : "answer",
+          action: !!answerId ? "edit-answer" : "answer",
           content: $("#content").val(),
           boardId,
           answerId,
@@ -71,7 +71,7 @@ $(function () {
   });
 
   $("[data-delete-board]").on("click", function (e) {
-    // console.log(e.currentTarget.getAttribute("data-delete-board"));
+    // console.log(e.target.getAttribute("data-delete-board"));
     if (
       confirm(
         "Sei sicuro di voler eliminare questo post?\n\nUna volta eliminato non sarà più visibile e non sarà possibile ripristinarlo.\n\nConfermi?"
@@ -81,13 +81,16 @@ $(function () {
         method: "POST",
         data: {
           action: "delete-board",
-          boardId: e.currentTarget.getAttribute("data-delete-board"),
+          boardId: e.target.getAttribute("data-delete-board"),
         },
         success: (r) => {
-          location.href = "bacheca.php";
+          snackbar("Messaggio cancellato", "success");
+          setTimeout(() => {
+            location.href = "bacheca.php";
+          }, 500);
         },
-        error: (r) => {
-          console.error(r);
+        error: (e) => {
+          snackbar(`${e.name}, ${e.message}`, "error");
         },
       });
     }
@@ -104,14 +107,15 @@ $(function () {
         method: "POST",
         data: {
           action: "delete-answer",
-          answerId: e.currentTarget.getAttribute("data-delete-answer"),
+          answerId: e.target.getAttribute("data-delete-answer"),
         },
         success: (r) => {
-          console.log(r);
-          location.reload();
+          snackbar("Risposta cancellata", "success");
+          // location.reload();
+          setTimeout(location.reload, 500);
         },
-        error: (r) => {
-          console.error(r);
+        error: (e) => {
+          snackbar(`${e.name}, ${e.message}`, "error");
         },
       });
     }
