@@ -63,6 +63,40 @@ class Place extends Model
         return [];
     }
 
+    public function relatedByDistance($lat, $lon)
+    {
+        $query_lat = (string) (new Query)
+            ->select("a.value")
+            ->from("attributes a")
+            ->where("a.idPlace = o.id")
+            ->and("a.name = 'Latitudine'")
+            ->and("a.deleted = 0")
+            ->limit(1);
+        $query_lon = (string) (new Query)
+            ->select("a.value")
+            ->from("attributes a")
+            ->where("a.idPlace = o.id")
+            ->and("a.name = 'Longitudine'")
+            ->and("a.deleted = 0")
+            ->limit(1);
+        $query = (new Query)
+            ->select(["o.id", "o.name"])
+            ->from("$this->_table o")
+            ->where("o.deleted = 0")
+            ->and("o.id != $this->_id")
+            ->and("
+                POWER((($query_lat) - $lat), 2) +
+                POWER((($query_lon) - $lon) *1.4, 2)
+                < 0.001
+            ") // < 0.001072798606
+            ->order("o.name ASC");
+        $ret = $this->query($query);
+        if ($ret) {
+            return $ret->fetch_all(MYSQLI_ASSOC);
+        }
+        return [];
+    }
+
     public function latest($offset, $count)
     {
         $query = (new Query)

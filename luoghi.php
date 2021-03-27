@@ -46,12 +46,21 @@ if ($placeId) {
         $datetime    = $place["uDateTime"];
         $image       = $place["image"];
         $showPlace   = true;
-        // Load related places
-        $related = $cPlace->related();
         // Load tags
         $tags = (new Tag)->ofPlace($placeId, ["name", "color", "textColor"]);
         // // Load attributes
         $attributes = (new MyAttribute)->ofPlace($placeId);
+        // Check if place has Latitudine and Longitudine
+        // $latKey = array_search("Latitudine", array_column($attributes, "name"));
+        // $lonKey = array_search("Longitudine", array_column($attributes, "name"));
+        // if ($latKey !== false && $lonKey !== false) {
+        //     $related = $cPlace->relatedByDistance(
+        //         $attributes[$latKey]["value"],
+        //         $attributes[$lonKey]["value"]
+        //     );
+        // }
+        // Load related places
+        $related = array_merge($related, $cPlace->related());
     } else {
         $errore = "Errore nel database";
     }
@@ -120,7 +129,7 @@ if ($placeId) {
                     <tr>
                       <th><?=$attr["name"]?></th>
                         <td>
-                          <?php if(str_starts_with($attr["value"], "http")): ?>
+                          <?php if (str_starts_with($attr["value"], "http")): ?>
                             <a
                               href="<?=$attr["value"] . $attr["after"]?>"
                               title="Apri link <?=$attr["value"] . $attr["after"]?>"
@@ -128,7 +137,7 @@ if ($placeId) {
                               ><?=$attr["value"] . $attr["after"]?></a>
                           <?php else: ?>
                             <span><?=$attr["value"] . $attr["after"]?></span>
-                          <?php endif; ?>
+                          <?php endif;?>
                         </td>
                     </tr>
                   <?php endforeach;?>
