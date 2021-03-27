@@ -40,7 +40,11 @@
             class="mb1"/>
           <div class="button-container">
             <button type="submit">Login</button>
-            <button type="button" onclick="location.href = 'registrazione.php';" class="bWarning">Registrati</button>
+            <a
+              type="button"
+              href="registrazione.php"
+              class="bWarning"
+              >Registrati</a>
           </div>
           <p id="response" class="klein my1"></p>
         </fieldset>

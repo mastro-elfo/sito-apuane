@@ -123,7 +123,8 @@ body > footer {
 }
 
 button,
-[type="button"] {
+[type="button"],
+[type="submit"] {
   border: none;
   background: forestgreen;
   color: white;
@@ -136,10 +137,17 @@ button,
 }
 
 button:disabled,
+[type="button"]:disabled,
 [type="submit"]:disabled {
   background: silver;
   color: #444;
   cursor: default;
+}
+
+button:active,
+[type="button"]:active,
+[type="submit"]:active {
+  border-style: inset;
 }
 
 ul.style-none,
@@ -262,17 +270,19 @@ textarea {
 .bSuccess {
   background: forestgreen;
   color: white;
+  border: 1px outset forestgreen;
 }
 
-.danger,
-.bError {
+.bDanger {
   background: crimson;
   color: white;
+  border: 1px outset crimson;
 }
 
 .bWarning {
   background: orange;
   color: black;
+  border: 1px outset orange;
 }
 
 /* Lista a blocchi */

@@ -61,7 +61,7 @@ if ($boardId) {
             placeholder="Messaggio"
             ><?=$board["content"]?></textarea>
           <div class="button-container mt1">
-            <button type="button" id="write">Conferma</button>
+            <button type="button" id="write" class="bSuccess">Conferma</button>
             <a
               type="button"
               id="cancel"

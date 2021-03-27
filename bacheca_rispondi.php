@@ -69,6 +69,7 @@ if ($answerId) {
             <button
               type="button"
               id="answer"
+              class="bSuccess"
               >Rispondi</button>
             <a
               href="bacheca.php?id=<?=$board["id"]?>"

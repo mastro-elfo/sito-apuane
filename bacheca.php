@@ -46,9 +46,8 @@ if ($boardId) {
         $datetime    = $board["uDateTime"];
         $showBoard   = true;
         $answers     = $cAnswer->toBoard($boardId);
-    }
-    else {
-      $error = "Questo messaggio non esiste";
+    } else {
+        $error = "Questo messaggio non esiste";
     }
 } else {
     // Carico la lista dei messaggi
@@ -105,6 +104,7 @@ if ($boardId) {
               <a
                 type="button"
                 href="bacheca_rispondi.php?boardId=<?=$board["id"]?>"
+                class="bSuccess"
                 >Rispondi</a>
               <!-- If user is owner, add the edit and delete button -->
               <?php if ($_SESSION["user"]["id"] == $board["user_id"]): ?>
@@ -117,7 +117,7 @@ if ($boardId) {
                 <!-- Delete this message -->
                 <button
                   type="button"
-                  class="danger"
+                  class="bDanger"
                   data-delete-board="<?=$board["id"]?>"
                   >Elimina</button>
               <?php endif;?>
@@ -146,7 +146,7 @@ if ($boardId) {
                       >Modifica</a>
                     <button
                       type="button"
-                      class="danger"
+                      class="bDanger"
                       data-delete-answer="<?=$answer["id"]?>"
                       >Elimina</button>
                   <?php endif;?>
@@ -162,6 +162,7 @@ if ($boardId) {
             <a
               type="button"
               href="bacheca_scrivi.php"
+               class="bSuccess"
               >Scrivi</a>
             <a
               type="button"

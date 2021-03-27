@@ -5,9 +5,9 @@ error_reporting(E_ALL);
 
 session_start();
 
-if(!array_key_exists("user", $_SESSION)) {
-  header("Location: login.php");
-  exit;
+if (!array_key_exists("user", $_SESSION)) {
+    header("Location: login.php");
+    exit;
 }
 ?>
 
@@ -45,16 +45,26 @@ if(!array_key_exists("user", $_SESSION)) {
         </li>
         <li class="mb1 px1">
           <label for="name">Nome</label>
-          <input type="text" name="name" id="name" value="<?=$_SESSION['user']['name']?>" placeholder="Scrivi il tuo nome"/>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            value="<?=$_SESSION['user']['name']?>"
+            placeholder="Scrivi il tuo nome"/>
         </li>
         <li class="mb1 px1">
           <label for="email">Email</label>
-          <input type="text" name="email" id="email" value="<?=$_SESSION['user']['email']?>" placeholder="Scrivi il tuo indirizzo email">
+          <input
+            type="text"
+            name="email"
+            id="email"
+            value="<?=$_SESSION['user']['email']?>"
+            placeholder="Scrivi il tuo indirizzo email">
         </li>
         <li class="mb1 px1 button-container">
-          <button type="button" id="save">Salva</button>
+          <button type="button" id="save" class="bSuccess">Salva</button>
           <button type="button" id="logout" class="bWarning">Logout</button>
-          <button type="button" id="delete" class="danger">Elimina</button>
+          <button type="button" id="delete" class="bDanger">Elimina</button>
         </li>
         <li class="mb1 px1 klein">
           <span id="response"></span>
