@@ -18,7 +18,7 @@ $places = $cPlace->latest(0, 4);
 ?>
 
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
