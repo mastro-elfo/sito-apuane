@@ -169,7 +169,7 @@ class Query
     public function from($table)
     {
         if (is_array($table)) {
-            $this->_fromimplode(", ", $table);
+            $this->_from = implode(", ", $table);
         } else {
             $this->_from = $table;
         }
