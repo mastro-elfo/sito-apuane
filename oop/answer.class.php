@@ -23,7 +23,7 @@ class Answer extends Model
             ->where("a.deleted = 0")
             ->and("a.idBoard = $idBoard")
             ->and("u.deleted = 0")
-            ->order(["a.uDateTime" => "DESC"]);
+            ->order("a.uDateTime DESC");
         $ret = $this->query($query);
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);

@@ -10,21 +10,21 @@ class Query
     // The table name for INSERT INTO, UPDATE
     protected $_table = null;
     // The FROM statement for SELECT and DELETE
-    protected $_from = null;
+    protected $_from = "";
     // The WHERE statement
     protected $_where = null;
     // The ORDER BY statement
-    protected $_order = null;
+    protected $_order = [];
     // The LIMIT statement
     protected $_limit = null;
     // List of columns for SELECT
     protected $_selectCols = null;
     // List of columns for INSERT INTO and UPDATE
-    protected $_columns = null;
+    protected $_columns = [];
     // List of values for INSERT INTO
-    protected $_values = null;
+    protected $_values = [];
     // List of column=value for UPDATE
-    protected $_set = null;
+    protected $_set = [];
     // List of inner joins
     protected $_joins = [];
 
@@ -55,15 +55,15 @@ class Query
         }
 
         if ($this->_columns) {
-            $query .= " ($this->_columns)";
+            $query .= " (" . implode(", ", $this->_columns) . ")";
         }
 
         if ($this->_values) {
-            $query .= " VALUES ($this->_values)";
+            $query .= " VALUES (" . implode(", ", $this->_values) . ")";
         }
 
         if ($this->_set) {
-            $query .= " SET $this->_set";
+            $query .= " SET " . implode(", ", $this->_set);
         }
 
         foreach ($this->_joins as $join => $on) {
@@ -75,7 +75,7 @@ class Query
         }
 
         if ($this->_order) {
-            $query .= " ORDER BY $this->_order";
+            $query .= " ORDER BY " . implode(", ", $this->_order);
         }
 
         if ($this->_limit) {
@@ -138,14 +138,11 @@ class Query
      */
     public function set($cols = [])
     {
-        $this->_set = implode(
-            ", ",
-            array_map(
-                fn($k, $v) => "$k = $v",
-                array_keys($cols),
-                array_values($cols)
-            )
-        );
+        $this->_set = array_merge($this->_set, array_map(
+            fn($k, $v) => "$k = $v",
+            array_keys($cols),
+            array_values($cols)
+        ));
         return $this;
     }
 
@@ -156,8 +153,10 @@ class Query
      */
     public function values($cols = [])
     {
-        $this->_columns = implode(", ", array_keys($cols));
-        $this->_values  = implode(", ", array_values($cols));
+        // $this->_columns = implode(", ", array_keys($cols));
+        // $this->_values  = implode(", ", array_values($cols));
+        $this->_columns = array_merge($this->_columns, array_keys($cols));
+        $this->_values  = array_merge($this->_values, array_values($cols));
         return $this;
     }
 
@@ -168,11 +167,7 @@ class Query
      */
     public function from($table)
     {
-        if (is_array($table)) {
-            $this->_from = implode(", ", $table);
-        } else {
-            $this->_from = $table;
-        }
+        $this->_from = $table;
         return $this;
     }
 
@@ -195,14 +190,11 @@ class Query
      */
     public function order($condition)
     {
-        $this->_order = implode(
-            ", ",
-            array_map(
-                fn($col, $ord) => "$col $ord",
-                array_keys($condition),
-                array_values($condition)
-            )
-        );
+        if (is_string($condition)) {
+            array_push($this->_order, $condition);
+        } else {
+            $this->_order = array_merge($this->_order, $condition);
+        }
         return $this;
     }
 

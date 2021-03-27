@@ -47,7 +47,7 @@ class Board extends Model
             ->from("$this->_table b")
             ->join("users u", "u.id = b.idUser")
             ->where("b.deleted = 0")
-            ->order(["b.uDateTime" => "DESC"]);
+            ->order("b.uDateTime DESC");
         // Search by string
         if ($string) {
             $query->and("b.title LIKE '%$string%'");

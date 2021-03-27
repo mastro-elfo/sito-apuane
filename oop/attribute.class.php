@@ -21,10 +21,7 @@ class MyAttribute extends Model
             ->where("a.idPlace = $idPlace")
             ->and("a.deleted = 0");
         if ($columns) {
-            $query->select(array_map(
-                fn($c) => "a.$c",
-                $columns
-            ));
+            $query->select(array_map(fn($c) => "a.$c", $columns));
         } else {
             $query->select(["a.id", "a.name", "a.value", "a.after"]);
         }

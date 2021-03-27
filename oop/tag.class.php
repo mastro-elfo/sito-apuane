@@ -22,7 +22,7 @@ class Tag extends Model
             ->where("pt.idPlace = $idPlace")
             ->and("t.deleted = 0")
             ->and("pt.deleted = 0")
-            ->order(["pt.main" => "DESC", "t.name" => "ASC"]);
+            ->order(["pt.main DESC", "t.name ASC"]);
         if ($columns) {
             $query->select(array_map(
                 fn($c) => "t.$c",

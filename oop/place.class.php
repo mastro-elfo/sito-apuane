@@ -27,13 +27,14 @@ class Place extends Model
             ->select(["p.id", "p.name", "p.title", "($query_t) AS tags"])
             ->from("$this->_table p")
             ->where("p.deleted = 0")
-            ->order(["p.name" => "ASC"]);
+            ->order("p.name ASC");
         // Filter by name
         if ($string) {
             $query->and("p.name LIKE '%$string%'");
         }
         if ($tag) {
-            $query->join("places_tags pt", "pt.idPlace = p.id")
+            $query
+                ->join("places_tags pt", "pt.idPlace = p.id")
                 ->join("tags t", "t.id = pt.idTag")
                 ->and("t.name = '$tag'");
         }
@@ -54,7 +55,7 @@ class Place extends Model
             ->where("pp.idFrom = $this->_id")
             ->and("pp.deleted = 0")
             ->and("o.deleted = 0")
-            ->order(["o.name" => "ASC"]);
+            ->order("o.name ASC");
         $ret = $this->query($query);
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);
@@ -68,7 +69,7 @@ class Place extends Model
             ->select(["id", "name", "description", "title", "!isnull(image) as image", "uDateTime"])
             ->from($this->_table)
             ->where("deleted = 0")
-            ->order(["uDateTime" => "DESC"])
+            ->order("uDateTime DESC")
             ->limit($offset, $count);
         $ret = $this->query($query);
         if ($ret) {
@@ -100,7 +101,7 @@ class Place extends Model
             ->where("t.deleted = 0")
             ->and("pt.deleted = 0")
             ->and("pt.idPlace = p.id")
-            ->order(["pt.main" => "DESC"])
+            ->order("pt.main DESC")
             ->limit(1);
         $query = (new Query)
             ->select([

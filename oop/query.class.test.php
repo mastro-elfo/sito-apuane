@@ -36,8 +36,9 @@ test(
         ->select(["id", "name"])
         ->from("table")
         ->where("id = 0")
-        ->and("deleted = 0"),
-    "SELECT id, name FROM table WHERE id = 0 AND deleted = 0"
+        ->and("deleted = 0")
+        ->order("main DESC"),
+    "SELECT id, name FROM table WHERE id = 0 AND deleted = 0 ORDER BY main DESC"
 );
 
 test(
