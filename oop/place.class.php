@@ -21,8 +21,7 @@ class Place extends Model
             ->select("GROUP_CONCAT(t.name, '/', t.color, '/', t.textColor SEPARATOR ',')")
             ->from("tags t")
             ->join("places_tags pt", "pt.idTag = t.id")
-            ->where("pt.idPlace = p.id")
-            ->order(["t.name" => "ASC"]);
+            ->where("pt.idPlace = p.id");
         // Query
         $query = (new Query)
             ->select(["p.id", "p.name", "p.title", "($query_t) AS tags"])
