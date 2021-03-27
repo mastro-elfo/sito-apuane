@@ -101,6 +101,7 @@ class Place extends Model
             ->where("t.deleted = 0")
             ->and("pt.deleted = 0")
             ->and("pt.idPlace = p.id")
+            ->order(["pt.main" => "DESC"])
             ->limit(1);
         $query = (new Query)
             ->select([

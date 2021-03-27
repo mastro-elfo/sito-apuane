@@ -22,14 +22,14 @@ class Tag extends Model
             ->where("pt.idPlace = $idPlace")
             ->and("t.deleted = 0")
             ->and("pt.deleted = 0")
-            ->order(["t.name" => "ASC"]);
+            ->order(["pt.main" => "DESC", "t.name" => "ASC"]);
         if ($columns) {
             $query->select(array_map(
-              fn($c) => "t.$c",
-              $columns
+                fn($c) => "t.$c",
+                $columns
             ));
         } else {
-            $query->select(["t.id", "t.name", "t.color", "t.textColor"]);
+            $query->select(["t.id", "t.name", "t.color", "t.textColor", "pt.main"]);
         }
         $ret = $this->query($query);
         if ($ret) {
