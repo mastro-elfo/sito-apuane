@@ -31,4 +31,19 @@ class MyAttribute extends Model
         }
         return [];
     }
+
+    public function names()
+    {
+        $query = (new Query)
+            ->select(["SUBSTRING(COLUMN_TYPE,5) as names"])
+            ->from("information_schema.COLUMNS")
+            ->where("TABLE_SCHEMA='apuane'")
+            ->and("TABLE_NAME='attributes'")
+            ->and("COLUMN_NAME='name'");
+        $ret = $this->query($query);
+        if ($ret) {
+            return $ret->fetch_assoc();
+        }
+        return [];
+    }
 }

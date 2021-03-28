@@ -7,3 +7,9 @@ article {
   right: 0;
   top: 0.15em;
 }
+
+@media screen and (max-width: 1024px) {
+  #editPlaceButton {
+    right: 1em;
+  }
+}

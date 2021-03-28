@@ -167,6 +167,10 @@ textarea {
   line-height: inherit;
   color: inherit;
   width: 100%;
+  resize: vertical;
+  border-radius: 0.25em;
+  border: 1px solid #cdc7c2;
+  padding: 0.25em;
 }
 
 /* Margini e Padding */
