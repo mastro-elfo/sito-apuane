@@ -9,6 +9,7 @@ require_once "lib/php/parsedown-master/Parsedown.php";
 require_once "oop/attribute.class.php";
 require_once "oop/place.class.php";
 require_once "oop/tag.class.php";
+require_once "php/admin.php";
 
 // Init parser
 $pd = new Parsedown();
@@ -80,6 +81,7 @@ if ($placeId) {
       content="<?=$description?>"
     />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/luoghi.css" />
     <link rel="icon" href="favicon.png" type="image/png"/>
     <title><?=$title?></title>
   </head>
@@ -95,6 +97,13 @@ if ($placeId) {
       <?php if ($showPlace): ?>
         <!-- Visualizzazione luogo -->
         <article>
+          <?php if(isAdmin()): ?>
+              <a
+                type="button"
+                href="place_edit.php?id=<?=$placeId?>"
+                id="editPlaceButton"
+                class="bWarning">Modifica</a>
+          <?php endif; ?>
           <!-- Title -->
           <h2><?=$h1?></h2>
           <?php if ($image): ?>

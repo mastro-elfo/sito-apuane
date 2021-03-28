@@ -1,0 +1,9 @@
+article {
+  position: relative;
+}
+
+#editPlaceButton {
+  position: absolute;
+  right: 0;
+  top: 0.15em;
+}
