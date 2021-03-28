@@ -39,7 +39,7 @@
             value=""
             class="mb1"/>
           <div class="button-container">
-            <button type="submit">Login</button>
+            <button type="submit" class="bSuccess">Login</button>
             <a
               type="button"
               href="registrazione.php"
