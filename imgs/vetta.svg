@@ -6,11 +6,39 @@
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="32"
    height="32"
    viewBox="0 0 8.4666665 8.4666669"
    version="1.1"
-   id="svg8">
+   id="svg8"
+   sodipodi:docname="vetta.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1043"
+     id="namedview11"
+     showgrid="true"
+     inkscape:zoom="17.75"
+     inkscape:cx="29.521127"
+     inkscape:cy="22.760563"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg8">
+    <inkscape:grid
+       type="xygrid"
+       id="grid836" />
+  </sodipodi:namedview>
   <defs
      id="defs2">
     <linearGradient
@@ -41,15 +69,24 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
-     id="layer1">
+     id="g883"
+     transform="translate(-7.672917,0.52916675)">
     <path
-       style="fill:url(#linearGradient888);fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 1.3229166,8.4666666 c 0,0 2.3812501,-7.1437499 2.9104167,-7.14375 0.5291667,-1e-7 2.9104166,7.14375 2.9104166,7.14375 z"
-       id="path880" />
+       style="fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 9.2604166,7.9374999 H 14.552083 L 11.90625,1.3229166 Z"
+       id="path838" />
+    <path
+       style="fill:#178d1d;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 9.2604166,7.9374999 10.847917,3.96875 11.377083,4.4979166 11.90625,3.96875 12.435417,4.4979166 12.964583,3.96875 l 1.5875,3.9687499 z"
+       id="path848" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 11.377083,2.6458333 11.90625,2.1166666 12.435417,2.6458333 11.90625,1.3229166 Z"
+       id="path850" />
   </g>
 </svg>
