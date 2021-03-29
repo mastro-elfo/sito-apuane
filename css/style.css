@@ -299,14 +299,12 @@ textarea {
 .block-list .list-item {
   display: block;
   padding: 0.5em;
-  transition: color 0.25s ease, background-color 0.25s ease;
   color: inherit;
   text-decoration: none;
 }
 
 .block-list .list-item:hover {
-  color: white;
-  background-color: forestgreen;
+  background-color: #d6e5d4;
 }
 
 /* Contenitore di bottoni */
