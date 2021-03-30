@@ -26,11 +26,11 @@ $(function () {
       });
 
       const ICONS = {
-        Cascata: "imgs/cascata.svg",
         Castello: "imgs/castello.svg",
         Culto: "imgs/culto.svg",
         Grotta: "imgs/grotta.svg",
         Località: "imgs/localita.svg",
+        Marker: "imgs/marker.svg",
         Natura: "imgs/natura.svg",
         Rifugio: "imgs/rifugio.svg",
         Vetta: "imgs/vetta.svg",
@@ -41,7 +41,7 @@ $(function () {
           position: new google.maps.LatLng(latitudine, longitudine),
           map,
           title: name,
-          icon: ICONS[tag] || null,
+          icon: ICONS[tag] || ICONS["Marker"],
         });
       });
     });
