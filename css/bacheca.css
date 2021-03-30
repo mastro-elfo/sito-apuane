@@ -27,7 +27,7 @@
   margin-top: 0.5em;
 }
 #boards section > div.content > * {
-  font-size: 80%;
+  line-height: 1.5em;
 }
 #boards section > div.content ul,
 #boards section > div.content ol {
