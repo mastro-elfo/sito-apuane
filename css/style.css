@@ -6,13 +6,13 @@
 }
 
 @font-face {
-  font-family: MainFont;
-  src: (../fonts/Raleway/Raleway-VariableFont-wght.ttf);
+  font-family: "Raleway";
+  src: url("/fonts/Raleway/Raleway-VariableFont_wght.ttf") format("truetype");
 }
 
 /* Oggetti principali */
 body {
-  font-family: "Raleway", sans-serif;
+  font-family: Raleway, sans-serif;
   background-color: #f6f5f4;
 }
 
@@ -54,10 +54,6 @@ a {
 
 a:hover {
   text-decoration: underline;
-}
-
-article a {
-  color: blue;
 }
 
 label {
@@ -330,6 +326,10 @@ article {
   padding: 0 1em;
 }
 
+article a {
+  color: blue;
+}
+
 article h2 {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
@@ -337,6 +337,7 @@ article h2 {
 
 article p {
   margin-bottom: 1em;
+  line-height: 1.5em;
 }
 
 article table {
