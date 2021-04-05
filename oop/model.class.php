@@ -44,7 +44,7 @@ class Model
             ));
     }
 
-        /**
+    /**
      * Returns the default "SELECT" query
      * @param  string|array $columns
      * @param  array  $ands
@@ -56,11 +56,8 @@ class Model
             ->select($columns)
             ->from($this->_table)
             ->where("id = $this->_id")
-            ->and("deleted = 0");
-        // Add `$ands`
-        foreach ($ands as $and) {
-            $query->and($and);
-        }
+            ->and("deleted = 0")
+            ->and($ands);
         return $query;
     }
 
@@ -79,11 +76,8 @@ class Model
                 array_map(fn($s) => $this->clean($s), array_values($columns))
             ))
             ->where("id = $this->_id")
-            ->and("deleted = 0");
-        // Add `$ands`
-        foreach ($ands as $and) {
-            $query->and($and);
-        }
+            ->and("deleted = 0")
+            ->and($ands);
         return $query;
     }
 
@@ -103,11 +97,9 @@ class Model
             // Soft delete
             $query->update($this->_table)->set(["deleted" => 1]);
         }
-        $query->where("id = $this->_id");
-        // Add `$ands`
-        foreach ($ands as $and) {
-            $query->and($and);
-        }
+        $query
+            ->where("id = $this->_id")
+            ->and($ands);
         return $query;
     }
 

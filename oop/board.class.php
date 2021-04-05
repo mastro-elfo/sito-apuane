@@ -14,22 +14,20 @@ class Board extends Model
         parent::__construct("boards", $id);
     }
 
-    public function getSelectQuery($columns = "*", $ands = []) {
+    public function getSelectQuery($columns = "*", $ands = [])
+    {
         $query = (new Query)
             ->select(["b.id", "b.content", "b.title", "b.uDateTime", "u.id as user_id", "u.name as user_name"])
             ->from("$this->_table b")
             ->join("users u", "u.id = b.idUser")
             ->where("b.id = $this->_id")
             ->and("b.deleted = 0")
-            ->and("u.deleted = 0");
-        // Add `$ands`
-        foreach ($ands as $and) {
-            $query->and($and);
-        }
+            ->and("u.deleted = 0")
+            ->and($ands);
         return $query;
     }
 
-    function search($string = null, $userId = null)
+    public function search($string = null, $userId = null)
     {
         // Query how many answers
         $query_a = (string) (new Query)

@@ -231,7 +231,11 @@ class Query
      * @return Query
      */
     function  and ($condition) {
-        $this->_where .= " AND $condition";
+        if (is_string($condition)) {
+            $this->_where .= " AND $condition";
+        } elseif (is_array($condition) && count($condition)) {
+            $this->_where .= " AND " . implode("AND", $condition);
+        }
         return $this;
     }
 
@@ -241,7 +245,11 @@ class Query
      * @return Query
      */
     function  or ($condition) {
-        $this->_where .= " OR $condition";
+        if (is_string($condition)) {
+            $this->_where .= " OR $condition";
+        } elseif (is_array($condition) && count($condition)) {
+            $this->_where .= " OR " . implode(" OR ", $condition);
+        }
         return $this;
     }
 }
