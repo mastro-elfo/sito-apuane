@@ -26,6 +26,7 @@ $(function () {
       });
 
       const ICONS = {
+        Arte: "imgs/art.svg",
         Castello: "imgs/castello.svg",
         Culto: "imgs/culto.svg",
         Grotta: "imgs/grotta.svg",
