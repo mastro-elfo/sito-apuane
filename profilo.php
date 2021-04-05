@@ -66,9 +66,6 @@ if (!array_key_exists("user", $_SESSION)) {
           <button type="button" id="logout" class="bWarning">Logout</button>
           <button type="button" id="delete" class="bDanger">Elimina</button>
         </li>
-        <li class="mb1 px1 klein">
-          <span id="response"></span>
-        </li>
       </ul>
     </main>
   </body>

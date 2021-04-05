@@ -63,7 +63,7 @@ $(function () {
                 location.href = "./";
               }, 500);
             } catch (e) {
-              setResponse("error", `${e.name}, ${e.message}`);
+              snackbar("error", `${e.name}, ${e.message}`);
             }
           },
           error: function () {

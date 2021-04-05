@@ -46,7 +46,6 @@
               class="bWarning"
               >Registrati</a>
           </div>
-          <p id="response" class="klein my1"></p>
         </fieldset>
       </form>
     </main>

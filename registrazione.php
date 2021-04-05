@@ -36,7 +36,6 @@
           <div class="button-container">
             <button type="submit" name="action" value="signup">Registrami</button>
           </div>
-          <p id="response"></p>
         </fieldset>
       </form>
 
