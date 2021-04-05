@@ -14,11 +14,7 @@ class Board extends Model
         parent::__construct("boards", $id);
     }
 
-    public function read($columns = null, $ands = [])
-    {
-        if ($columns) {
-            return parent::read($columns);
-        }
+    public function getSelectQuery($columns = "*", $ands = []) {
         $query = (new Query)
             ->select(["b.id", "b.content", "b.title", "b.uDateTime", "u.id as user_id", "u.name as user_name"])
             ->from("$this->_table b")
@@ -26,14 +22,14 @@ class Board extends Model
             ->where("b.id = $this->_id")
             ->and("b.deleted = 0")
             ->and("u.deleted = 0");
-        $ret = $this->query($query);
-        if (!$ret) {
-            return null;
+        // Add `$ands`
+        foreach ($ands as $and) {
+            $query->and($and);
         }
-        return $ret->fetch_assoc();
+        return $query;
     }
 
-    public function search($string = null, $userId = null)
+    function search($string = null, $userId = null)
     {
         // Query how many answers
         $query_a = (string) (new Query)

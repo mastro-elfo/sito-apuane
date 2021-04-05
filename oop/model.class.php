@@ -28,21 +28,13 @@ class Model
     }
 
     /**
-     * Alias for `$this->_db->query`
+     * Returns the default "INSERT" query
+     * @param  array $columns
+     * @return Query
      */
-    public function query($query)
+    public function getInsertQuery($columns)
     {
-        return $this->_db->query((string) $query);
-    }
-
-    /**
-     * Creo una nuova riga nel db
-     * @param $columns `array` associativo `["colonna" => <valore>, ...]`
-     * @return int ultimo id inserito o `null` in caso di errore
-     */
-    public function create($columns)
-    {
-        $query = (new Query)
+        return (new Query)
             ->insert($this->_table)
             ->values(array_combine(
                 array_keys($columns),
@@ -50,20 +42,15 @@ class Model
                     fn($s) => $this->clean($s),
                     array_values($columns))
             ));
-
-        $ret = $this->query($query);
-        if ($ret) {
-            return $this->_db->get_last_id();
-        }
-        return null;
     }
 
-    /**
-     * Leggo una riga dal db
-     * @param  string $columns Elenco delle colonne da leggere
-     * @return array dei risultati o `null` in caso di errore
+        /**
+     * Returns the default "SELECT" query
+     * @param  string|array $columns
+     * @param  array  $ands
+     * @return Query
      */
-    public function read($columns = "*", $ands = [])
+    public function getSelectQuery($columns = "*", $ands = [])
     {
         $query = (new Query)
             ->select($columns)
@@ -74,20 +61,16 @@ class Model
         foreach ($ands as $and) {
             $query->and($and);
         }
-        // Query
-        $ret = $this->query($query);
-        if ($ret) {
-            return $ret->fetch_assoc();
-        }
-        return null;
+        return $query;
     }
 
     /**
-     * Aggiorna una riga nel db
-     * @param  array $columns array associativo `["colonna" => <valore>, ...]`
-     * @return int numero di righe aggiornate o `null` in caso di errore
+     * Returns the default "UPDATE" query
+     * @param  array $columns
+     * @param  array  $ands
+     * @return Query
      */
-    public function update($columns, $ands = [])
+    public function getUpdateQuery($columns, $ands = [])
     {
         $query = (new Query)
             ->update($this->_table)
@@ -101,19 +84,16 @@ class Model
         foreach ($ands as $and) {
             $query->and($and);
         }
-        // Query
-        $ret = $this->query($query);
-        if ($ret) {
-            return $this->_db->get_affected();
-        }
-        return null;
+        return $query;
     }
 
     /**
-     * Elimina una riga dal db
-     * @return int numero di righe aggiornate o `null` in caso di errore
+     * Returns the default "DELETE" query
+     * @param  boolean $force
+     * @param  array   $ands
+     * @return Query
      */
-    public function delete($force = false, $ands = [])
+    public function getDeleteQuery($force = false, $ands = [])
     {
         $query = (new Query);
         if ($force) {
@@ -128,8 +108,69 @@ class Model
         foreach ($ands as $and) {
             $query->and($and);
         }
+        return $query;
+    }
+
+    /**
+     * Alias for `$this->_db->query`
+     */
+    public function query($query)
+    {
+        return $this->_db->query((string) $query);
+    }
+
+    /**
+     * Creo una nuova riga nel db
+     * @param $columns `array` associativo `["colonna" => <valore>, ...]`
+     * @return int ultimo id inserito o `null` in caso di errore
+     */
+    public function create($columns)
+    {
+        $ret = $this->query($this->getInsertQuery($columns));
+        if ($ret) {
+            return $this->_db->get_last_id();
+        }
+        return null;
+    }
+
+    /**
+     * Leggo una riga dal db
+     * @param  string $columns Elenco delle colonne da leggere
+     * @return array dei risultati o `null` in caso di errore
+     */
+    public function read($columns = "*", $ands = [])
+    {
         // Query
-        $ret = $this->query($query);
+        $ret = $this->query($this->getSelectQuery($columns, $ands));
+        if ($ret) {
+            return $ret->fetch_assoc();
+        }
+        return null;
+    }
+
+    /**
+     * Aggiorna una riga nel db
+     * @param  array $columns array associativo `["colonna" => <valore>, ...]`
+     * @return int numero di righe aggiornate o `null` in caso di errore
+     */
+    public function update($columns, $ands = [])
+    {
+        // Query
+        $ret = $this->query($this->getUpdateQuery($columns, $ands));
+        if ($ret) {
+            return $this->_db->get_affected();
+        }
+        return null;
+    }
+
+    /**
+     * Elimina una riga dal db
+     * @return int numero di righe aggiornate o `null` in caso di errore
+     */
+    public function delete($force = false, $ands = [])
+    {
+        // Query
+        $ret = $this->query($this->getDeleteQuery($force, $ands));
         if ($ret) {
             return $this->_db->get_affected();
         }
