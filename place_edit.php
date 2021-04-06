@@ -33,10 +33,10 @@ if ($placeId) {
     // $tags = (new Tag)->ofPlace($placeId);
     $attributes = (new MyAttribute)->ofPlace($placeId);
     $attr_names = (new MyAttribute)->names();
-    $attr_names = array_map(
-        fn($v) => substr($v, 1, -1),
-        explode(",", substr($attr_names["names"], 1, -1))
-    );
+    // $attr_names = array_map(
+    //     fn($v) => substr($v, 1, -1),
+    //     explode(",", substr($attr_names["names"], 1, -1))
+    // );
 
 }
 
@@ -111,9 +111,9 @@ if (!$place) {
                         <select>
                           <?php foreach ($attr_names as $attr_name): ?>
                             <option
-                              value="<?=$attr_name?>"
-                              <?=$attr_name == $attr["name"] ? "selected" : ""?>
-                              ><?=$attr_name?></option>
+                              value="<?=$attr_name["name"]?>"
+                              <?=$attr_name["name"] == $attr["name"] ? "selected" : ""?>
+                              ><?=$attr_name["name"]?></option>
                           <?php endforeach;?>
                         </select>
                       </td>

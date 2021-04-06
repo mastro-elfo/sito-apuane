@@ -17,8 +17,9 @@ class MyAttribute extends Model
     public function ofPlace($idPlace)
     {
         $query = (new Query)
-            ->select(["a.id", "a.name", "a.value", "a.after"])
+            ->select(["a.id", "at.name", "at.keyname", "a.value", "a.after"])
             ->from("$this->_table a")
+            ->join("attrtypes at", "at.id = a.idAttrtype")
             ->where("a.idPlace = $idPlace")
             ->and("a.deleted = 0");
         $ret = $this->query($query);
@@ -31,14 +32,13 @@ class MyAttribute extends Model
     public function names()
     {
         $query = (new Query)
-            ->select(["SUBSTRING(COLUMN_TYPE,5) as names"])
-            ->from("information_schema.COLUMNS")
-            ->where("TABLE_SCHEMA='apuane'")
-            ->and("TABLE_NAME='attributes'")
-            ->and("COLUMN_NAME='name'");
+            ->select(["id", "name", "keyname"])
+            ->from("attrtypes")
+            ->where("deleted = 0")
+            ->order("name ASC");
         $ret = $this->query($query);
         if ($ret) {
-            return $ret->fetch_assoc();
+            return $ret->fetch_all(MYSQLI_ASSOC);
         }
         return [];
     }
