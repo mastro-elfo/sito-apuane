@@ -30,7 +30,7 @@ if ($placeId) {
 
     $cPlace = new Place($placeId);
     $place  = $cPlace->read();
-    // $tags = (new Tag)->ofPlace($placeId, ["name", "color", "textColor"]);
+    // $tags = (new Tag)->ofPlace($placeId);
     $attributes = (new MyAttribute)->ofPlace($placeId);
     $attr_names = (new MyAttribute)->names();
     $attr_names = array_map(

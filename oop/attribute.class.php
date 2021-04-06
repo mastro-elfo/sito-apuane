@@ -14,17 +14,13 @@ class MyAttribute extends Model
         parent::__construct("attributes", $id);
     }
 
-    public function ofPlace($idPlace, $columns = [])
+    public function ofPlace($idPlace)
     {
         $query = (new Query)
+            ->select(["a.id", "a.name", "a.value", "a.after"])
             ->from("$this->_table a")
             ->where("a.idPlace = $idPlace")
             ->and("a.deleted = 0");
-        if ($columns) {
-            $query->select(array_map(fn($c) => "a.$c", $columns));
-        } else {
-            $query->select(["a.id", "a.name", "a.value", "a.after"]);
-        }
         $ret = $this->query($query);
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);

@@ -48,7 +48,7 @@ if ($placeId) {
         $image       = $place["image"];
         $showPlace   = true;
         // Load tags
-        $tags = (new Tag)->ofPlace($placeId, ["name", "color", "textColor"]);
+        $tags = (new Tag)->ofPlace($placeId);
         // // Load attributes
         $attributes = (new MyAttribute)->ofPlace($placeId);
         // Check if place has Latitudine and Longitudine
