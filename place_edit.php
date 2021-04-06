@@ -25,6 +25,7 @@ $attributes = [];
 // Controllo richiesta
 if ($placeId) {
     require_once "oop/attribute.class.php";
+    require_once "oop/attrtype.class.php";
     require_once "oop/place.class.php";
     require_once "oop/tag.class.php";
 
@@ -32,11 +33,7 @@ if ($placeId) {
     $place  = $cPlace->read();
     // $tags = (new Tag)->ofPlace($placeId);
     $attributes = (new MyAttribute)->ofPlace($placeId);
-    $attr_names = (new MyAttribute)->names();
-    // $attr_names = array_map(
-    //     fn($v) => substr($v, 1, -1),
-    //     explode(",", substr($attr_names["names"], 1, -1))
-    // );
+    $attr_names = (new AttrType)->all();
 
 }
 
