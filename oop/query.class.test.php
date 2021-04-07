@@ -31,12 +31,29 @@ test(
 );
 
 test(
+    "Create query short",
+    (new Query)->insert("table", [
+        "id"   => 0,
+        "name" => "'name'",
+    ]),
+    "INSERT INTO table (id, name) VALUES (0, 'name')"
+);
+
+test(
     "Read query",
     (new Query)
         ->select(["id", "name"])
         ->from("table")
         ->where("id = 0")
         ->and("deleted = 0")
+        ->order("main DESC"),
+    "SELECT id, name FROM table WHERE id = 0 AND deleted = 0 ORDER BY main DESC"
+);
+
+test(
+    "Read query short",
+    (new Query)
+        ->select(["id", "name"], "table", ["id = 0", "deleted = 0"])
         ->order("main DESC"),
     "SELECT id, name FROM table WHERE id = 0 AND deleted = 0 ORDER BY main DESC"
 );
@@ -49,6 +66,14 @@ test(
         ->join("other o", "o.tableId = t.id")
         ->where("t.id = 0")
         ->and("t.deleted = 0"),
+    "SELECT t.id, t.name FROM table t INNER JOIN other o ON o.tableId = t.id WHERE t.id = 0 AND t.deleted = 0"
+);
+
+test(
+    "Join query short",
+    (new Query)
+        ->select(["t.id", "t.name"], "table t", ["t.id = 0", "t.deleted = 0"])
+        ->join("other o", "o.tableId = t.id"),
     "SELECT t.id, t.name FROM table t INNER JOIN other o ON o.tableId = t.id WHERE t.id = 0 AND t.deleted = 0"
 );
 
@@ -67,11 +92,28 @@ test(
 );
 
 test(
+    "Update query short",
+    (new Query)
+        ->update("table", [
+            "name"   => "'new name'",
+            "number" => 1,
+            "string" => "'str'",
+        ], ["id = 0", "deleted = 0"]),
+    "UPDATE table SET name = 'new name', number = 1, string = 'str' WHERE id = 0 AND deleted = 0"
+);
+
+test(
     "Delete query",
     (new Query)
         ->delete()
         ->from("table")
         ->where("id = 0"),
+    "DELETE FROM table WHERE id = 0"
+);
+
+test(
+    "Delete query short",
+    (new Query)->delete("table", "id = 0"),
     "DELETE FROM table WHERE id = 0"
 );
 

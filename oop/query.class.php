@@ -154,7 +154,7 @@ class Query
     public function delete($from = null, $where = null)
     {
         $this->method("DELETE");
-        if ($table) {
+        if ($from) {
             $this->from($from);
         }
         if ($where) {
@@ -253,8 +253,8 @@ class Query
      */
     public function where($condition)
     {
-        if (is_array($where)) {
-            $this->_where = implode(" AND ", $where);
+        if (is_array($condition)) {
+            $this->_where = implode(" AND ", $condition);
         } else {
             $this->_where = $condition;
         }
