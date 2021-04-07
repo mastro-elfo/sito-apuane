@@ -86,6 +86,17 @@ class Query
     }
 
     /**
+     * Sets SQL method
+     * @param  string $method
+     * @return Query
+     */
+    public function method($method)
+    {
+        $this->_method = $method;
+        return $this;
+    }
+
+    /**
      * Sets "SELECT" statement
      * @param  string|array $cols The string "*", or a comma separated list of columns, or a list of columns
      * @return Query
