@@ -34,14 +34,15 @@ class Model
      */
     public function getCreateQuery($columns)
     {
-        return (new Query)
-            ->insert($this->_table)
-            ->values(array_combine(
+        return (new Query)->insert(
+            $this->_table,
+            array_combine(
                 array_keys($columns),
                 array_map(
                     fn($s) => $this->clean($s),
-                    array_values($columns))
-            ));
+                    array_values($columns)
+                ))
+        );
     }
 
     /**
@@ -52,13 +53,11 @@ class Model
      */
     public function getReadQuery($columns = "*", $ands = [])
     {
-        $query = (new Query)
-            ->select($columns)
-            ->from($this->_table)
-            ->where("id = $this->_id")
-            ->and("deleted = 0")
-            ->and($ands);
-        return $query;
+        return (new Query)->select(
+            $columns,
+            $this->_table,
+            array_merge(["id = $this->_id", "deleted = 0"], $ands)
+        );
     }
 
     /**
@@ -69,16 +68,14 @@ class Model
      */
     public function getUpdateQuery($columns, $ands = [])
     {
-        $query = (new Query)
-            ->update($this->_table)
-            ->set(array_combine(
+        return (new Query)->update(
+            $this->_table,
+            array_combine(
                 array_keys($columns),
                 array_map(fn($s) => $this->clean($s), array_values($columns))
-            ))
-            ->where("id = $this->_id")
-            ->and("deleted = 0")
-            ->and($ands);
-        return $query;
+            ),
+            array_merge(["id = $this->_id", "deleted = 0"], $ands)
+        );
     }
 
     /**
@@ -89,7 +86,7 @@ class Model
      */
     public function getDeleteQuery($force = false, $ands = [])
     {
-        $query = (new Query);
+        $query = (new Query)->where("id = $this->_id")->and($ands);
         if ($force) {
             // Delete row from table
             $query->delete()->from($this->_table);
@@ -97,9 +94,6 @@ class Model
             // Soft delete
             $query->update($this->_table)->set(["deleted" => 1]);
         }
-        $query
-            ->where("id = $this->_id")
-            ->and($ands);
         return $query;
     }
 
