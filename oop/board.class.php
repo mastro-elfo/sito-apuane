@@ -14,7 +14,7 @@ class Board extends Model
         parent::__construct("boards", $id);
     }
 
-    public function getSelectQuery($columns = "*", $ands = [])
+    public function getReadQuery($columns = "*", $ands = [])
     {
         $query = (new Query)
             ->select(["b.id", "b.content", "b.title", "b.uDateTime", "u.id as user_id", "u.name as user_name"])

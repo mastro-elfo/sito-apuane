@@ -32,7 +32,7 @@ class Model
      * @param  array $columns
      * @return Query
      */
-    public function getInsertQuery($columns)
+    public function getCreateQuery($columns)
     {
         return (new Query)
             ->insert($this->_table)
@@ -50,7 +50,7 @@ class Model
      * @param  array  $ands
      * @return Query
      */
-    public function getSelectQuery($columns = "*", $ands = [])
+    public function getReadQuery($columns = "*", $ands = [])
     {
         $query = (new Query)
             ->select($columns)
@@ -118,7 +118,7 @@ class Model
      */
     public function create($columns)
     {
-        $ret = $this->query($this->getInsertQuery($columns));
+        $ret = $this->query($this->getCreateQuery($columns));
         if ($ret) {
             return $this->_db->get_last_id();
         }
@@ -133,7 +133,7 @@ class Model
     public function read($columns = "*", $ands = [])
     {
         // Query
-        $ret = $this->query($this->getSelectQuery($columns, $ands));
+        $ret = $this->query($this->getReadQuery($columns, $ands));
         if ($ret) {
             return $ret->fetch_assoc();
         }
