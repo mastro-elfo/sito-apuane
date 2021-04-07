@@ -101,10 +101,18 @@ class Query
      * @param  string|array $cols The string "*", or a comma separated list of columns, or a list of columns
      * @return Query
      */
-    public function select($cols = "*")
+    public function select($cols = "*", $from = null, $where = null)
     {
         $this->_selectCols = $cols;
-        $this->_method     = "SELECT";
+        $this->method("SELECT");
+        if ($from) {
+            $this->from($from);
+        }
+        if (is_array($where)) {
+            $this->where(implode(" AND ", $where));
+        } elseif (is_string($where)) {
+            $this->where($where);
+        }
         return $this;
     }
 
@@ -113,10 +121,13 @@ class Query
      * @param  string $table
      * @return Query
      */
-    public function insert($table)
+    public function insert($table, $values = null)
     {
-        $this->_table  = $table;
-        $this->_method = "INSERT INTO";
+        $this->_table = $table;
+        $this->method("INSERT INTO");
+        if ($values) {
+            $this->values($values);
+        }
         return $this;
     }
 
@@ -125,10 +136,18 @@ class Query
      * @param  string $table
      * @return Query
      */
-    public function update($table)
+    public function update($table, $set = null, $where = null)
     {
-        $this->_table  = $table;
-        $this->_method = "UPDATE";
+        $this->_table = $table;
+        $this->method("UPDATE");
+        if ($set) {
+            $this->set($set);
+        }
+        if (is_array($where)) {
+            $this->where(implode(" AND ", $where));
+        } elseif (is_string($where)) {
+            $this->where($where);
+        }
         return $this;
     }
 
@@ -136,9 +155,17 @@ class Query
      * Sets method "DELETE"
      * @return Query
      */
-    public function delete()
+    public function delete($from = null, $where = null)
     {
-        $this->_method = "DELETE";
+        $this->method("DELETE");
+        if ($table) {
+            $this->from($from);
+        }
+        if (is_array($where)) {
+            $this->where(implode(" AND ", $where));
+        } elseif (is_string($where)) {
+            $this->where($where);
+        }
         return $this;
     }
 
