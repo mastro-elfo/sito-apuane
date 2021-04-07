@@ -108,9 +108,7 @@ class Query
         if ($from) {
             $this->from($from);
         }
-        if (is_array($where)) {
-            $this->where(implode(" AND ", $where));
-        } elseif (is_string($where)) {
+        if ($where) {
             $this->where($where);
         }
         return $this;
@@ -143,9 +141,7 @@ class Query
         if ($set) {
             $this->set($set);
         }
-        if (is_array($where)) {
-            $this->where(implode(" AND ", $where));
-        } elseif (is_string($where)) {
+        if ($where) {
             $this->where($where);
         }
         return $this;
@@ -161,9 +157,7 @@ class Query
         if ($table) {
             $this->from($from);
         }
-        if (is_array($where)) {
-            $this->where(implode(" AND ", $where));
-        } elseif (is_string($where)) {
+        if ($where) {
             $this->where($where);
         }
         return $this;
@@ -254,12 +248,16 @@ class Query
 
     /**
      * Sets "WHERE" statement
-     * @param  string $condition
+     * @param  array|string $condition
      * @return Query
      */
     public function where($condition)
     {
-        $this->_where = $condition;
+        if (is_array($where)) {
+            $this->_where = implode(" AND ", $where);
+        } else {
+            $this->_where = $condition;
+        }
         return $this;
     }
 
