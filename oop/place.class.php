@@ -48,13 +48,27 @@ class Place extends Model
 
     public function related()
     {
+        // $query = (new Query)
+        //     ->select(["o.id", "o.name"])
+        //     ->from("places o")
+        //     ->join("places_places pp", "pp.idTo = o.id")
+        //     ->where("pp.idFrom = $this->_id")
+        //     ->and("pp.deleted = 0")
+        //     ->and("o.deleted = 0")
+        //     ->order("o.name ASC");
+
+        // Auto select from/to related places
         $query = (new Query)
-            ->select(["o.id", "o.name"])
-            ->from("places o")
-            ->join("places_places pp", "pp.idTo = o.id")
-            ->where("pp.idFrom = $this->_id")
-            ->and("pp.deleted = 0")
-            ->and("o.deleted = 0")
+            ->select(
+                ["o.id", "o.name"],
+                "$this->_table o",
+                ["o.deleted = 0", "pp.deleted = 0"]
+            )
+            ->join(
+                "places_places pp",
+                "(pp.idFrom = $this->_id AND pp.idTo = o.id) OR
+                (pp.idTo = $this->_id AND pp.idFrom = o.id)"
+            )
             ->order("o.name ASC");
         $ret = $this->query($query);
         if ($ret) {
