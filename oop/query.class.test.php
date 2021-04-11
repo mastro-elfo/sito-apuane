@@ -70,11 +70,30 @@ test(
 );
 
 test(
-    "Join query short",
+    "Join Join query short",
     (new Query)
         ->select(["t.id", "t.name"], "table t", ["t.id = 0", "t.deleted = 0"])
         ->join("other o", "o.tableId = t.id"),
     "SELECT t.id, t.name FROM table t INNER JOIN other o ON o.tableId = t.id WHERE t.id = 0 AND t.deleted = 0"
+);
+
+test(
+    "Left Join query",
+    (new Query)
+        ->select(["t.id", "t.name"])
+        ->from("table t")
+        ->left("other o", "o.tableId = t.id")
+        ->where("t.id = 0")
+        ->and("t.deleted = 0"),
+    "SELECT t.id, t.name FROM table t LEFT JOIN other o ON o.tableId = t.id WHERE t.id = 0 AND t.deleted = 0"
+);
+
+test(
+    "Left Join query short",
+    (new Query)
+        ->select(["t.id", "t.name"], "table t", ["t.id = 0", "t.deleted = 0"])
+        ->left("other o", "o.tableId = t.id"),
+    "SELECT t.id, t.name FROM table t LEFT JOIN other o ON o.tableId = t.id WHERE t.id = 0 AND t.deleted = 0"
 );
 
 test(

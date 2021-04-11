@@ -27,6 +27,8 @@ class Query
     protected $_set = [];
     // List of inner joins
     protected $_joins = [];
+    // List of left joins
+    protected $_lefts = [];
 
     /**
      * This is where all the magic happens.
@@ -68,6 +70,10 @@ class Query
 
         foreach ($this->_joins as $join => $on) {
             $query .= " INNER JOIN $join ON $on";
+        }
+
+        foreach ($this->_lefts as $join => $on) {
+          $query .= " LEFT JOIN $join ON $on";
         }
 
         if ($this->_where) {
@@ -213,6 +219,17 @@ class Query
     {
         $this->_joins[$join] = $on;
         return $this;
+    }
+
+    /**
+     * Set "LEFT JOIN" table/condition statement
+     * @param  string $join table
+     * @param  string $on   condition
+     * @return Query
+     */
+    public function left($join, $on){
+      $this->_lefts[$join] = $on;
+      return $this;
     }
 
     /**
