@@ -33,8 +33,13 @@
           <input type="email" name="email" id="email" value="" placeholder="">
           <label for="password">Password</label>
           <input type="password" name="password" value="" placeholder="">
-          <div class="button-container">
-            <button type="submit" name="action" value="signup">Registrami</button>
+          <div class="button-container py1">
+            <button
+              type="submit"
+              name="action"
+              value="signup"
+              class="bSuccess"
+              >Registrami</button>
           </div>
         </fieldset>
       </form>
