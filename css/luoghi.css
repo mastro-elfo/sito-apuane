@@ -8,6 +8,22 @@ article {
   top: 0.15em;
 }
 
+.pagination {
+  padding: 0 0.5em;
+  text-align: center;
+}
+
+.pagination a {
+  padding: 0.25em 0.5em;
+  text-align: center;
+}
+
+.pagination a.selected,
+.pagination a:hover {
+  background: forestgreen;
+  color: white;
+}
+
 @media screen and (max-width: 1024px) {
   #editPlaceButton {
     right: 1em;

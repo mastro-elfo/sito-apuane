@@ -14,7 +14,7 @@ class Place extends Model
         parent::__construct("places", $id);
     }
 
-    public function search($string = null, $tag = null)
+    public function search($string = null, $tag = null, $offset = 0, $limit = 10)
     {
         // Query tags
         $query_t = (string) (new Query)
@@ -38,10 +38,34 @@ class Place extends Model
                 ->join("tags t", "t.id = pt.idTag")
                 ->and("t.name = '$tag'");
         }
+        $query->limit($offset, $limit);
         // Filter by tag
         $ret = $this->query($query);
         if ($ret) {
             return $ret->fetch_all(MYSQLI_ASSOC);
+        }
+        return null;
+    }
+
+    public function count($string = null, $tag = null)
+    {
+        $query = (new Query)
+            ->select(["count(*) AS count"])
+            ->from("$this->_table p")
+            ->where("p.deleted = 0");
+            // Filter by name
+        if ($string) {
+            $query->and("p.name LIKE '%$string%'");
+        }
+        if ($tag) {
+            $query
+                ->join("places_tags pt", "pt.idPlace = p.id")
+                ->join("tags t", "t.id = pt.idTag")
+                ->and("t.name = '$tag'");
+        }
+        $ret = $this->query($query);
+        if ($ret) {
+            return $ret->fetch_assoc();
         }
         return null;
     }

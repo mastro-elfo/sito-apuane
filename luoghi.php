@@ -66,7 +66,19 @@ if ($placeId) {
         $errore = "Errore nel database";
     }
 } else {
-    $places = $cPlace->search($search, $tagFilter);
+    $page    = 1;
+    $perPage = 10;
+    if (isset($_GET["page"])) {
+        $page = intval($_GET["page"]);
+    }
+    $count  = $cPlace->count($search, $tagFilter)["count"];
+    $pages  = ceil(intval($count) / $perPage);
+    $places = $cPlace->search(
+        $search,
+        $tagFilter,
+        ($page - 1) * $perPage,
+        $perPage
+    );
 }
 
 ?>
@@ -97,13 +109,13 @@ if ($placeId) {
       <?php if ($showPlace): ?>
         <!-- Visualizzazione luogo -->
         <article>
-          <?php if(isAdmin()): ?>
+          <?php if (isAdmin()): ?>
               <a
                 type="button"
                 href="place_edit.php?id=<?=$placeId?>"
                 id="editPlaceButton"
                 class="bWarning">Modifica</a>
-          <?php endif; ?>
+          <?php endif;?>
           <!-- Title -->
           <h2><?=$h1?></h2>
           <?php if ($image): ?>
@@ -215,6 +227,14 @@ if ($placeId) {
               </li>
             <?php endforeach;?>
           </ul>
+          <div class="pagination mt1">
+            <?php for ($i = 1; $i <= $pages; $i++): ?>
+              <a
+                href="luoghi.php?page=<?=$i?>&q=<?=$search?>&t=<?=$tagFilter?>"
+                class="<?=$i == $page ? "selected" : ""?>"
+                ><?=$i?></a>
+            <?php endfor;?>
+          </div>
         <?php endif;?>
       <?php endif;?>
       <footer class="py1"></footer>
