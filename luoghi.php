@@ -67,7 +67,7 @@ if ($placeId) {
     }
 } else {
     $page    = 1;
-    $perPage = 10;
+    $perPage = 15;
     if (isset($_GET["page"])) {
         $page = intval($_GET["page"]);
     }
@@ -196,6 +196,10 @@ if ($placeId) {
               name="q"
               value="<?=$search?>"
               placeholder="Ricerca">
+            <input
+              type="hidden"
+              name="t"
+              value="<?=$tagFilter?>">
           </fieldset>
         </form>
         <!-- Visualizzazione lista -->
@@ -211,7 +215,7 @@ if ($placeId) {
                       <a
                         class="tag klein ml1"
                         style="background:<?=$parts[1]?>;color:<?=$parts[2]?>"
-                        href="luoghi.php?t=<?=$parts[0]?>"
+                        href="luoghi.php?q=<?=$search?>&t=<?=$parts[0]?>"
                         title="Cerca <?=$parts[0]?>"
                         ><?=$parts[0]?></a>
                     <?php endforeach;?>
