@@ -109,8 +109,7 @@ if ($boardId) {
               <?php if ($_SESSION["user"]["id"] == $board["user_id"]): ?>
                 <!-- Edit this message -->
                 <a
-                  type="button"
-                  class="bWarning"
+                  class="button bWarning"
                   href="bacheca_scrivi.php?id=<?=$board["id"]?>"
                   >Modifica</a>
                 <!-- Delete this message -->
@@ -162,8 +161,7 @@ if ($boardId) {
               class="button bSuccess"
               >Scrivi</a>
             <a
-              type="button"
-              class="bWarning"
+              class="button bWarning"
               href="bacheca.php?<?=$searchByUserId ? "" : "byUser"?>"
               ><?=$searchByUserId ? "-" : "+"?> Filtra</a>
             <span></span>
