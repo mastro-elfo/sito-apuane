@@ -111,10 +111,10 @@ if ($placeId) {
         <article>
           <?php if (isAdmin()): ?>
               <a
-                type="button"
-                href="place_edit.php?id=<?=$placeId?>"
                 id="editPlaceButton"
-                class="bWarning">Modifica</a>
+                href="place_edit.php?id=<?=$placeId?>"
+                class="button bWarning"
+                >Modifica</a>
           <?php endif;?>
           <!-- Title -->
           <h2><?=$h1?></h2>

@@ -63,9 +63,8 @@ if ($boardId) {
           <div class="button-container mt1">
             <button type="button" id="write" class="bSuccess">Conferma</button>
             <a
-              type="button"
               id="cancel"
-              class="bWarning"
+              class="button bWarning"
               href="bacheca.php"
               >Annulla</a>
           </div>

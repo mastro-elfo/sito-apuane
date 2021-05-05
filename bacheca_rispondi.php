@@ -73,8 +73,7 @@ if ($answerId) {
               >Rispondi</button>
             <a
               href="bacheca.php?id=<?=$board["id"]?>"
-              type="button"
-              class="bWarning"
+              class="button bWarning"
               >Annulla</a>
           </div>
           <input type="hidden" id="boardId" value="<?=$boardId?>">

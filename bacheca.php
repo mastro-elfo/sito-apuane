@@ -102,9 +102,8 @@ if ($boardId) {
             <div class="button-container mb1">
               <!-- Answer this message -->
               <a
-                type="button"
                 href="bacheca_rispondi.php?boardId=<?=$board["id"]?>"
-                class="bSuccess"
+                class="button bSuccess"
                 >Rispondi</a>
               <!-- If user is owner, add the edit and delete button -->
               <?php if ($_SESSION["user"]["id"] == $board["user_id"]): ?>
@@ -138,8 +137,7 @@ if ($boardId) {
                   <span></span>
                   <?php if (isset($_SESSION["user"]) && $answer["idUser"] == $_SESSION["user"]["id"]): ?>
                     <a
-                      type="button"
-                      class="bWarning"
+                      class="button bWarning"
                       data-board-id="<?=$board["id"]?>"
                       data-answer-id="<?=$answer["id"]?>"
                       href="bacheca_rispondi.php?boardId=<?=$board["id"]?>&answerId=<?=$answer["id"]?>"
@@ -160,9 +158,8 @@ if ($boardId) {
         <?php if (isset($_SESSION["user"])): ?>
           <div class="button-container p1">
             <a
-              type="button"
               href="bacheca_scrivi.php"
-               class="bSuccess"
+              class="button bSuccess"
               >Scrivi</a>
             <a
               type="button"

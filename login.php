@@ -41,9 +41,8 @@
           <div class="button-container">
             <button type="submit" class="bSuccess">Login</button>
             <a
-              type="button"
               href="registrazione.php"
-              class="bWarning"
+              class="button bWarning"
               >Registrati</a>
           </div>
         </fieldset>

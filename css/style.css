@@ -121,7 +121,8 @@ body > footer {
 
 button,
 [type="button"],
-[type="submit"] {
+[type="submit"],
+.button {
   border: none;
   background: forestgreen;
   color: white;
@@ -135,7 +136,8 @@ button,
 
 button:disabled,
 [type="button"]:disabled,
-[type="submit"]:disabled {
+[type="submit"]:disabled,
+.button:disabled {
   background: silver;
   color: #444;
   cursor: default;
@@ -143,7 +145,8 @@ button:disabled,
 
 button:active,
 [type="button"]:active,
-[type="submit"]:active {
+[type="submit"]:active,
+.button:active {
   border-style: inset;
 }
 
