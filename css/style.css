@@ -70,7 +70,7 @@ fieldset {
   border: none;
   /* max-width: 400px; */
   width: 100%;
-  max-width: 1024;
+  max-width: 1024px;
 }
 
 nav {
@@ -274,19 +274,19 @@ textarea {
 .bSuccess {
   background: forestgreen;
   color: white;
-  border: 1px outset forestgreen;
+  border: 1px outset darkgreen;
 }
 
 .bDanger {
   background: crimson;
   color: white;
-  border: 1px outset crimson;
+  border: 1px outset darkred;
 }
 
 .bWarning {
   background: orange;
   color: black;
-  border: 1px outset orange;
+  border: 1px outset darkorange;
 }
 
 /* Lista a blocchi */
