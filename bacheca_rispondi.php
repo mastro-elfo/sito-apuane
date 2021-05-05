@@ -46,7 +46,7 @@ if ($answerId) {
     <link rel="icon" href="favicon.png" type="image/png"/>
     <title>Rispondi a messaggio</title>
     <script src="lib/js/jquery-3.6.0.js"></script>
-    <script src="lib/js/SnackBar-master/dist/snackbar.min.js" charset="utf-8"></script>
+    <script src="lib/js/SnackBar-master/dist/snackbar.min.js"></script>
     <script src="js/snackbar.js" charset="utf-8"></script>
     <script src="js/bacheca.js"></script>
   </head>

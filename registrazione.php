@@ -10,15 +10,15 @@
     <script src="lib/js/jquery-3.6.0.js"></script>
     <link rel="stylesheet" href="lib/js/passfield-1.1.15/dist/css/passfield.min.css">
     <script src="lib/js/passfield-1.1.15/dist/js/passfield.min.js"></script>
-    <script type="text/javascript">
+    <script>
     $(function($){
       $('input[type="password"]').passField({
         pattern: "aB$3aB$3"
       });
     })
     </script>
-    <script src="lib/js/SnackBar-master/dist/snackbar.min.js" charset="utf-8"></script>
-    <script src="js/snackbar.js" charset="utf-8"></script>
+    <script src="lib/js/SnackBar-master/dist/snackbar.min.js"></script>
+    <script src="js/snackbar.js"></script>
     <script src="js/registrazione.js"></script>
   </head>
   <body>
@@ -28,11 +28,11 @@
       <form id="registrazione" action="ajax/registrazione.php" method="post">
         <fieldset>
           <label for="name">Nome</label>
-          <input type="text" name="name" value="" placeholder="">
+          <input type="text" name="name" id="name" value="" placeholder="">
           <label for="email">Email</label>
           <input type="email" name="email" id="email" value="" placeholder="">
           <label for="password">Password</label>
-          <input type="password" name="password" value="" placeholder="">
+          <input type="password" name="password" id="password" value="" placeholder="">
           <div class="button-container py1">
             <button
               type="submit"

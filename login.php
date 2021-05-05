@@ -12,10 +12,10 @@
     <link rel="stylesheet" href="lib/js/SnackBar-master/dist/snackbar.min.css">
     <link rel="icon" href="favicon.png" type="image/png"/>
     <title>Accesso al sito</title>
-    <script type="text/javascript" src="lib/js/jquery-3.6.0.js"></script>
-    <script src="lib/js/SnackBar-master/dist/snackbar.min.js" charset="utf-8"></script>
-    <script src="js/snackbar.js" charset="utf-8"></script>
-    <script type="text/javascript" src="js/accesso.js"></script>
+    <script src="lib/js/jquery-3.6.0.js"></script>
+    <script src="lib/js/SnackBar-master/dist/snackbar.min.js"></script>
+    <script src="js/snackbar.js"></script>
+    <script src="js/accesso.js"></script>
   </head>
   <body>
     <?php require "php/nav.php";?>
