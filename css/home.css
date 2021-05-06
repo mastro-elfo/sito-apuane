@@ -3,8 +3,16 @@ body > header {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  text-shadow: silver 0 0 2px;
-  padding: 4em 0;
+  padding: 4em 0 1em;
+}
+
+body > header h1 {
+  text-shadow: rgba(0, 0, 0, 0.75) 1px 1px 0px,
+    rgba(255, 255, 255, 0.75) -1px -1px 0px;
+  color: forestgreen;
+  font-size: 8em;
+  text-align: center;
+  font-family: "Dancing Script", cursive;
 }
 
 video {
