@@ -53,7 +53,7 @@ $places = $cPlace->latest(0, 4);
           <!-- Check if place has image -->
           <?php if ($place["image"]): ?>
             <img
-              src="php/img.php?table=places&id=<?=$place["id"]?>"
+              src="img.php?table=places&id=<?=$place["id"]?>"
               alt="<?=$place["title"]?>">
           <?php endif;?>
           <!-- Place description -->

@@ -38,7 +38,7 @@ function get_place_by_id($id)
         "id", "name", "title", "article", "description", "!isnull(image) as has_image", "uDateTime",
     ]);
     if ($place["has_image"]) {
-        $place["src"] = "/php/img.php?id=$id";
+        $place["src"] = "/img.php?id=$id";
     }
     $place["attributes"] = (new MyAttribute)->ofPlace($id);
     $place["tags"]       = (new Tag)->ofPlace($id);

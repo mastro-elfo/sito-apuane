@@ -121,7 +121,7 @@ if ($placeId) {
           <?php if ($image): ?>
             <!-- Inserisci l'immagine se presente -->
             <img
-              src="php/img.php?id=<?=$placeId?>"
+              src="img.php?id=<?=$placeId?>"
               alt="<?=$image?>"/>
           <?php endif;?>
           <!-- Article content -->
