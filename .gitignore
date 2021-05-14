@@ -1,5 +1,5 @@
 memo.md
-*.ini
+*/database.ini
 .~*
 tmp
 docs/documentazione.pdf

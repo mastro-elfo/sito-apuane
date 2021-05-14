@@ -9,8 +9,10 @@ session_start();
 
 require_once "lib/php/parsedown-master/Parsedown.php";
 require_once "oop/place.class.php";
+require_once "php/i18n.php";
 
 $pd = new Parsedown();
+$i18n = i18n("index");
 
 $cPlace  = new Place();
 $places = $cPlace->latest(0, 4);
@@ -31,20 +33,14 @@ $places = $cPlace->latest(0, 4);
     <link rel="stylesheet" href="css/home.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
     <link rel="icon" href="favicon.png" type="image/png"/>
-    <title>Vette Apuane</title>
+    <title><?=$i18n["title"]?></title>
   </head>
   <body>
     <header>
-      <h1>Alpi Apuane</h1>
+      <h1><?=$i18n["h1"]?></h1>
     </header>
 
     <?php require "php/nav.php";?>
-
-    <!-- <aside class="center">
-      <video autoplay controls muted title="Un video sulla montagna">
-        <source src="./video/montagna.mp4" type="video/mp4" />
-      </video>
-    </aside> -->
 
     <main>
       <?php foreach ($places as $place): ?>
@@ -62,11 +58,12 @@ $places = $cPlace->latest(0, 4);
           <div class="button-container">
             <a
               href="luoghi.php?id=<?=$place["id"]?>"
-              title="<?=$place["title"]?>">Leggi</a>
+              title="<?=$place["title"]?>"
+              ><?=$i18n["read"]?></a>
           </div>
           <!-- Footer -->
           <footer class="clear">
-            <p>(<time datetime="<?=$place["uDateTime"]?>"><?=date_format(date_create($place["uDateTime"]), "d/m/Y")?></time>)</p>
+            <p>(<time datetime="<?=$place["uDateTime"]?>"><?=date_format(date_create($place["uDateTime"]), $i18n["dtformat"])?></time>)</p>
           </footer>
         </article>
       <?php endforeach;?>

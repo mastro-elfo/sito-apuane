@@ -3,17 +3,20 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+require_once "php/i18n.php";
+$_i18n = i18n("nav");
+
 $items = [
     [
         "href"  => "./",
         "match" => "~/(index\.php)?$~",
-        "label" => "Home",
-        "title" => "Home Page",
+        "label" => $_i18n["home"],
+        "title" => $_i18n["home_title"],
     ],
     [
         "href"  => "luoghi.php",
-        "label" => "Luoghi",
-        "title" => "Luoghi sulle Alpi Apuane",
+        "label" => $_i18n["places"],
+        "title" => $_i18n["places_title"],
     ],
     // [
     //     "href"  => "#",
@@ -22,25 +25,25 @@ $items = [
     // ],
     [
         "href"  => "mappa.php",
-        "label" => "Mappa",
-        "title" => "Mappa del parco",
+        "label" => $_i18n["map"],
+        "title" => $_i18n["map_title"],
     ],
     [
         "href"   => "login.php",
-        "label"  => "Accedi",
-        "title"  => "Accedi all&rsquo;area riservata",
+        "label"  => $_i18n["login"],
+        "title"  => $_i18n["login_title"],
         "access" => false,
     ],
     [
         "href"   => "profilo.php",
-        "label"  => "Profilo",
-        "title"  => "Il tuo profilo personale",
+        "label"  => $_i18n["profile"],
+        "title"  => $_i18n["profile_title"],
         "access" => true,
     ],
     [
         "href"   => "bacheca.php",
-        "label"  => "Bacheca",
-        "title"  => "Bacheca del sito",
+        "label"  => $_i18n["board"],
+        "title"  => $_i18n["board_title"],
         "access" => true,
     ]
 ];

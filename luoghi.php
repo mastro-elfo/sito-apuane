@@ -10,7 +10,9 @@ require_once "oop/attribute.class.php";
 require_once "oop/place.class.php";
 require_once "oop/tag.class.php";
 require_once "php/admin.php";
+require_once "php/i18n.php";
 
+$i18n = i18n("luoghi");
 // Init parser
 $pd = new Parsedown();
 // Inizializzo variabili di pagina
@@ -129,7 +131,7 @@ if ($placeId) {
           <!-- Luoghi correlati -->
           <?php if (count($related)): ?>
             <section>
-              <h3>Vedi anche</h3>
+              <h3><?=$i18n["seealso"]?></h3>
               <p>
                 <?php foreach ($related as $key => $item): ?>
                   <a
@@ -143,7 +145,7 @@ if ($placeId) {
           <!-- Attributi -->
           <?php if (count($attributes)): ?>
             <section>
-              <h3>Dati</h3>
+              <h3><?=$i18n["data"]?></h3>
               <table>
                 <tbody>
                   <?php foreach ($attributes as $attr): ?>
@@ -195,7 +197,7 @@ if ($placeId) {
               type="text"
               name="q"
               value="<?=$search?>"
-              placeholder="Ricerca">
+              placeholder="<?=$i18n["search"]?>">
             <input
               type="hidden"
               name="t"
