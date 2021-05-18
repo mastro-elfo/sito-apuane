@@ -24,14 +24,14 @@ class User extends Model
         }
         // Check email not used;
         $user = $this->query(
-          (new Query)
-            ->select()
-            ->from($this->_table)
-            ->where("email = '$columns[email]'")
-            ->and("deleted = 0")
+            (new Query)
+                ->select()
+                ->from($this->_table)
+                ->where("email = '$columns[email]'")
+                ->and("deleted = 0")
         );
-        if($user) {
-          return null;
+        if ($user) {
+            return null;
         }
         // Encrypt password
         $columns["password"] = hash("sha256", $columns["password"]);

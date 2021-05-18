@@ -134,6 +134,19 @@ class Model
         return null;
     }
 
+    public function readAll()
+    {
+        $query = (new Query)
+            ->select("*")
+            ->from($this->_table)
+            ->where("deleted = 0");
+        $ret = $this->query($query);
+        if ($ret) {
+            return $ret->fetch_all(MYSQLI_ASSOC);
+        }
+        return [];
+    }
+
     /**
      * Aggiorna una riga nel db
      * @param  array $columns array associativo `["colonna" => <valore>, ...]`
