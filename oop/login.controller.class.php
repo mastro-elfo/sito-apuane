@@ -9,12 +9,12 @@ class LoginController extends Controller
         $username = $args["username"];
         $password = $args["password"];
         $user     = (new User)->login($username, $password);
-        $this->json(["response" => !!$user]);
+        $this->json(["ok" => !!$user]);
     }
 
     public function logout()
     {
         $ret = (new User)->logout();
-        $this->json(["response" => !!$ret]);
+        $this->json(["ok" => !!$ret]);
     }
 }
