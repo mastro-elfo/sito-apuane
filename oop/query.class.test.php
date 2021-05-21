@@ -1,22 +1,8 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
+require_once __DIR__ . "/test.php";
 require_once __DIR__ . "/query.class.php";
 
-echo "zend.assertions = " . ini_get("zend.assertions") . PHP_EOL;
 echo "Start test query.class.test.php" . PHP_EOL;
-
-function test($title, $expression, $expected)
-{
-    echo $title . PHP_EOL;
-    assert(
-        ((string) $expression) == $expected,
-        "$title, Expected: \"$expected\", Got: \""
-        . ((string) $expression) . '"'
-    );
-}
 
 test(
     "Create query",
