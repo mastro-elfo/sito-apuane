@@ -1,6 +1,27 @@
 $(function () {
   let map = null;
 
+  function center_park() {
+    if (map) {
+      // console.log(map);
+      map.setCenter(
+        new google.maps.LatLng(44.07868721388755, 10.280850401209221)
+      );
+      map.setZoom(11);
+    }
+  }
+
+  function center_user() {
+    if (map) {
+      navigator.geolocation.getCurrentPosition(
+        ({ coords: { latitude, longitude } }) => {
+          map.setCenter(new google.maps.LatLng(latitude, longitude));
+          map.setZoom(11);
+        }
+      );
+    }
+  }
+
   // Ask geolocation permission
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -23,6 +44,7 @@ $(function () {
         position: new google.maps.LatLng(latitude, longitude),
         map,
         title: `Lat: ${latitude.toFixed(2)}°, Lon: ${longitude.toFixed(2)}°`,
+        icon: "imgs/hiker.svg",
       });
 
       const ICONS = {
@@ -50,13 +72,6 @@ $(function () {
     alert("Localizzazione non consentita");
   }
 
-  $("#center").on("click", function () {
-    if (map) {
-      // console.log(map);
-      map.setCenter(
-        new google.maps.LatLng(44.07868721388755, 10.280850401209221)
-      );
-      map.setZoom(11);
-    }
-  });
+  $("#center").on("click", center_park);
+  $("#user").on("click", center_user);
 });
