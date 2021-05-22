@@ -5,7 +5,7 @@ $(function () {
     $.ajax("ajax/board.php", {
       method: "POST",
       data: {
-        action: !!boardId ? "edit-board" : "create",
+        action: !!boardId ? "editBoard" : "create",
         title: $("#title").val(),
         content: $("#content").val(),
         boardId,
@@ -13,7 +13,7 @@ $(function () {
       success: (r) => {
         // console.log("response", r);
         try {
-          const id = JSON.parse(r);
+          const { id } = JSON.parse(r);
           if (id) {
             snackbar("Messaggio inviato", "success");
             setTimeout(() => {
@@ -40,7 +40,7 @@ $(function () {
       $.ajax("ajax/board.php", {
         method: "POST",
         data: {
-          action: !!answerId ? "edit-answer" : "answer",
+          action: !!answerId ? "editAnswer" : "answer",
           content: $("#content").val(),
           boardId,
           answerId,
@@ -80,7 +80,7 @@ $(function () {
       $.ajax("ajax/board.php", {
         method: "POST",
         data: {
-          action: "delete-board",
+          action: "deleteBoard",
           boardId: e.target.getAttribute("data-delete-board"),
         },
         success: (r) => {
@@ -106,7 +106,7 @@ $(function () {
       $.ajax("ajax/board.php", {
         method: "POST",
         data: {
-          action: "delete-answer",
+          action: "deleteAnswer",
           answerId: e.target.getAttribute("data-delete-answer"),
         },
         success: (r) => {
