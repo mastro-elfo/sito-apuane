@@ -41,7 +41,9 @@ $markers = array_values(array_filter(
 
     <main>
       <div class="button-container pt1">
-        <button type="button" id="center" class="bSuccess">Centra</button>
+        <button type="button" id="center" class="bSuccess">Parco</button>
+        <button type="button" id="user" class="bSuccess">Tu</button>
+        <span></span>
       </div>
       <div class="center mt1">
         <div id="map-container" class="radius1">
