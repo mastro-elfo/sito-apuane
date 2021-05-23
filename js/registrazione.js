@@ -39,8 +39,8 @@ $(function () {
       );
       return false;
     }
-    snackbar("Tutti i campi sono validi", "success");
-    return false;
+    // snackbar("Tutti i campi sono validi", "success");
+    // return false;
     // console.log(e);
     $.ajax("ajax/registrazione.php", {
       method: "POST",
@@ -52,8 +52,8 @@ $(function () {
       },
       success: function (r) {
         try {
-          r = JSON.parse(r);
-          if (r) {
+          const { id } = JSON.parse(r);
+          if (id) {
             snackbar("Registrazione effettuata", "success");
             setTimeout(() => (location.href = "/login.php"), 500);
           } else {
