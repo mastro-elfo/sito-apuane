@@ -30,7 +30,6 @@ class User extends Model
                 ->where("email = '$columns[email]'")
                 ->and("deleted = 0")
         );
-        file_put_contents("/tmp/create.txt", print_r($user, true));
         if ($user && $user->fetch_assoc()) {
             return null;
         }
