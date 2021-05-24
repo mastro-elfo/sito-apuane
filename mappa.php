@@ -6,6 +6,9 @@ error_reporting(E_ALL);
 session_start();
 
 require_once "oop/place.class.php";
+require_once "php/i18n.php";
+
+$i18n = i18n("map");
 
 // Create a new class `Place`
 $cPlace  = new Place();
@@ -41,8 +44,12 @@ $markers = array_values(array_filter(
 
     <main>
       <div class="button-container pt1">
-        <button type="button" id="center" class="bSuccess">Parco</button>
-        <button type="button" id="user" class="bSuccess">Tu</button>
+        <button type="button" id="center" class="bSuccess">
+          <?=$i18n["park"]?>
+        </button>
+        <button type="button" id="user" class="bSuccess">
+          <?=$i18n["you"]?>
+        </button>
         <span></span>
       </div>
       <div class="center mt1">

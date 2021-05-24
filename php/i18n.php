@@ -8,6 +8,10 @@ if (array_key_exists("HTTP_ACCEPT_LANGUAGE", $_SERVER)) {
     }
 }
 
+// Debug
+// $lng = "de";
+
+// Load ini file of given `$page` and returns the section relative to the language
 function i18n($page)
 {
     global $lng;
