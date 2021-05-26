@@ -9,6 +9,10 @@ if (!array_key_exists("user", $_SESSION)) {
     header("Location: login.php");
     exit;
 }
+
+require_once "php/i18n.php";
+$i18n = i18n("profile");
+
 ?>
 
 <!DOCTYPE html>
@@ -18,12 +22,12 @@ if (!array_key_exists("user", $_SESSION)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Profilo utente."
+      content="<?=$i18n["description"]?>"
     />
     <link rel="stylesheet" href="lib/js/SnackBar-master/dist/snackbar.min.css">
     <link rel="stylesheet" href="css/style.css" />
     <link rel="icon" href="favicon.png" type="image/png"/>
-    <title>Profilo utente</title>
+    <title><?=$i18n["title"]?></title>
     <script src="lib/js/jquery-3.6.0.js"></script>
     <script src="lib/js/SnackBar-master/dist/snackbar.min.js"></script>
     <script src="js/snackbar.js"></script>
@@ -36,35 +40,50 @@ if (!array_key_exists("user", $_SESSION)) {
       <ul class="style-none mt1">
         <?php if (array_key_exists("admin", $_SESSION['user']) && $_SESSION['user']['admin']): ?>
           <li class="mb1 px1">
-            <label>Amministratore</label>
+            <label><?=$i18n["admin"]?></label>
           </li>
         <?php endif;?>
         <li class="mb1 px1">
-          <label>I tuoi messaggi</label>
-          <a href="bacheca.php?byUser">Leggi</a>
+          <label><?=$i18n["yourmessages"]?></label>
+          <a href="bacheca.php?byUser"><?=$i18n["read"]?></a>
         </li>
         <li class="mb1 px1">
-          <label for="name">Nome</label>
+          <label for="name"><?=$i18n["name"]?></label>
           <input
             type="text"
             name="name"
             id="name"
             value="<?=$_SESSION['user']['name']?>"
-            placeholder="Scrivi il tuo nome"/>
+            placeholder="<?=$i18n["name_placeholder"]?>"/>
         </li>
         <li class="mb1 px1">
-          <label for="email">Email</label>
+          <label for="email"><?=$i18n["email"]?></label>
           <input
             type="text"
             name="email"
             id="email"
             value="<?=$_SESSION['user']['email']?>"
-            placeholder="Scrivi il tuo indirizzo email">
+            placeholder="<?=$i18n["email_placeholder"]?>">
         </li>
         <li class="mb1 px1 button-container">
-          <button type="button" id="save" class="bSuccess">Salva</button>
-          <button type="button" id="logout" class="bWarning">Logout</button>
-          <button type="button" id="delete" class="bDanger">Elimina</button>
+          <button
+            type="button"
+            id="save"
+            class="bSuccess">
+            <?=$i18n["save"]?>
+          </button>
+          <button
+            type="button"
+            id="logout"
+            class="bWarning">
+            <?=$i18n["logout"]?>
+          </button>
+          <button
+            type="button"
+            id="delete"
+            class="bDanger">
+            <?=$i18n["delete"]?>
+          </button>
         </li>
       </ul>
     </main>
