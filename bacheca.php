@@ -13,13 +13,15 @@ if (!array_key_exists("user", $_SESSION)) {
 require_once "lib/php/parsedown-master/Parsedown.php";
 require_once "oop/answer.class.php";
 require_once "oop/board.class.php";
+require_once "php/i18n.php";
 
 $pd = new Parsedown();
+$i18n = i18n("board");
 
 // Inizializzo variabili di pagina
 $error       = array_key_exists("error", $_GET) ? $_GET["error"] : "";
-$title       = "Bacheca";
-$description = "Bacheca del sito";
+$title       = $i18n["title"];
+$description = $i18n["description"];
 $h1          = "";
 $article     = "";
 $author      = "";
@@ -47,7 +49,7 @@ if ($boardId) {
         $showBoard   = true;
         $answers     = $cAnswer->toBoard($boardId);
     } else {
-        $error = "Questo messaggio non esiste";
+        $error = $i18n["error_404"];
     }
 } else {
     // Carico la lista dei messaggi
@@ -104,20 +106,20 @@ if ($boardId) {
               <a
                 href="bacheca_rispondi.php?boardId=<?=$board["id"]?>"
                 class="button bSuccess"
-                >Rispondi</a>
+                ><?=$i18n["answer"]?></a>
               <!-- If user is owner, add the edit and delete button -->
               <?php if ($_SESSION["user"]["id"] == $board["user_id"]): ?>
                 <!-- Edit this message -->
                 <a
                   class="button bWarning"
                   href="bacheca_scrivi.php?id=<?=$board["id"]?>"
-                  >Modifica</a>
+                  ><?=$i18n["edit"]?></a>
                 <!-- Delete this message -->
                 <button
                   type="button"
                   class="bDanger"
                   data-delete-board="<?=$board["id"]?>"
-                  >Elimina</button>
+                  ><?=$i18n["delete"]?></button>
               <?php endif;?>
             </div>
           <?php endif;?>
@@ -128,7 +130,9 @@ if ($boardId) {
                 <?=$pd->text($answer["content"])?>
                 <div class="klein">
                   <span><?=$answer["name"]?></span>,
-                  <time datetime="<?=$answer["uDateTime"]?>"><?=date_format(date_create($answer["uDateTime"]), "d/m/Y")?></time>
+                  <time
+                    datetime="<?=$answer["uDateTime"]?>"
+                    ><?=date_format(date_create($answer["uDateTime"]), $i18n["date_format"])?></time>
                 </div>
                 <!-- Buttons -->
                 <div class="button-container">
@@ -140,12 +144,12 @@ if ($boardId) {
                       data-board-id="<?=$board["id"]?>"
                       data-answer-id="<?=$answer["id"]?>"
                       href="bacheca_rispondi.php?boardId=<?=$board["id"]?>&answerId=<?=$answer["id"]?>"
-                      >Modifica</a>
+                      ><?=$i18n["edit"]?></a>
                     <button
                       type="button"
                       class="bDanger"
                       data-delete-answer="<?=$answer["id"]?>"
-                      >Elimina</button>
+                      ><?=$i18n["delete"]?></button>
                   <?php endif;?>
                 </div>
               </div>
@@ -159,11 +163,11 @@ if ($boardId) {
             <a
               href="bacheca_scrivi.php"
               class="button bSuccess"
-              >Scrivi</a>
+              ><?=$i18n["write"]?></a>
             <a
               class="button bWarning"
               href="bacheca.php?<?=$searchByUserId ? "" : "byUser"?>"
-              ><?=$searchByUserId ? "-" : "+"?> Filtra</a>
+              ><?=$searchByUserId ? "-" : "+"?> <?=$i18n["filter"]?></a>
             <span></span>
           </div>
         <?php endif;?>
@@ -183,11 +187,11 @@ if ($boardId) {
                     <p>
                       <?=$board["user_name"]?>,
                       <time datetime="<?=$board["uDateTime"]?>">
-                        <?=date_format(date_create($board["uDateTime"]), "d/m/Y")?></time>,
+                        <?=date_format(date_create($board["uDateTime"]), $i18n["date_format"])?></time>,
                       <?php if ($board["answers"] == 1): ?>
-                        <span><?=$board["answers"]?> risposta</span>
+                        <span><?=$board["answers"]?> <?=$i18n["1answer"]?></span>
                       <?php else: ?>
-                        <span><?=$board["answers"]?> risposte</span>
+                        <span><?=$board["answers"]?> <?=$i18n["2answers"]?></span>
                       <?php endif;?>
                     </p>
                   </footer>

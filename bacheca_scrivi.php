@@ -12,7 +12,9 @@ if (!array_key_exists("user", $_SESSION)) {
 
 require_once "lib/php/parsedown-master/Parsedown.php";
 require_once "oop/board.class.php";
+require_once "php/i18n.php";
 
+$i18n = i18n("board");
 $boardId = array_key_exists("id", $_GET) ? $_GET["id"] : null;
 $cBoard  = new Board($boardId);
 $board   = [
@@ -35,7 +37,7 @@ if ($boardId) {
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="lib/js/SnackBar-master/dist/snackbar.min.css">
     <link rel="icon" href="favicon.png" type="image/png"/>
-    <title>Scrivi messaggio</title>
+    <title><?=$i18n["write_title"]?></title>
     <script src="lib/js/jquery-3.6.0.js"></script>
     <script src="lib/js/SnackBar-master/dist/snackbar.min.js"></script>
     <script src="js/snackbar.js" charset="utf-8"></script>
@@ -47,26 +49,29 @@ if ($boardId) {
     <main>
       <form>
         <fieldset>
-          <label for="title">Titolo</label>
+          <label for="title"><?=$i18n["message_title"]?></label>
           <input
             id="title"
             type="text"
             value="<?=$board["title"]?>"
             placeholder=""
             autofocus/>
-          <label for="content">Testo</label>
+          <label for="content"><?=$i18n["text"]?></label>
           <textarea
             id="content"
             rows="8" cols="40"
-            placeholder="Messaggio"
+            placeholder="<?=$i18n["message"]?>"
             ><?=$board["content"]?></textarea>
           <div class="button-container mt1">
-            <button type="button" id="write" class="bSuccess">Conferma</button>
+            <button
+              type="button"
+              id="write"
+              class="bSuccess"><?=$i18n["confirm"]?></button>
             <a
               id="cancel"
               class="button bWarning"
               href="bacheca.php"
-              >Annulla</a>
+              ><?=$i18n["cancel"]?></a>
           </div>
           <input type="hidden" id="boardId" value="<?=$boardId?>">
         </fieldset>

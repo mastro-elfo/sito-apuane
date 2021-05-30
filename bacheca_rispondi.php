@@ -21,9 +21,12 @@ $answerId = array_key_exists("answerId", $_GET) ? $_GET["answerId"] : null;
 require_once "lib/php/parsedown-master/Parsedown.php";
 require_once "oop/answer.class.php";
 require_once "oop/board.class.php";
+require_once "php/i18n.php";
+
 //
 $cBoard = new Board($boardId);
 $board  = $cBoard->read();
+$i18n = i18n("board");
 
 if (!$board) {
     header("Location: bacheca.php?error=" . urlencode("Messaggio non trovato: $boardId"));
@@ -44,7 +47,7 @@ if ($answerId) {
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="lib/js/SnackBar-master/dist/snackbar.min.css">
     <link rel="icon" href="favicon.png" type="image/png"/>
-    <title>Rispondi a messaggio</title>
+    <title><?=$i18n["answer_title"]?></title>
     <script src="lib/js/jquery-3.6.0.js"></script>
     <script src="lib/js/SnackBar-master/dist/snackbar.min.js"></script>
     <script src="js/snackbar.js"></script>
@@ -56,13 +59,13 @@ if ($answerId) {
     <main>
       <form>
         <fieldset>
-          <label>Rispondi a <?=$board["user_name"]?></label>
+          <label><?=$i18n["answer_to"]?> <?=$board["user_name"]?></label>
           <p class="mb1"><?=$board["title"]?></p>
-          <label for="content">Testo</label>
+          <label for="content"><?=$i18n["text"]?></label>
           <textarea
             id="content"
             rows="8" cols="40"
-            placeholder="Messaggio"
+            placeholder="<?=$i18n["message"]?>"
             class="mb1"
             ><?=$answer && array_key_exists("content", $answer) ? $answer["content"] : ""?></textarea>
           <div class="button-container">
@@ -70,11 +73,11 @@ if ($answerId) {
               type="button"
               id="answer"
               class="bSuccess"
-              >Rispondi</button>
+              ><?=$i18n["answer"]?></button>
             <a
               href="bacheca.php?id=<?=$board["id"]?>"
               class="button bWarning"
-              >Annulla</a>
+              ><?=$i18n["cancel"]?></a>
           </div>
           <input type="hidden" id="boardId" value="<?=$boardId?>">
           <input type="hidden" id="answerId" value="<?=$answerId?>">
