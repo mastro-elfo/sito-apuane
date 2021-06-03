@@ -26,6 +26,7 @@ $datetime    = "";
 $related     = [];
 $tags        = [];
 $attributes  = [];
+$osm         = null;
 // Turn this on to show the place article
 $showPlace = false;
 $places    = [];
@@ -54,9 +55,10 @@ if ($placeId) {
         // // Load attributes
         $attributes = (new MyAttribute)->ofPlace($placeId);
         // Check if place has Latitudine and Longitudine
-        // $latKey = array_search("Latitudine", array_column($attributes, "name"));
-        // $lonKey = array_search("Longitudine", array_column($attributes, "name"));
-        // if ($latKey !== false && $lonKey !== false) {
+        $latKey      = array_search("Latitudine", array_column($attributes, "name"));
+        $lonKey      = array_search("Longitudine", array_column($attributes, "name"));
+        $hasPosition = $latKey !== false && $lonKey !== false;
+        // if ($hasPosition) {
         //     $related = $cPlace->relatedByDistance(
         //         $attributes[$latKey]["value"],
         //         $attributes[$lonKey]["value"]
@@ -64,6 +66,12 @@ if ($placeId) {
         // }
         // Load related places
         $related = array_merge($related, $cPlace->related());
+        // Open Street Map
+        if ($hasPosition) {
+            $osm = 'https://www.openstreetmap.org/#map=18/'
+            . $attributes[$latKey]["value"] . '/'
+            . $attributes[$lonKey]["value"] . '';
+        }
     } else {
         $errore = "Errore nel database";
     }
@@ -181,6 +189,15 @@ if ($placeId) {
               <?php endforeach;?>
             </p>
           <?php endif;?>
+          <?php if($osm): ?>
+            <p>
+              <a
+                href="<?=$osm?>"
+                title="<?=$i18n["osmLinkTitle"]?>"
+                >Open Street Map
+              </a>
+            </p>
+          <?php endif; ?>
           <footer>
             <p>
               <time datetime="<?=$datetime?>">
